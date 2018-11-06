@@ -1,0 +1,115 @@
+commit 9425db1d601328b152c026749e7f38d900b865c0
+Author: terala <tomasterala@gmail.com>
+Date:   Tue Nov 6 13:34:00 2018 +0200
+
+    file1 pois, file2 to 22
+
+ tiedostoja/file1  | 0
+ tiedostoja/file2  | 0
+ tiedostoja/file22 | 0
+ 3 files changed, 0 insertions(+), 0 deletions(-)
+
+commit a9d7127f705b1c7336cf914bcf20423f47ecc042
+Author: terala <tomasterala@gmail.com>
+Date:   Tue Nov 6 13:30:43 2018 +0200
+
+    lisattiin tiedostoja kansio
+
+ tiedostoja/file1 | 0
+ tiedostoja/file2 | 0
+ tiedostoja/file3 | 0
+ 3 files changed, 0 insertions(+), 0 deletions(-)
+
+commit 5a119f3e8a966a2721f26749599000b738613c81
+Author: terala <tomasterala@gmail.com>
+Date:   Tue Nov 6 13:26:48 2018 +0200
+
+    git add -p
+
+ eka.txt    | 5 ++---
+ kolmas.txt | 4 +++-
+ 2 files changed, 5 insertions(+), 4 deletions(-)
+
+commit b0482c0ec2562f603ca265f3d6b58e0d9a5919b7
+Author: terala <tomasterala@gmail.com>
+Date:   Tue Nov 6 13:24:50 2018 +0200
+
+    tiedosto.txt->eka.txt
+
+ eka.txt      | 12 ++++++++++++
+ tiedosto.txt | 12 ------------
+ 2 files changed, 12 insertions(+), 12 deletions(-)
+
+commit beffb5d57e3127ea5bedf698e4a67d08a5299204
+Author: terala <tomasterala@gmail.com>
+Date:   Tue Nov 6 13:23:32 2018 +0200
+
+    poistettiin toinen
+
+ toinen.txt | 1 -
+ 1 file changed, 1 deletion(-)
+
+commit 53014bccb978025f0b0ec1f3d3ec9ca9d3b232b1
+Author: terala <tomasterala@gmail.com>
+Date:   Tue Nov 6 13:21:06 2018 +0200
+
+    tiedosto.txt del + pasta
+
+ tiedosto.txt | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+commit 597240bc39edecc533f2a7c7c5a9bad8ae49539d
+Author: terala <tomasterala@gmail.com>
+Date:   Tue Nov 6 13:19:30 2018 +0200
+
+    tiedosto.txt copypasta
+
+ tiedosto.txt | 10 ++++++++++
+ 1 file changed, 10 insertions(+)
+
+commit 612c9dd00ddf0e6a89479a01189dbf6c3c9313b4
+Author: terala <tomasterala@gmail.com>
+Date:   Tue Nov 6 13:16:22 2018 +0200
+
+    stuff lisattiin
+
+ stuff/neljas.txt | 0
+ 1 file changed, 0 insertions(+), 0 deletions(-)
+
+commit 1aca88636c3eb8036897d2d3e57e2d1faf903390
+Author: terala <tomasterala@gmail.com>
+Date:   Tue Nov 6 13:15:21 2018 +0200
+
+    toka ja kolmas tekstit
+
+ kolmas.txt | 1 +
+ toinen.txt | 1 +
+ 2 files changed, 2 insertions(+)
+
+commit cc6ac04f010673b64849c80285abc3988e6f12c5
+Author: terala <tomasterala@gmail.com>
+Date:   Tue Nov 6 13:14:20 2018 +0200
+
+    lisattiin kolmas
+
+ kolmas.txt | 0
+ 1 file changed, 0 insertions(+), 0 deletions(-)
+
+commit 290e20806e633006b26b77ab42f0e787e35791a8
+Author: terala <tomasterala@gmail.com>
+Date:   Tue Nov 6 13:13:02 2018 +0200
+
+    muutos ja lisays
+
+ tiedosto.txt | 2 ++
+ toinen.txt   | 0
+ 2 files changed, 2 insertions(+)
+
+commit 78ced61120c9e7c98920a959e565baaf8218b7a5
+Author: terala <tomasterala@gmail.com>
+Date:   Tue Nov 6 13:09:43 2018 +0200
+
+    tiedosto.txt luoto
+
+ tiedosto.txt | 0
+ 1 file changed, 0 insertions(+), 0 deletions(-)
