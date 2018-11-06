@@ -1,6 +1,6 @@
 # Jokin otsikko
 
-Tavallista tekstiä, **osa lihavoituna** ja *osa kursivoituna*
+Tavallista tekstiä tällä rivillä, **osa lihavoituna** ja *osa kursivoituna*
 
 ## Viikko1
 
