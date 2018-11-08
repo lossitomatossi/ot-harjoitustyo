@@ -1,20 +1,23 @@
 package foodtracker;
 
+import java.time.LocalDate;
 import javafx.application.Application;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextField;
+import javafx.scene.control.Toggle;
+import javafx.scene.control.ToggleGroup;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
-import javax.swing.ButtonGroup;
 
 public class FoodTracker extends Application {
 
@@ -43,26 +46,75 @@ public class FoodTracker extends Application {
         grid.add(quantityTF, 1, 2);
         
         
-        //Finding out the type of quantity
+        //Radiobuttons for quantity
         RadioButton grams = new RadioButton("grams");
+        grams.setUserData("grams");
         grid.add(grams, 2, 1);
         RadioButton liters = new RadioButton("liters");
+        liters.setUserData("liters");
         grid.add(liters, 2, 2);
         RadioButton pieces = new RadioButton("pieces");
+        pieces.setUserData("pieces");
         grid.add(pieces, 2, 3);
-        ButtonGroup group = new ButtonGroup();
         
         
+        //togglegroup for checking which button is selected
+        final ToggleGroup toggler = new ToggleGroup();
+        grams.setToggleGroup(toggler);
+        grams.setSelected(true);
+        liters.setToggleGroup(toggler);
+        pieces.setToggleGroup(toggler);
+        
+        
+        //Checks which radiobutton is toggled
+        toggler.selectedToggleProperty().addListener(new ChangeListener<Toggle>() {
+            public void changed(ObservableValue<? extends Toggle> ov,
+                    Toggle old_toggle, Toggle new_toggle) {
+                        if (toggler.getSelectedToggle() != null) {
+                            System.out.println(toggler.getSelectedToggle().getUserData().toString());
+                            getClass().getResourceAsStream(
+                                toggler.getSelectedToggle().getUserData().toString()
+                    );
+                }
+            }
+            
+        });
+        
+        //use toggler.getSelectedToggle().getUserData() to find out which button
+        //is used so you can get good sql queries in place!
+        
+        
+        
+        //Ability to pick expiration date in a calendar format
+        Label expirationLb = new Label("Expiration date: ");
+        grid.add(expirationLb, 0 , 3);
+        DatePicker expiration = new DatePicker();
+        expiration.setOnAction(event -> {
+            LocalDate date = expiration.getValue();
+            System.out.println("Selected date: " + date);
+        });
+        grid.add(expiration, 1, 3);
         
         Button btn = new Button();
-        btn.setText("Say 'Hello World'");
-        btn.setOnAction(new EventHandler<ActionEvent>() {
-            
-            @Override
-            public void handle(ActionEvent event) {
-                System.out.println("Hello World!");
-            }
-        });
+        btn.setText("Add a food to the database");
+        grid.add(btn, 1, 4);
+        
+        //continue by making a list of what is Expiring today.
+        
+        
+        
+        
+        
+        
+//        Button btn = new Button();
+//        btn.setText("Say 'Hello World'");
+//        btn.setOnAction(new EventHandler<ActionEvent>() {
+//            
+//            @Override
+//            public void handle(ActionEvent event) {
+//                System.out.println("Hello World!");
+//            }
+//        });
         //for showing the application
         StackPane root = new StackPane();
         root.getChildren().add(grid);
