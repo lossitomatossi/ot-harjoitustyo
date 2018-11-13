@@ -10,7 +10,7 @@ public class MaksukorttiTest {
 
     @Before
     public void setUp() {
-        kortti = new Maksukortti(10);
+        kortti = new Maksukortti(1000);
     }
 
     @Test
@@ -20,31 +20,31 @@ public class MaksukorttiTest {
     
     @Test
     public void kortinSaldoAlussaOikein() {
-        assertTrue(kortti.saldo() == 10);
+        assertTrue(kortti.saldo() == 1000);
     }
     
     @Test
     public void rahanLatausKasvattaaSaldoaOikein() {
-        kortti.lataaRahaa(10);
-        assertTrue(kortti.saldo()== 20);
+        kortti.lataaRahaa(1000);
+        assertTrue(kortti.saldo()== 2000);
     }
     
     @Test
     public void saldoVaheneeJosRahaaOn() {
-        kortti.otaRahaa(5);
-        assertTrue(kortti.saldo() == 5);
+        kortti.otaRahaa(500);
+        assertTrue(kortti.saldo() == 500);
     }
     
     @Test
     public void saldoEiVaheneJosRahaaEiTarpeeksi() {
-        kortti.otaRahaa(15);
-        assertTrue(kortti.saldo() == 10);
+        kortti.otaRahaa(1500);
+        assertTrue(kortti.saldo() == 1000);
     }
     
     @Test
     public void josRahatRiittaTrue() {
-        Kassapaate kassa = new Kassapaate();
-        Boolean riittiko = kassa.syoEdullisesti(kortti);
+       
+        Boolean riittiko = kortti.otaRahaa(2000);
         if (riittiko == true) {
             assertEquals(true, riittiko);
         } else {
@@ -54,6 +54,6 @@ public class MaksukorttiTest {
     
     @Test
     public void oikeaToString() {
-        assertEquals("saldo: 0.10", kortti.toString());
+        assertEquals("saldo: 10.0", kortti.toString());
     }
 }
