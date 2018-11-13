@@ -11,4 +11,7 @@ Tavallista tekstiä tällä rivillä, **osa lihavoituna** ja *osa kursivoituna*
 
 [komentorivi.txt](https://github.com/lossitomatossi/ot-harjoitustyo/blob/master/laskarit/viikko1/komentorivi.txt)
 
+## Viikko2
+
+[vaatimusmaarittely.md](https://github.com/lossitomatossi/ot-harjoitustyo/blob/master/laskarit/viikko2/vaatimusmaarittely.md)
 
