@@ -11,7 +11,6 @@ FoodTracker on sovellus joka mahdollistaa käyttäjälle paremman tarkkailun ruu
 
 ## Viikko2
 
-[vaatimusmaarittely.md](https://github.com/lossitomatossi/ot-harjoitustyo/blob/master/laskarit/viikko2/vaatimusmaarittely.md)
 
 [jacoco.png](https://github.com/lossitomatossi/ot-harjoitustyo/blob/master/laskarit/viikko2/jacoco.png)
 
@@ -24,6 +23,6 @@ FoodTracker on sovellus joka mahdollistaa käyttäjälle paremman tarkkailun ruu
 
 [käyttöohje]
 
-[vaatimusmaarittely.md](https://github.com/lossitomatossi/ot-harjoitustyo/blob/master/laskarit/viikko2/vaatimusmaarittely.md)
+[vaatimusmaarittely.md](https://github.com/lossitomatossi/ot-harjoitustyo/blob/master/dokumentaatio/vaatimusmaarittely.md)
 
-[työaikakirjanpito.md](https://github.com/lossitomatossi/ot-harjoitustyo/blob/master/tyoaikakirjanpito.md)
+[työaikakirjanpito.md](https://github.com/lossitomatossi/ot-harjoitustyo/blob/master/dokumentaatio/tyoaikakirjanpito.md)
