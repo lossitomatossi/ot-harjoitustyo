@@ -26,4 +26,4 @@ FoodTracker on sovellus joka mahdollistaa käyttäjälle paremman tarkkailun ruu
 
 [vaatimusmaarittely.md](https://github.com/lossitomatossi/ot-harjoitustyo/blob/master/laskarit/viikko2/vaatimusmaarittely.md)
 
-[työaikakirjanpito]
+[työaikakirjanpito] (https://github.com/lossitomatossi/ot-harjoitustyo/blob/master/tyoaikakirjanpito.md)
