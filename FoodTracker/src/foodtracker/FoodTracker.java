@@ -18,6 +18,7 @@ import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
+import javafx.event.*;
 
 public class FoodTracker extends Application {
 
@@ -98,6 +99,14 @@ public class FoodTracker extends Application {
         Button btn = new Button();
         btn.setText("Add a food to the database");
         grid.add(btn, 1, 4);
+        
+        btn.setOnAction(new EventHandler<ActionEvent>() {
+//            
+            @Override
+            public void handle(ActionEvent event) {
+                System.out.println(expiration.getValue());
+            }
+        });
         
         //continue by making a list of what is Expiring today.
         
