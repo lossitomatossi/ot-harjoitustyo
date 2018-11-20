@@ -61,13 +61,14 @@ public class PreparedFoodDao implements Dao<PreparedFood, Integer>{
             Date dateAdded = rs.getDate("dateAdded");
             boolean opened = rs.getBoolean("opened");
 
-            PreparedFood pf = new PreparedFood(id, name, foodType, quantity, quantityType, expirationDate, dateAdded, opened);
-            preparedFoods.add(pf);
+            PreparedFood preparedFood = new PreparedFood(id, name, foodType, quantity, quantityType, expirationDate, dateAdded, opened);
+            preparedFoods.add(preparedFood);
         }   
         
         rs.close();
         stmt.close();
         connection.close();
+        
         
         return preparedFoods;
     }
@@ -80,6 +81,15 @@ public class PreparedFoodDao implements Dao<PreparedFood, Integer>{
     @Override
     public void delete(Integer key) throws SQLException {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+    
+    public void addToDatabase() throws SQLException {
+        Connection conn = DriverManager.getConnection("jdbc:sqlite:food.db");
+        PreparedStatement stmt = conn.prepareStatement("INSERT INTO FoodItem (name) VALUES ('testi')");
+        stmt.executeUpdate();
+        
+        conn.close();
+        
     }
     
 

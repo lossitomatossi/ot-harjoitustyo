@@ -1,9 +1,12 @@
 package foodtracker;
 
 import Dao.PreparedFoodDao;
+import FoodTypes.PreparedFood;
 import database.Database;
 import java.sql.SQLException;
-import java.util.HashMap;
+import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.application.Application;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -27,8 +30,8 @@ public class FoodTracker extends Application {
 
     @Override
     public void start(Stage primaryStage) throws ClassNotFoundException, SQLException {
-        Database database = new Database("jbdc:sqlite:food.db");
-        database.init();
+        Database database = new Database("jdbc:sqlite:food.db");
+        PreparedFoodDao pfood = new PreparedFoodDao(database);
         
         GridPane grid = new GridPane();
         grid.setHgap(10);
@@ -110,17 +113,8 @@ public class FoodTracker extends Application {
 //            
             @Override
             public void handle(ActionEvent event) {
-                
             }
         });
-        
-//        List<PreparedFood> listing = PreparedFoodDao.
-//        map.put("foodItems", PreparedFoodDao.findAll());
-//        for (int i = 0; i < map.size(); i++) {
-//            
-//            Label testing = new Label();
-//            
-//        }
         
         //continue by making a list of what is Expiring today.
         

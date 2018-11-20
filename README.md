@@ -2,6 +2,7 @@
 
 FoodTracker on sovellus joka mahdollistaa käyttäjälle paremman tarkkailun ruuan säilymiseen.
 
+Mikään vaatimusmäärittelyn osista ei toimi vielä koska tietokantayhteyden otto kaataa sovelluksen.... ainoastaan visuaalista osaa sovelluksesta toteutettu
 
 # Dokumentaatio
 
