@@ -1,6 +1,9 @@
 package foodtracker;
 
-import java.time.LocalDate;
+import Dao.PreparedFoodDao;
+import database.Database;
+import java.sql.SQLException;
+import java.util.HashMap;
 import javafx.application.Application;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -23,7 +26,10 @@ import javafx.event.*;
 public class FoodTracker extends Application {
 
     @Override
-    public void start(Stage primaryStage) {
+    public void start(Stage primaryStage) throws ClassNotFoundException, SQLException {
+        Database database = new Database("jbdc:sqlite:food.db");
+        database.init();
+        
         GridPane grid = new GridPane();
         grid.setHgap(10);
         grid.setVgap(10);
@@ -91,8 +97,8 @@ public class FoodTracker extends Application {
         grid.add(expirationLb, 0 , 3);
         DatePicker expiration = new DatePicker();
         expiration.setOnAction(event -> {
-            LocalDate date = expiration.getValue();
-            System.out.println("Selected date: " + date);
+//            LocalDate date = expiration.getValue();
+//            System.out.println("Selected date: " + date);
         });
         grid.add(expiration, 1, 3);
         
@@ -104,9 +110,17 @@ public class FoodTracker extends Application {
 //            
             @Override
             public void handle(ActionEvent event) {
-                System.out.println(expiration.getValue());
+                
             }
         });
+        
+//        List<PreparedFood> listing = PreparedFoodDao.
+//        map.put("foodItems", PreparedFoodDao.findAll());
+//        for (int i = 0; i < map.size(); i++) {
+//            
+//            Label testing = new Label();
+//            
+//        }
         
         //continue by making a list of what is Expiring today.
         
