@@ -5,7 +5,7 @@ FoodTracker on sovellus joka mahdollistaa käyttäjälle paremman tarkkailun ruu
 
 # Dokumentaatio
 
-[Käyttöohje]
+[Käyttöohje](https://github.com/lossitomatossi/ot-harjoitustyo/blob/master/dokumentaatio/kayttoohje.md)
 
 [Vaatimusmaarittely](https://github.com/lossitomatossi/ot-harjoitustyo/blob/master/dokumentaatio/vaatimusmaarittely.md)
 
