@@ -18,7 +18,9 @@ FoodTracker on sovellus joka mahdollistaa käyttäjälle paremman tarkkailun ruu
 # Releaset
 
 # Komentorivitoiminnot
-##Testaus
+
+## Testaus
+
 Testit suoritetaan komennolla
 ```
 mvn test
