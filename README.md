@@ -3,26 +3,28 @@
 FoodTracker on sovellus joka mahdollistaa käyttäjälle paremman tarkkailun ruuan säilymiseen.
 
 
-## Viikko1
-
-[gitlog.txt](https://github.com/lossitomatossi/ot-harjoitustyo/blob/master/laskarit/viikko1/gitlog.txt)
-
-[komentorivi.txt](https://github.com/lossitomatossi/ot-harjoitustyo/blob/master/laskarit/viikko1/komentorivi.txt)
-
-## Viikko2
-
-
-[jacoco.png](https://github.com/lossitomatossi/ot-harjoitustyo/blob/master/laskarit/viikko2/jacoco.png)
-
-[Maksukortti](https://github.com/lossitomatossi/ot-harjoitustyo/tree/master/laskarit/viikko2/Maksukortti)
-
-[Unicafe](https://github.com/lossitomatossi/ot-harjoitustyo/tree/master/laskarit/viikko2/Unicafe)
-
-
 # Dokumentaatio
 
-[käyttöohje]
+[Käyttöohje.md]
 
-[vaatimusmaarittely.md](https://github.com/lossitomatossi/ot-harjoitustyo/blob/master/dokumentaatio/vaatimusmaarittely.md)
+[Vaatimusmaarittely.md](https://github.com/lossitomatossi/ot-harjoitustyo/blob/master/dokumentaatio/vaatimusmaarittely.md)
 
-[työaikakirjanpito.md](https://github.com/lossitomatossi/ot-harjoitustyo/blob/master/dokumentaatio/tyoaikakirjanpito.md)
+[Arkkitehtuurikuvaus.md]
+
+[Testausdokumentti.md]
+
+[Työaikakirjanpito.md](https://github.com/lossitomatossi/ot-harjoitustyo/blob/master/dokumentaatio/tyoaikakirjanpito.md)
+
+# Releaset
+
+# Komentorivitoiminnot
+##Testaus
+Testit suoritetaan komennolla
+```
+mvn test
+```
+Testikattavuusraportti luodaan komennolla
+```
+mvn jacoco:report
+```
+Kattavuusrapottia voi tarkastella avaamalla selaimella tiedosto target/site/jacoco/index.html
