@@ -39,7 +39,11 @@ public class PreparedFood {
     public String getFoodType() {
         return foodType;
     }
-
+    
+    /*https://stackoverflow.com/questions/4216745/java-string-to-date-conversion
+    Käytä ton linkin ohjeistusta, pitää muuttaa tietokantaan puskiessa tietokannan
+    YYYY-MM-DD muotoon ja sit ottaa se ja kääntää se DD-MM-YYYY
+    */
     public Date getExpirationDate() {
         return expirationDate;
     }
@@ -55,4 +59,11 @@ public class PreparedFood {
     public boolean isOpened() {
         return opened;
     }
+
+    @Override
+    public String toString() {
+        return getName() + " " + getQuantity() + " (" + getQuantityType() + ") " + getExpirationDate();
+    }
+    
+    
 }

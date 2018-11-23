@@ -1,12 +1,13 @@
-package foodtracker;
+package foodtracker.ui;
 
 import Dao.PreparedFoodDao;
 import FoodTypes.PreparedFood;
 import database.Database;
-import java.sql.SQLException;
+import java.sql.*;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javafx.application.Application;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -43,17 +44,17 @@ public class FoodTracker extends Application {
         grid.add(sceneTitle, 0, 0, 2, 1);
         
         //food item data gathering
-        Label foodName = new Label("Food item:");
-        grid.add(foodName, 0, 1);
-        TextField foodTF = new TextField();
-        grid.add(foodTF, 1, 1);
+        Label foodNameLb = new Label("Food item:");
+        grid.add(foodNameLb, 0, 1);
+        TextField foodNameTf = new TextField();
+        grid.add(foodNameTf, 1, 1);
         
         
         //food quantity data gathering
-        Label quantity = new Label("Quantity of food item:");
-        grid.add(quantity, 0, 2);
-        TextField quantityTF = new TextField();
-        grid.add(quantityTF, 1, 2);
+        Label quantityLb = new Label("Quantity of food item:");
+        grid.add(quantityLb, 0, 2);
+        TextField quantityTf = new TextField();
+        grid.add(quantityTf, 1, 2);
         
         
         //Radiobuttons for quantity
@@ -81,7 +82,7 @@ public class FoodTracker extends Application {
             public void changed(ObservableValue<? extends Toggle> ov,
                     Toggle old_toggle, Toggle new_toggle) {
                         if (toggler.getSelectedToggle() != null) {
-                            System.out.println(toggler.getSelectedToggle().getUserData().toString());
+                            System.out.println("Toggle changed to: " + toggler.getSelectedToggle().getUserData().toString());
                             getClass().getResourceAsStream(
                                 toggler.getSelectedToggle().getUserData().toString()
                     );
@@ -100,8 +101,8 @@ public class FoodTracker extends Application {
         grid.add(expirationLb, 0 , 3);
         DatePicker expiration = new DatePicker();
         expiration.setOnAction(event -> {
-//            LocalDate date = expiration.getValue();
-//            System.out.println("Selected date: " + date);
+            System.out.println("Selected date: " + expiration.getValue());
+            System.out.println("Date now: " + Date.valueOf(LocalDate.now()));
         });
         grid.add(expiration, 1, 3);
         
@@ -113,11 +114,33 @@ public class FoodTracker extends Application {
 //            
             @Override
             public void handle(ActionEvent event) {
+                System.out.println("nappia painettu");
+                try {
+                    System.out.println("try lauseen sisällä käyty");
+                    int amountOfFood = Integer.parseInt(quantityTf.getText());
+                    String selected = toggler.getSelectedToggle().getUserData().toString();
+                    System.out.println(selected);
+                    PreparedFood foodToAdd = new PreparedFood((pfood.findAll().size() +1), foodNameTf.getText(), null, amountOfFood, selected, Date.valueOf(expiration.getValue()), Date.valueOf(LocalDate.now()), false);
+                    System.out.println(foodToAdd);
+                    pfood.addToDatabase(foodToAdd);
+                } catch (Exception e) {
+                    System.out.println(e.getMessage());
+                }
             }
         });
         
-        //continue by making a list of what is Expiring today.
         
+        //continue by making a list of what is Expiring today.
+        Label expiringSoon = new Label("Expiring soon: ");
+        grid.add(expiringSoon, 0, 5);
+        GridPane expirationList = new GridPane();
+        grid.add(expirationList, 1, 6);
+        
+        List<PreparedFood> expiring = pfood.findAll();
+        for (int i = 0; i < expiring.size(); i++) {
+            Label pf = new Label(expiring.get(i).toString());
+            expirationList.add(pf, 0, i);
+        }
         
         
         
@@ -149,4 +172,6 @@ public class FoodTracker extends Application {
     public static void main(String[] args) {
         launch(args);
     }
+    
+    
 }

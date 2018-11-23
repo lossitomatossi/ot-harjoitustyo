@@ -4,6 +4,7 @@ import FoodTypes.PreparedFood;
 import database.Database;
 import java.sql.*;
 import java.sql.SQLException;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -53,6 +54,7 @@ public class PreparedFoodDao implements Dao<PreparedFood, Integer>{
         List<PreparedFood> preparedFoods = new ArrayList<>();
         while(rs.next()) {
             int id = rs.getInt("id");
+            System.out.println(id);
             String name = rs.getString("name");
             String foodType = rs.getString("foodType");
             int quantity = rs.getInt("quantity");
@@ -83,14 +85,25 @@ public class PreparedFoodDao implements Dao<PreparedFood, Integer>{
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
     
-    public void addToDatabase() throws SQLException {
+    public void addToDatabase(PreparedFood food) throws SQLException {
         Connection conn = DriverManager.getConnection("jdbc:sqlite:food.db");
-        PreparedStatement stmt = conn.prepareStatement("INSERT INTO FoodItem (name) VALUES ('testi')");
+        PreparedStatement stmt = conn.prepareStatement("INSERT INTO FoodItem (name, foodType, quantity, quantityType, expirationDate, dateAdded, opened) VALUES (?, ?, ?, ?, ?, ?, ?)");
+        stmt.setString(1, food.getName());
+        if (food.getFoodType() == null) {
+            stmt.setString(2, "unknown");
+        } else {
+            stmt.setString(2, food.getFoodType());
+        }
+        System.out.println("toimiiko");
+        stmt.setInt(3, food.getQuantity());
+        stmt.setString(4, food.getQuantityType());
+        //expirationDate
+        stmt.setDate(5, Date.valueOf(LocalDate.now()));
+        //dateAdded
+        stmt.setDate(6, Date.valueOf(LocalDate.now()));
+        stmt.setBoolean(7, food.isOpened());
         stmt.executeUpdate();
         
         conn.close();
-        
     }
-    
-
 }
