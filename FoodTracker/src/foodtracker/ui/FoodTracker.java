@@ -1,12 +1,13 @@
 package foodtracker.ui;
 
+import Dao.FreshFoodDao;
 import Dao.PreparedFoodDao;
+import FoodTypes.FreshFood;
 import FoodTypes.PreparedFood;
 import database.Database;
 import java.sql.*;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 import javafx.application.Application;
 import javafx.beans.value.ChangeListener;
@@ -32,7 +33,8 @@ public class FoodTracker extends Application {
     @Override
     public void start(Stage primaryStage) throws ClassNotFoundException, SQLException {
         Database database = new Database("jdbc:sqlite:food.db");
-        PreparedFoodDao pfood = new PreparedFoodDao(database);
+        PreparedFoodDao preparedFood = new PreparedFoodDao(database);
+        FreshFoodDao freshFood = new FreshFoodDao(database);
         
         GridPane grid = new GridPane();
         grid.setHgap(10);
@@ -114,15 +116,15 @@ public class FoodTracker extends Application {
 //            
             @Override
             public void handle(ActionEvent event) {
-                System.out.println("nappia painettu");
+//                System.out.println("nappia painettu");
                 try {
-                    System.out.println("try lauseen sisällä käyty");
+//                    System.out.println("try lauseen sisällä käyty");
                     int amountOfFood = Integer.parseInt(quantityTf.getText());
                     String selected = toggler.getSelectedToggle().getUserData().toString();
                     System.out.println(selected);
-                    PreparedFood foodToAdd = new PreparedFood((pfood.findAll().size() +1), foodNameTf.getText(), null, amountOfFood, selected, Date.valueOf(expiration.getValue()), Date.valueOf(LocalDate.now()), false);
+                    PreparedFood foodToAdd = new PreparedFood((preparedFood.findAll().size() +1), foodNameTf.getText(), null, amountOfFood, selected, Date.valueOf(expiration.getValue()), Date.valueOf(LocalDate.now()), false);
                     System.out.println(foodToAdd);
-                    pfood.addToDatabase(foodToAdd);
+                    preparedFood.addToDatabase(foodToAdd);
                 } catch (Exception e) {
                     System.out.println(e.getMessage());
                 }
@@ -136,11 +138,22 @@ public class FoodTracker extends Application {
         GridPane expirationList = new GridPane();
         grid.add(expirationList, 1, 6);
         
-        List<PreparedFood> expiring = pfood.findAll();
-        for (int i = 0; i < expiring.size(); i++) {
-            Label pf = new Label(expiring.get(i).toString());
-            expirationList.add(pf, 0, i);
+        int expiring = 0;
+        List<PreparedFood> expiringPrepared = preparedFood.findAll();
+        List<FreshFood> expiringFresh = freshFood.findAll();
+        for (int i = 0; i < expiringFresh.size(); i++) {
+            Label ff = new Label(expiringFresh.get(i).toString());
+            expirationList.add(ff, 0, i + expiring);
         }
+        
+        List<Object> kaikki = new ArrayList<>();
+        kaikki.addAll(expiringFresh);
+        kaikki.addAll(expiringPrepared);
+        for (int i = 0; i < kaikki.size(); i++) {
+            Label ff = new Label(kaikki.get(i).toString());
+            expirationList.add(ff, 0, i + expiring);
+        }
+        
         
         
         
