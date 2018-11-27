@@ -1,6 +1,6 @@
 # FoodTracker
 
-FoodTracker on sovellus joka mahdollistaa käyttäjälle paremman tarkkailun ruuan säilymiseen.
+FoodTracker on sovellus joka mahdollistaa käyttäjälle paremman tarkkailun ruuan säilymiseen. Ruuat lisätään graafisen käyttöliittymän kautta, jonka jälkeen ne ilmestyvät sille listalle johon ne kuuluvat. Eri listoja ovat mm. pian pilaantuvat joka sisältää kaikki tuoreet ruuat sekä seuraavan kolmen päivän aikana parasta ennen päivämääränsä saavuttavat ruuat. Tämän lisäksi ruuat voi listata seuraavan viikon, kuukauden ja vuoden aikana pilaantuviin sekä aakkosjärjestykseen. Pilaantuneet ruuat näkyvät omalla listallaan josta ne voi helposti poistaa. Ruokien määriä voi myös muuttaa kulutuksen mukaan.
 
 Tietokantaan voi lisätä tietoja kaikkien kenttien ollessa oikein, mutta testejä ei ole.
 
