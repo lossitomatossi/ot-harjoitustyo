@@ -14,7 +14,7 @@ Ohjelma myös ilmoittaa käyttäjälle jos jossain kentässä on virheellistä t
 
 [Vaatimusmaarittely](https://github.com/lossitomatossi/ot-harjoitustyo/blob/master/dokumentaatio/vaatimusmaarittely.md)
 
-[Arkkitehtuurikuvaus]
+[Arkkitehtuurikuvaus](https://github.com/lossitomatossi/ot-harjoitustyo/blob/master/dokumentaatio/arkkitehtuurikuvaus.md)
 
 [Testausdokumentti](https://github.com/lossitomatossi/ot-harjoitustyo/blob/master/dokumentaatio/testaus.md)
 
