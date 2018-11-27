@@ -51,7 +51,7 @@ JavaDocia voi tarkastella avaamalla selaimella tiedosto _target/site/apidocs/ind
 
 ### Checkstyle
 
-Tiedostoon [checkstyle.xml]() määrittelemät tarkistukset suoritetaan komennolla
+Tiedostoon [checkstyle.xml](https://github.com/lossitomatossi/ot-harjoitustyo/blob/master/FoodTracker/checkstyle.xml) määrittelemät tarkistukset suoritetaan komennolla
 
 ```
  mvn jxr:jxr checkstyle:checkstyle
