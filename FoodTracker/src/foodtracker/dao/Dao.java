@@ -1,4 +1,4 @@
-package dao;
+package foodtracker.dao;
 
 import java.sql.*;
 import java.util.*;

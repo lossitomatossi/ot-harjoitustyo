@@ -1,4 +1,4 @@
-package database;
+package foodtracker.database;
 
 import java.sql.*;
 
@@ -15,7 +15,6 @@ public class Database {
         try {
             Class.forName("org.sqlite.JDBC");
         } catch (ClassNotFoundException e) {
-            
         }
         return DriverManager.getConnection(databaseAddress);
     }

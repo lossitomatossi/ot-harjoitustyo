@@ -1,4 +1,4 @@
-package foodtypes;
+package foodtracker.foodtypes;
 
 import java.sql.Date;
 

@@ -6,9 +6,9 @@ package Dao;
  * and open the template in the editor.
  */
 
-import dao.FreshFoodDao;
-import foodtypes.FreshFood;
-import database.Database;
+import foodtracker.dao.FreshFoodDao;
+import foodtracker.foodtypes.FreshFood;
+import foodtracker.database.Database;
 import java.sql.SQLException;
 import java.util.List;
 import org.junit.Assert;

@@ -1,10 +1,10 @@
 package foodtracker.ui;
 
-import dao.FreshFoodDao;
-import dao.PreparedFoodDao;
-import foodtypes.FreshFood;
-import foodtypes.PreparedFood;
-import database.Database;
+import foodtracker.dao.FreshFoodDao;
+import foodtracker.dao.PreparedFoodDao;
+import foodtracker.foodtypes.FreshFood;
+import foodtracker.foodtypes.PreparedFood;
+import foodtracker.database.Database;
 import java.sql.*;
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -151,7 +151,6 @@ public class FoodTracker extends Application {
 //                    System.out.println("try lauseen sisällä käyty");
                     int amountOfFood = Integer.parseInt(quantityTf.getText());
                     String selected = toggler.getSelectedToggle().getUserData().toString();
-                    System.out.println(selected);
                     PreparedFood foodToAdd = new PreparedFood((preparedFood.findAll().size() +1), foodNameTf.getText(), null, amountOfFood, selected, Date.valueOf(expiration.getValue()), Date.valueOf(LocalDate.now()), false);
                     System.out.println(foodToAdd);
                     preparedFood.addToDatabase(foodToAdd);

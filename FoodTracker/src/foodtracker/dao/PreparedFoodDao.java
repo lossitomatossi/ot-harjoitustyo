@@ -1,7 +1,7 @@
-package dao;
+package foodtracker.dao;
 
-import foodtypes.PreparedFood;
-import database.Database;
+import foodtracker.foodtypes.PreparedFood;
+import foodtracker.database.Database;
 import java.sql.*;
 import java.sql.SQLException;
 import java.time.LocalDate;
