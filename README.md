@@ -35,9 +35,9 @@ Kattavuusrapottia voi tarkastella avaamalla selaimella tiedosto target/site/jaco
 ## Suoritettavan jarin generointi
 
 Komento
-
+```
 mvn package
-
+```
 generoi hakemistoon target suoritettavan jar-tiedoston FoodTracker-1.0-SNAPSHOT.jar #"¤%#¤%¤#%¤#% tarkista tää
 
 ## JavaDoc
