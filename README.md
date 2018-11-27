@@ -12,7 +12,7 @@ Tietokantaan voi lisätä tietoja kaikkien kenttien ollessa oikein, mutta testej
 
 [Arkkitehtuurikuvaus]
 
-[Testausdokumentti]
+[Testausdokumentti](https://github.com/lossitomatossi/ot-harjoitustyo/blob/master/dokumentaatio/testaus.md)
 
 [Työaikakirjanpito](https://github.com/lossitomatossi/ot-harjoitustyo/blob/master/dokumentaatio/tyoaikakirjanpito.md)
 
