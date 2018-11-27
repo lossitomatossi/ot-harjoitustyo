@@ -1,9 +1,9 @@
 package foodtracker.ui;
 
-import Dao.FreshFoodDao;
-import Dao.PreparedFoodDao;
-import FoodTypes.FreshFood;
-import FoodTypes.PreparedFood;
+import dao.FreshFoodDao;
+import dao.PreparedFoodDao;
+import foodtypes.FreshFood;
+import foodtypes.PreparedFood;
 import database.Database;
 import java.sql.*;
 import java.time.LocalDate;

@@ -1,6 +1,6 @@
-package Dao;
+package dao;
 
-import FoodTypes.PreparedFood;
+import foodtypes.PreparedFood;
 import database.Database;
 import java.sql.*;
 import java.sql.SQLException;
@@ -8,7 +8,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
-public class PreparedFoodDao implements Dao<PreparedFood, Integer>{
+public class PreparedFoodDao implements Dao<PreparedFood, Integer> {
     
     private Database database;
 
@@ -21,28 +21,16 @@ public class PreparedFoodDao implements Dao<PreparedFood, Integer>{
         Connection connection = database.getConnection();
         PreparedStatement stmt = connection.prepareStatement("SELECT * FROM FoodItem WHERE id = ? AND foodType = 'prepared'");
         stmt.setObject(1, key);
-        
         ResultSet rs = stmt.executeQuery();
         if (!rs.next()) {
             return null;
         }
-        int id = rs.getInt("id");
-        String name = rs.getString("name");
-        String foodType = rs.getString("foodType");
-        int quantity = rs.getInt("quantity");
-        String quantityType = rs.getString("quantityType");
-        Date expirationDate = rs.getDate("expirationDate");
-        Date dateAdded = rs.getDate("dateAdded");
-        boolean opened = rs.getBoolean("opened");
-        
-        PreparedFood pf = new PreparedFood(id, name, foodType, quantity, quantityType, expirationDate, dateAdded, opened);
-        
+        PreparedFood pf =  new PreparedFood(rs.getInt("id"), rs.getString("name"), rs.getString("foodType"), rs.getInt("quantity"),
+                    rs.getString("quantityType"), rs.getDate("expirationDate"), rs.getDate("dateAdded"), rs.getBoolean("opened"));
         rs.close();
         stmt.close();
         connection.close();
-        
         return pf;
-        
     }
 
     @Override
@@ -52,25 +40,14 @@ public class PreparedFoodDao implements Dao<PreparedFood, Integer>{
         
         ResultSet rs = stmt.executeQuery();
         List<PreparedFood> preparedFoods = new ArrayList<>();
-        while(rs.next()) {
-            int id = rs.getInt("id");
-            System.out.println(id);
-            String name = rs.getString("name");
-            String foodType = rs.getString("foodType");
-            int quantity = rs.getInt("quantity");
-            String quantityType = rs.getString("quantityType");
-            Date expirationDate = rs.getDate("expirationDate");
-            Date dateAdded = rs.getDate("dateAdded");
-            boolean opened = rs.getBoolean("opened");
-
-            PreparedFood preparedFood = new PreparedFood(id, name, foodType, quantity, quantityType, expirationDate, dateAdded, opened);
+        while (rs.next()) {
+            PreparedFood preparedFood = new PreparedFood(rs.getInt("id"), rs.getString("name"), rs.getString("foodType"), rs.getInt("quantity"),
+                    rs.getString("quantityType"), rs.getDate("expirationDate"), rs.getDate("dateAdded"), rs.getBoolean("opened"));
             preparedFoods.add(preparedFood);
-        }   
-        
+        }
         rs.close();
         stmt.close();
         connection.close();
-        
         return preparedFoods;
     }
     

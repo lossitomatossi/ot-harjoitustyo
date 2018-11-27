@@ -1,4 +1,4 @@
-package FoodTypes;
+package foodtypes;
 
 import java.sql.Date;
 

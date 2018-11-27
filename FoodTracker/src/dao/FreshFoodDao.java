@@ -1,6 +1,6 @@
-package Dao;
+package dao;
 
-import FoodTypes.FreshFood;
+import foodtypes.FreshFood;
 import database.Database;
 import java.sql.*;
 import java.sql.SQLException;
@@ -9,7 +9,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
-public class FreshFoodDao implements Dao<FreshFood, Integer>{
+public class FreshFoodDao implements Dao<FreshFood, Integer> {
     
     private Database database;
 
@@ -51,7 +51,7 @@ public class FreshFoodDao implements Dao<FreshFood, Integer>{
         
         ResultSet rs = stmt.executeQuery();
         List<FreshFood> freshFoods = new ArrayList<>();
-        while(rs.next()) {
+        while (rs.next()) {
             int id = rs.getInt("id");
             String name = rs.getString("name");
             String foodType = rs.getString("foodType");

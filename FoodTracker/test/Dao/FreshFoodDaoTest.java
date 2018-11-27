@@ -6,8 +6,8 @@ package Dao;
  * and open the template in the editor.
  */
 
-import Dao.FreshFoodDao;
-import FoodTypes.FreshFood;
+import dao.FreshFoodDao;
+import foodtypes.FreshFood;
 import database.Database;
 import java.sql.SQLException;
 import java.util.List;
