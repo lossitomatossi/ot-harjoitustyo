@@ -11,7 +11,7 @@ public class FoodIngredient extends Food {
 
     @Override
     public String toString() {
-        return getFoodType() + " " + getName() + " " + getQuantity() + " " + getQuantityType() + " added: " + getDateAdded();
+        return "Ingredient: " + getName() + " " + getQuantity() + " " + getQuantityType() + " added: " + getDateAdded();
     }
     
     

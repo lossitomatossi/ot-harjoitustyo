@@ -63,7 +63,10 @@ public class FreshFoodDao implements Dao<FreshFood, Integer> {
 
     @Override
     public void delete(Integer key) throws SQLException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        Connection conn = DriverManager.getConnection("jdbc:sqlite:food.db");
+        PreparedStatement stmt = conn.prepareStatement("DELETE FROM FoodItem WHERE id = ?");
+        stmt.setInt(1, key);
+        stmt.executeUpdate();
     }
     
     public void addToDatabase(FreshFood food) throws SQLException {

@@ -1,4 +1,4 @@
-package foodtracker.utilities;
+package foodtracker.ui;
 
 import static com.sun.org.apache.xalan.internal.xsltc.compiler.util.Type.Text;
 import javafx.scene.control.Alert;

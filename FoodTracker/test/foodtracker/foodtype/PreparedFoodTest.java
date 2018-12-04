@@ -1,3 +1,5 @@
+package foodtracker.foodtype;
+
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -33,7 +35,7 @@ public class PreparedFoodTest {
         String quantityType = "pieces";
         LocalDate expirationDate = LocalDate.of(2018, 12, 12);
         LocalDate dateAdded = LocalDate.now();
-        Boolean opened = true;
+        Boolean opened = false;
         
         pf = new PreparedFood(id, name, foodType, quantity, quantityType, expirationDate, dateAdded, opened);
     }
@@ -66,7 +68,7 @@ public class PreparedFoodTest {
     
     @Test
     public void isOpenedWorks() {
-        Assert.assertEquals(true, pf.isOpened());
+        Assert.assertEquals(false, pf.isOpened());
     }
     
     @Test
@@ -89,6 +91,13 @@ public class PreparedFoodTest {
         String dateNow = converter.dateToString(LocalDate.now());
         String expiration = converter.dateToString(LocalDate.of(2018, 12, 12));
         Assert.assertEquals("lihis 3 pieces " + dateNow + " - " + expiration, pf.toString());
+    }
+    
+    @Test
+    public void openWorks() {
+        pf.open();
+        Assert.assertEquals(true, pf.isOpened());
+        
     }
     
     
