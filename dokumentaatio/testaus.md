@@ -4,7 +4,7 @@ Ohjelmaa on testattu JUnitilla sekä manuaalisesti
 
 ## Testauskattavuus
 
-Käyttöliittymäkerrosta lukuunottamatta sovelluksen testauksen rivikattavuus on 40% ja haarautumakattavuus on 16%.
+Käyttöliittymäkerrosta lukuunottamatta sovelluksen testauksen rivikattavuus on 46% ja haarautumakattavuus on 28%.
 
 <img src="https://github.com/lossitomatossi/ot-harjoitustyo/blob/master/dokumentaatio/kuvat/jacoco.png" width="800">
 
@@ -13,7 +13,9 @@ Testaamatta jäänyt lukuisia tilanteita.
 
 # Sovellukseen jääneet laatuongelmat:
 
-- sovellus ei tiedosta onko ruuan määrää kuvaavalla rivillä numero
-- sovellus ei ole vielä korjannut sql-tietokannan kanssa olevaa ongelmaa päivämäärien oikean näyttämistavan kanssa
-- sovellus ei vielä tarkista ruuan tyyppiä ennen lisäämistä
-- Dao luokkien testausta ei toteutettu
+
+
+- Dao luokkien testaus ei vielä täysin valmis
+- Ruokien tyyppi testataan mutta ingredient tyyppisiä ruokia ei saa vielä lisättyä
+- Pian pilaantuvien lista päivittää vasta hedelmien lisäyksen sitä mukaan kun tietokantaan lisätään tietoa
+- Kaikkia tietokannan ruokia ei saa vielä listattua kerralla
