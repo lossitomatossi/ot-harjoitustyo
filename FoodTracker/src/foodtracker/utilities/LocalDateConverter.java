@@ -29,6 +29,6 @@ public class LocalDateConverter {
     public LocalDate dateToLocalDate(final Date date) {
         return LocalDateTime.ofInstant(date.toInstant(), ZoneId.systemDefault())
             .toLocalDate();
-}
+    }
 
 }

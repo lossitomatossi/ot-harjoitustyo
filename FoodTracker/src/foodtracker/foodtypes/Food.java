@@ -3,13 +3,13 @@ package foodtracker.foodtypes;
 import java.time.LocalDate;
 
 
-public class Food {
-    private int id;
-    private String name;
-    private String foodType;
-    private int quantity;
-    private String quantityType;
-    private LocalDate dateAdded;
+public abstract class Food {
+    protected int id;
+    protected String name;
+    protected String foodType;
+    protected int quantity;
+    protected String quantityType;
+    protected LocalDate dateAdded;
 
     public Food(int id, String name, String foodType, int quantity, String quantityType, LocalDate dateAdded) {
         this.id = id;

@@ -19,7 +19,7 @@ public class FoodDao implements Dao<Food, Integer> {
 
     public FoodDao(Database database) {
         this.database = database;
-        this.converter = converter;
+        this.converter = new LocalDateConverter();
     }
     @Override
     public Food findOne(Integer key) throws SQLException {
@@ -29,29 +29,31 @@ public class FoodDao implements Dao<Food, Integer> {
     @Override
     public List<Food> findAll() throws SQLException {
         Connection connection = database.getConnection();
-        PreparedStatement stmt = connection.prepareStatement("SELECT * FROM FoodItem WHERE foodType = 'fresh'");
-        
+        PreparedStatement stmt = connection.prepareStatement("SELECT * FROM FoodItem");
         ResultSet rs = stmt.executeQuery();
         List<Food> food = new ArrayList<>();
         while (rs.next()) {
-            int id = rs.getInt("id");
-            String name = rs.getString("name");
-            String foodType = rs.getString("foodType");
-            int quantity = rs.getInt("quantity");
-            String quantityType = rs.getString("quantityType");
             String dateAdded = rs.getString("dateAdded");
-            FreshFood freshToAdd = new FreshFood(id, name, foodType, quantity, quantityType, converter.stringToDate(dateAdded));
+            FreshFood freshToAdd = new FreshFood(rs.getInt("id"), rs.getString("name"), rs.getString("foodType"), rs.getInt("quantity"), rs.getString("quantityType"), converter.stringToDate(dateAdded));
             //System.out.println(freshToAdd.toString());
             food.add(freshToAdd);
-        }   
-        
+        }
         rs.close();
         stmt.close();
         connection.close();
-        
-        
         return food;
     }
+    /*
+    private PreparedFood collectPreparedFood(ResultSet rs) {
+        return new PreparedFood()
+    }
+    */
+    
+    /*
+    public int countAll() {
+        // SELECT COUNT(*) FROM FoodItem;
+    }
+    */
 
     @Override
     public Food saveOrUpdate(Food object) throws SQLException {

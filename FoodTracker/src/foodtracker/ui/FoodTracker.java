@@ -161,7 +161,7 @@ public class FoodTracker extends Application {
                     System.out.println(foodTypeString);
                     if (foodTypeString.equals("prepared")) {
                         System.out.println("11111");
-                        PreparedFood preparedToAdd = new PreparedFood(expiration.getValue(), false, allFoods.findAll().size(), foodNameTf.getText(), foodTypeString, amountOfFood, quantityType, LocalDate.now());
+                        PreparedFood preparedToAdd = new PreparedFood(allFoods.findAll().size(), foodNameTf.getText(), foodTypeString, amountOfFood, quantityType, expiration.getValue(), LocalDate.now(), false);
                         System.out.println("222222");
                         preparedFood.addToDatabase(preparedToAdd);
                     } else if (foodTypeString.equals("fresh")) {

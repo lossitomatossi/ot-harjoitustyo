@@ -24,25 +24,17 @@ public class FreshFoodDao implements Dao<FreshFood, Integer> {
         Connection connection = database.getConnection();
         PreparedStatement stmt = connection.prepareStatement("SELECT * FROM FoodItem WHERE id = ? AND foodType = 'fresh'");
         stmt.setObject(1, key);
-        
         ResultSet rs = stmt.executeQuery();
         if (!rs.next()) {
             return null;
         }
-        int id = rs.getInt("id");
-        String name = rs.getString("name");
-        String foodType = rs.getString("foodType");
-        int quantity = rs.getInt("quantity");
-        String quantityType = rs.getString("quantityType");
         String dateAdded = rs.getString("dateAdded");
-        
-        FreshFood ff = new FreshFood(id, name, foodType, quantity, quantityType, converter.stringToDate(dateAdded));
+        FreshFood ff = new FreshFood(rs.getInt("id"), rs.getString("name"), rs.getString("foodType"), rs.getInt("quantity"), rs.getString("quantityType"), converter.stringToDate(dateAdded));
         
         rs.close();
         stmt.close();
         connection.close();
         return ff;
-        
     }
 
     @Override
@@ -53,22 +45,14 @@ public class FreshFoodDao implements Dao<FreshFood, Integer> {
         ResultSet rs = stmt.executeQuery();
         List<FreshFood> freshFoods = new ArrayList<>();
         while (rs.next()) {
-            int id = rs.getInt("id");
-            String name = rs.getString("name");
-            String foodType = rs.getString("foodType");
-            int quantity = rs.getInt("quantity");
-            String quantityType = rs.getString("quantityType");
             String dateAdded = rs.getString("dateAdded");
-            FreshFood freshToAdd = new FreshFood(id, name, foodType, quantity, quantityType, converter.stringToDate(dateAdded));
+            FreshFood freshToAdd = new FreshFood(rs.getInt("id"), rs.getString("name"), rs.getString("foodType"), rs.getInt("quantity"), rs.getString("quantityType"), converter.stringToDate(dateAdded));
             System.out.println("Added the following fresh food to the list of fresh foods:" + freshToAdd.toString());
             freshFoods.add(freshToAdd);
-        }   
-        
+        }
         rs.close();
         stmt.close();
         connection.close();
-        
-        
         return freshFoods;
     }
 

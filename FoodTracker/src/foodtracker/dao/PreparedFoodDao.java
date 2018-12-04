@@ -28,14 +28,9 @@ public class PreparedFoodDao implements Dao<PreparedFood, Integer> {
         if (!rs.next()) {
             return null;
         }
-        int id = rs.getInt("id");
-        String name = rs.getString("name");
-        String foodType = rs.getString("foodType");
-        int quantity = rs.getInt("quantity");
-        String quantityType = rs.getString("quantityType");
         LocalDate dateAdded = converter.stringToDate(rs.getString("dateAdded"));
         LocalDate expirationDate = converter.stringToDate(rs.getString("expirationDate"));
-        PreparedFood pf = new PreparedFood(expirationDate, rs.getBoolean("opened"), id, name, foodType, quantity, quantityType, dateAdded);
+        PreparedFood pf = new PreparedFood(rs.getInt("id"), rs.getString("name"), rs.getString("foodType"), rs.getInt("quantity"), rs.getString("quantityType"), expirationDate, dateAdded, rs.getBoolean("opened"));
         rs.close();
         stmt.close();
         connection.close();
@@ -50,15 +45,11 @@ public class PreparedFoodDao implements Dao<PreparedFood, Integer> {
         ResultSet rs = stmt.executeQuery();
         List<PreparedFood> preparedFoods = new ArrayList<>();
         while (rs.next()) {
-            int id = rs.getInt("id");
-            String name = rs.getString("name");
-            String foodType = rs.getString("foodType");
-            int quantity = rs.getInt("quantity");
-            String quantityType = rs.getString("quantityType");
             LocalDate dateAdded = converter.stringToDate(rs.getString("dateAdded"));
             LocalDate expirationDate = converter.stringToDate(rs.getString("expirationDate"));
-            PreparedFood pf = new PreparedFood(expirationDate, rs.getBoolean("opened"), id, name, foodType, quantity, quantityType, dateAdded);
+            PreparedFood pf = new PreparedFood(rs.getInt("id"), rs.getString("name"), rs.getString("foodType"), rs.getInt("quantity"), rs.getString("quantityType"), expirationDate, dateAdded, rs.getBoolean("opened"));
             preparedFoods.add(pf);
+            System.out.println("Added the following prepared food to the list of fresh foods:" + pf.toString());
         }
         rs.close();
         stmt.close();

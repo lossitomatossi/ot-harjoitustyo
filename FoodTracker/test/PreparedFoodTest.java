@@ -5,7 +5,7 @@
  */
 
 import foodtracker.foodtypes.PreparedFood;
-import java.sql.Date;
+import foodtracker.utilities.LocalDateConverter;
 import java.time.LocalDate;
 import java.time.Month;
 import org.junit.Assert;
@@ -18,13 +18,24 @@ import org.junit.Test;
  */
 public class PreparedFoodTest {
     private PreparedFood pf;
+    private LocalDateConverter converter;
     
     public PreparedFoodTest() {
+        this.converter = new LocalDateConverter();
     }
 
     @Before
     public void setUp() {
-     //   pf = new PreparedFood(8, "lihis", "prepared", 3, "pcs" , Date.valueOf(LocalDate.of(2018, Month.MARCH, 30)), Date.valueOf(LocalDate.now()), true);
+        int id = 200;
+        String name = "lihis";
+        String foodType = "prepared";
+        int quantity = 3;
+        String quantityType = "pieces";
+        LocalDate expirationDate = LocalDate.of(2018, 12, 12);
+        LocalDate dateAdded = LocalDate.now();
+        Boolean opened = true;
+        
+        pf = new PreparedFood(id, name, foodType, quantity, quantityType, expirationDate, dateAdded, opened);
     }
 
     // TODO add test methods here.
@@ -35,7 +46,7 @@ public class PreparedFoodTest {
     
     @Test
     public void getIdWorks() {
-        Assert.assertEquals(8, pf.getId());
+        Assert.assertEquals(200, pf.getId());
     }
     
     @Test
@@ -60,22 +71,24 @@ public class PreparedFoodTest {
     
     @Test
     public void getQuantityTypeWorks() {
-        Assert.assertEquals("pcs", pf.getQuantityType());
+        Assert.assertEquals("pieces", pf.getQuantityType());
     }
     
     @Test
     public void getExpirationDateWorks() {
-        Assert.assertEquals(Date.valueOf(LocalDate.of(2018, Month.MARCH, 30)), pf.getExpirationDate());
+        Assert.assertEquals(LocalDate.of(2018, 12, 12), pf.getExpirationDate());
     }
     
     @Test
     public void getDateAddedWorks() {
-        Assert.assertEquals(Date.valueOf(LocalDate.now()), pf.getDateAdded());
+        Assert.assertEquals(LocalDate.now(), pf.getDateAdded());
     }
     
     @Test
     public void toStringWorks() {
-        Assert.assertEquals("lihis 3 (pcs) 2018-03-30", pf.toString());
+        String dateNow = converter.dateToString(LocalDate.now());
+        String expiration = converter.dateToString(LocalDate.of(2018, 12, 12));
+        Assert.assertEquals("lihis 3 pieces " + dateNow + " - " + expiration, pf.toString());
     }
     
     

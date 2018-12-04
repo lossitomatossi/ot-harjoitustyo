@@ -9,7 +9,7 @@ public class PreparedFood extends Food {
     private LocalDate expirationDate;
     private boolean opened;
 
-    public PreparedFood(LocalDate expirationDate, boolean opened, int id, String name, String foodType, int quantity, String quantityType, LocalDate dateAdded) {
+    public PreparedFood(int id, String name, String foodType, int quantity, String quantityType, LocalDate expirationDate, LocalDate dateAdded, boolean opened) {
         super(id, name, foodType, quantity, quantityType, dateAdded);
         this.expirationDate = expirationDate;
         this.opened = opened;
