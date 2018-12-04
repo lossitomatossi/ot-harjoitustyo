@@ -8,5 +8,5 @@
 | 23.11 | 2   | jdbc fixejä ja tietokantaan lisäyksen toteutus |
 | 27.11 | 6.5 | jbdc fixejä lisää, jacoco, checkstyle, testit, lisää luokkia, arkkitehtuurikuvaus karkeasti |
 | 3.12  | .5  | muutin tietokannan date osat varchar tyyppisiksi |
-| 4.12  | 9   | korjasin tietokantaan yhteydenoton, checkstyle korjauksia, lisää testejä, lisää luokkia, alertit kertomaan käyttäjälle jos tietokenttiä on tyhjänä |
-| yht   | 25.5  | projekti ok vaiheessa |
+| 4.12  | 9.5   | korjasin tietokantaan yhteydenoton, checkstyle korjauksia, lisää testejä, lisää luokkia, alertit kertomaan käyttäjälle jos tietokenttiä on tyhjänä, sekvenssikaavio freshfood lisäämiselle |
+| yht   | 26  | projekti ok vaiheessa |
