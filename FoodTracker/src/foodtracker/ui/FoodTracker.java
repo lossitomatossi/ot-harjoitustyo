@@ -1,10 +1,12 @@
 package foodtracker.ui;
 
+import foodtracker.dao.FoodDao;
 import foodtracker.dao.FreshFoodDao;
 import foodtracker.dao.PreparedFoodDao;
 import foodtracker.foodtypes.FreshFood;
 import foodtracker.foodtypes.PreparedFood;
 import foodtracker.database.Database;
+import foodtracker.utilities.LocalDateConverter;
 import java.sql.*;
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -27,14 +29,17 @@ import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.event.*;
+import static jdk.nashorn.internal.runtime.Debug.id;
 
 public class FoodTracker extends Application {
 
     @Override
     public void start(Stage primaryStage) throws ClassNotFoundException, SQLException {
         Database database = new Database("jdbc:sqlite:food.db");
+        FoodDao allFoods = new FoodDao(database);
         PreparedFoodDao preparedFood = new PreparedFoodDao(database);
         FreshFoodDao freshFood = new FreshFoodDao(database);
+        LocalDateConverter converter = new LocalDateConverter();
         
         GridPane grid = new GridPane();
         grid.setHgap(10);
@@ -147,17 +152,26 @@ public class FoodTracker extends Application {
             @Override
             public void handle(ActionEvent event) {
 //                System.out.println("nappia painettu");
+            
                 try {
-//                    System.out.println("try lauseen sisällä käyty");
+                    System.out.println("try lauseen sisällä käyty");
                     int amountOfFood = Integer.parseInt(quantityTf.getText());
                     String quantityType = toggler.getSelectedToggle().getUserData().toString();
-                    String foodType = toggler.getSelectedToggle().getUserData().toString();
-                    if (quantityType.equals("prepared")) {
-                        PreparedFood foodToAdd = new PreparedFood((preparedFood.findAll().size() +1), foodNameTf.getText(), "prepared", amountOfFood, quantityType, Date.valueOf(expiration.getValue()), Date.valueOf(LocalDate.now()), false);
-                        preparedFood.addToDatabase(foodToAdd);
+                    String foodTypeString = foodType.getSelectedToggle().getUserData().toString();
+                    System.out.println(foodTypeString);
+                    if (foodTypeString.equals("prepared")) {
+                        System.out.println("11111");
+                        PreparedFood preparedToAdd = new PreparedFood(expiration.getValue(), false, allFoods.findAll().size(), foodNameTf.getText(), foodTypeString, amountOfFood, quantityType, LocalDate.now());
+                        System.out.println("222222");
+                        preparedFood.addToDatabase(preparedToAdd);
+                    } else if (foodTypeString.equals("fresh")) {
+                        System.out.println("3333333");
+                        FreshFood freshToAdd = new FreshFood(allFoods.findAll().size(), foodNameTf.getText(), foodTypeString, amountOfFood, quantityType, LocalDate.now());
+                        System.out.println(freshToAdd.toString());
+                        System.out.println("4444444");
+                        freshFood.addToDatabase(freshToAdd);
                     }
-                    //PreparedFood foodToAdd = new PreparedFood((preparedFood.findAll().size() +1), foodNameTf.getText(), null, amountOfFood, quantityType, Date.valueOf(expiration.getValue()), Date.valueOf(LocalDate.now()), false);
-                    //System.out.println(foodToAdd);
+                    
                 } catch (Exception e) {
                     System.out.println(e.getMessage());
                 }

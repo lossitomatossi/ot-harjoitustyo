@@ -18,12 +18,13 @@ import org.junit.Test;
  */
 public class PreparedFoodTest {
     private PreparedFood pf;
+    
     public PreparedFoodTest() {
     }
 
     @Before
     public void setUp() {
-        pf = new PreparedFood(8, "lihis", "prepared", 3, "pcs" , Date.valueOf(LocalDate.of(2018, Month.MARCH, 30)), Date.valueOf(LocalDate.now()), true);
+     //   pf = new PreparedFood(8, "lihis", "prepared", 3, "pcs" , Date.valueOf(LocalDate.of(2018, Month.MARCH, 30)), Date.valueOf(LocalDate.now()), true);
     }
 
     // TODO add test methods here.

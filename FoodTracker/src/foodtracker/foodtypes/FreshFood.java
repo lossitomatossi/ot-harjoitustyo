@@ -1,10 +1,11 @@
 package foodtracker.foodtypes;
 
+import foodtracker.utilities.LocalDateConverter;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
 
-public class FreshFood {
+public class FreshFood extends Food {
     private int id;
     private String name;
     private String foodType;
@@ -13,43 +14,14 @@ public class FreshFood {
     private LocalDate dateAdded;
 
     public FreshFood(int id, String name, String foodType, int quantity, String quantityType, LocalDate dateAdded) {
-        this.id = id;
-        this.name = name;
-        this.foodType = foodType;
-        this.quantity = quantity;
-        this.quantityType = quantityType;
-        this.dateAdded = dateAdded;
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public String getFoodType() {
-        return foodType;
-    }
-
-    public int getQuantity() {
-        return quantity;
-    }
-
-    public String getQuantityType() {
-        return quantityType;
-    }
-
-    public LocalDate getDateAdded() {
-        return dateAdded;
+        super(id, name, foodType, quantity, quantityType, dateAdded);
     }
 
     @Override
     public String toString() {
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd.MM.yyyy");
-        String formattedString = this.dateAdded.format(formatter);
-        return this.name + " " + this.quantity + " " + this.quantityType + " " + formattedString;
+        LocalDateConverter converter = new LocalDateConverter();
+        String formattedString = converter.dateToString(super.getDateAdded());
+            return super.getName() + " " + super.getQuantity() + " " + super.getQuantityType() + " " + formattedString;
     }
     
     

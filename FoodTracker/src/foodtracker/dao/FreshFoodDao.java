@@ -2,19 +2,21 @@ package foodtracker.dao;
 
 import foodtracker.foodtypes.FreshFood;
 import foodtracker.database.Database;
+import foodtracker.utilities.LocalDateConverter;
 import java.sql.*;
 import java.sql.SQLException;
 import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
 public class FreshFoodDao implements Dao<FreshFood, Integer> {
     
     private Database database;
+    private LocalDateConverter converter;
 
     public FreshFoodDao(Database database) {
         this.database = database;
+        this.converter = new LocalDateConverter();
     }
 
     @Override
@@ -34,7 +36,7 @@ public class FreshFoodDao implements Dao<FreshFood, Integer> {
         String quantityType = rs.getString("quantityType");
         String dateAdded = rs.getString("dateAdded");
         
-        FreshFood ff = new FreshFood(id, name, foodType, quantity, quantityType, stringToDate(dateAdded));
+        FreshFood ff = new FreshFood(id, name, foodType, quantity, quantityType, converter.stringToDate(dateAdded));
         
         rs.close();
         stmt.close();
@@ -57,8 +59,8 @@ public class FreshFoodDao implements Dao<FreshFood, Integer> {
             int quantity = rs.getInt("quantity");
             String quantityType = rs.getString("quantityType");
             String dateAdded = rs.getString("dateAdded");
-            FreshFood freshToAdd = new FreshFood(id, name, foodType, quantity, quantityType, stringToDate(dateAdded));
-            //System.out.println(freshToAdd.toString());
+            FreshFood freshToAdd = new FreshFood(id, name, foodType, quantity, quantityType, converter.stringToDate(dateAdded));
+            System.out.println("Added the following fresh food to the list of fresh foods:" + freshToAdd.toString());
             freshFoods.add(freshToAdd);
         }   
         
@@ -82,6 +84,7 @@ public class FreshFoodDao implements Dao<FreshFood, Integer> {
     
     public void addToDatabase(FreshFood food) throws SQLException {
         Connection conn = DriverManager.getConnection("jdbc:sqlite:food.db");
+        System.out.println("attempted to connect to the database");
         PreparedStatement stmt = conn.prepareStatement("INSERT INTO FoodItem (name, foodType, quantity, quantityType, dateAdded) VALUES (?, ?, ?, ?, ?)");
         stmt.setString(1, food.getName());
         if (food.getFoodType() == null) {
@@ -91,23 +94,10 @@ public class FreshFoodDao implements Dao<FreshFood, Integer> {
         }
         stmt.setInt(3, food.getQuantity());
         stmt.setString(4, food.getQuantityType());
-        stmt.setString(5, dateToString(food.getDateAdded()));
+        stmt.setString(5, converter.dateToString(food.getDateAdded()));
         stmt.executeUpdate();
-        System.out.println("FreshFoods adding works");
+        System.out.println("FreshFoods adding works" + converter.dateToString(food.getDateAdded()));
         
         conn.close();
-    }
-    
-    public LocalDate stringToDate(String string) {
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd.MM.yyyy");
-        LocalDate localDate = LocalDate.parse(string, formatter);
-        
-        return localDate;
-    }
-    
-    public String dateToString(LocalDate date) {
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd.MM.yyyy");
-        String formattedString = date.format(formatter);
-        return formattedString;
     }
 }

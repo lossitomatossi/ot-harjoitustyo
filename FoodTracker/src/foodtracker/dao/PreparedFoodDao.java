@@ -2,6 +2,7 @@ package foodtracker.dao;
 
 import foodtracker.foodtypes.PreparedFood;
 import foodtracker.database.Database;
+import foodtracker.utilities.LocalDateConverter;
 import java.sql.*;
 import java.sql.SQLException;
 import java.time.LocalDate;
@@ -11,9 +12,11 @@ import java.util.List;
 public class PreparedFoodDao implements Dao<PreparedFood, Integer> {
     
     private Database database;
+    private LocalDateConverter converter;
 
     public PreparedFoodDao(Database database) {
         this.database = database;
+        this.converter = new LocalDateConverter();
     }
 
     @Override
@@ -25,8 +28,14 @@ public class PreparedFoodDao implements Dao<PreparedFood, Integer> {
         if (!rs.next()) {
             return null;
         }
-        PreparedFood pf =  new PreparedFood(rs.getInt("id"), rs.getString("name"), rs.getString("foodType"), rs.getInt("quantity"),
-                    rs.getString("quantityType"), rs.getDate("expirationDate"), rs.getDate("dateAdded"), rs.getBoolean("opened"));
+        int id = rs.getInt("id");
+        String name = rs.getString("name");
+        String foodType = rs.getString("foodType");
+        int quantity = rs.getInt("quantity");
+        String quantityType = rs.getString("quantityType");
+        LocalDate dateAdded = converter.stringToDate(rs.getString("dateAdded"));
+        LocalDate expirationDate = converter.stringToDate(rs.getString("expirationDate"));
+        PreparedFood pf = new PreparedFood(expirationDate, rs.getBoolean("opened"), id, name, foodType, quantity, quantityType, dateAdded);
         rs.close();
         stmt.close();
         connection.close();
@@ -41,9 +50,15 @@ public class PreparedFoodDao implements Dao<PreparedFood, Integer> {
         ResultSet rs = stmt.executeQuery();
         List<PreparedFood> preparedFoods = new ArrayList<>();
         while (rs.next()) {
-            PreparedFood preparedFood = new PreparedFood(rs.getInt("id"), rs.getString("name"), rs.getString("foodType"), rs.getInt("quantity"),
-                    rs.getString("quantityType"), rs.getDate("expirationDate"), rs.getDate("dateAdded"), rs.getBoolean("opened"));
-            preparedFoods.add(preparedFood);
+            int id = rs.getInt("id");
+            String name = rs.getString("name");
+            String foodType = rs.getString("foodType");
+            int quantity = rs.getInt("quantity");
+            String quantityType = rs.getString("quantityType");
+            LocalDate dateAdded = converter.stringToDate(rs.getString("dateAdded"));
+            LocalDate expirationDate = converter.stringToDate(rs.getString("expirationDate"));
+            PreparedFood pf = new PreparedFood(expirationDate, rs.getBoolean("opened"), id, name, foodType, quantity, quantityType, dateAdded);
+            preparedFoods.add(pf);
         }
         rs.close();
         stmt.close();
@@ -90,6 +105,7 @@ public class PreparedFoodDao implements Dao<PreparedFood, Integer> {
         stmt.setDate(6, Date.valueOf(LocalDate.now()));
         stmt.setBoolean(7, food.isOpened());
         stmt.executeUpdate();
+        System.out.println("preparedfooddao addtodatabase metodin loppuosassa käyty");
         
         conn.close();
     }
