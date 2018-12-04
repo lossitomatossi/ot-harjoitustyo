@@ -150,10 +150,14 @@ public class FoodTracker extends Application {
                 try {
 //                    System.out.println("try lauseen sisällä käyty");
                     int amountOfFood = Integer.parseInt(quantityTf.getText());
-                    String selected = toggler.getSelectedToggle().getUserData().toString();
-                    PreparedFood foodToAdd = new PreparedFood((preparedFood.findAll().size() +1), foodNameTf.getText(), null, amountOfFood, selected, Date.valueOf(expiration.getValue()), Date.valueOf(LocalDate.now()), false);
-                    System.out.println(foodToAdd);
-                    preparedFood.addToDatabase(foodToAdd);
+                    String quantityType = toggler.getSelectedToggle().getUserData().toString();
+                    String foodType = toggler.getSelectedToggle().getUserData().toString();
+                    if (quantityType.equals("prepared")) {
+                        PreparedFood foodToAdd = new PreparedFood((preparedFood.findAll().size() +1), foodNameTf.getText(), "prepared", amountOfFood, quantityType, Date.valueOf(expiration.getValue()), Date.valueOf(LocalDate.now()), false);
+                        preparedFood.addToDatabase(foodToAdd);
+                    }
+                    //PreparedFood foodToAdd = new PreparedFood((preparedFood.findAll().size() +1), foodNameTf.getText(), null, amountOfFood, quantityType, Date.valueOf(expiration.getValue()), Date.valueOf(LocalDate.now()), false);
+                    //System.out.println(foodToAdd);
                 } catch (Exception e) {
                     System.out.println(e.getMessage());
                 }
@@ -170,6 +174,7 @@ public class FoodTracker extends Application {
         int expiring = 0;
         List<PreparedFood> expiringPrepared = preparedFood.findAll();
         List<FreshFood> expiringFresh = freshFood.findAll();
+        
         for (int i = 0; i < expiringFresh.size(); i++) {
             Label ff = new Label(expiringFresh.get(i).toString());
             expirationList.add(ff, 0, i + expiring);
@@ -182,7 +187,6 @@ public class FoodTracker extends Application {
             Label ff = new Label(kaikki.get(i).toString());
             expirationList.add(ff, 0, i + expiring);
         }
-        
         
         
         

@@ -1,6 +1,6 @@
 import foodtracker.foodtypes.FreshFood;
-import java.sql.Date;
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -13,7 +13,7 @@ public class FreshFoodTest {
 
     @Before
     public void setUp() {
-        ff = new FreshFood(15, "omena", "fresh", 2, "pcs", Date.valueOf(LocalDate.now()));
+        ff = new FreshFood(15, "omena", "fresh", 2, "pcs", LocalDate.now());
     }
 
     // TODO add test methods here.
@@ -44,12 +44,13 @@ public class FreshFoodTest {
     
     @Test
     public void getDateAddedWorks() {
-        Assert.assertEquals(Date.valueOf(LocalDate.now()),  ff.getDateAdded());
+        Assert.assertEquals(LocalDate.now(),  ff.getDateAdded());
     }
     
     @Test
     public void toStringWorks() {
-        Assert.assertEquals("omena 2 pcs 2018-11-27", ff.toString());
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd.MM.yyyy");
+        Assert.assertEquals("omena 2 pcs " + LocalDate.now().format(formatter), ff.toString());
     }
     
     @Test

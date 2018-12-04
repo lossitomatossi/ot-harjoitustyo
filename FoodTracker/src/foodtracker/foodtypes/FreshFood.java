@@ -1,6 +1,7 @@
 package foodtracker.foodtypes;
 
-import java.sql.Date;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 
 
 public class FreshFood {
@@ -9,9 +10,9 @@ public class FreshFood {
     private String foodType;
     private int quantity;
     private String quantityType;
-    private Date dateAdded;
+    private LocalDate dateAdded;
 
-    public FreshFood(int id, String name, String foodType, int quantity, String quantityType, Date dateAdded) {
+    public FreshFood(int id, String name, String foodType, int quantity, String quantityType, LocalDate dateAdded) {
         this.id = id;
         this.name = name;
         this.foodType = foodType;
@@ -40,13 +41,15 @@ public class FreshFood {
         return quantityType;
     }
 
-    public Date getDateAdded() {
+    public LocalDate getDateAdded() {
         return dateAdded;
     }
 
     @Override
     public String toString() {
-        return this.name + " " + this.quantity + " " + this.quantityType + " " + this.dateAdded;
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd.MM.yyyy");
+        String formattedString = this.dateAdded.format(formatter);
+        return this.name + " " + this.quantity + " " + this.quantityType + " " + formattedString;
     }
     
     
