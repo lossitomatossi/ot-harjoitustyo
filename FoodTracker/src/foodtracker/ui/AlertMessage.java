@@ -18,10 +18,10 @@ public class AlertMessage {
         text.setWrappingWidth(400);
         alert.getDialogPane().setContent(text);
         alert.showAndWait().ifPresent(rs -> {
-                        if (rs == ButtonType.OK) {
-                            System.out.println("Pressed OK.");
-                        }
-                    });
+            if (rs == ButtonType.OK) {
+                System.out.println("Pressed OK.");
+            }
+        });
     }
     
     

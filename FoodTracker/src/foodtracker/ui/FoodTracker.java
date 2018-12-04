@@ -166,6 +166,29 @@ public class FoodTracker extends Application {
             }
             
         });
+        
+        //continue by making a list of what is Expiring today.
+        Label expiringSoon = new Label("Expiring soon: ");
+        grid.add(expiringSoon, 0, 8);
+        GridPane expirationList = new GridPane();
+        grid.add(expirationList, 1, 9);
+        
+        int expiring = 0;
+        List<PreparedFood> expiringPrepared = preparedFood.findAll();
+        List<FreshFood> expiringFresh = freshFood.findAll();
+        
+        for (int i = 0; i < expiringFresh.size(); i++) {
+            Label ff = new Label(expiringFresh.get(i).toString());
+            expirationList.add(ff, 0, i + expiring);
+        }
+        
+//        List<Object> kaikki = new ArrayList<>();
+//        kaikki.addAll(expiringFresh);
+//        kaikki.addAll(expiringPrepared);
+//        for (int i = 0; i < kaikki.size(); i++) {
+//            Label ff = new Label(kaikki.get(i).toString());
+//            expirationList.add(ff, 0, i + expiring);
+//        }
                 
         Button btn = new Button();
         btn.setText("Add a food to the database");
@@ -206,43 +229,27 @@ public class FoodTracker extends Application {
                         System.out.println(freshToAdd.toString());
                         System.out.println("4444444");
                         freshFood.addToDatabase(freshToAdd);
+                        if (expiringFresh.size() < freshFood.findAll().size()) {
+                            int beginningSize = expiringFresh.size();
+                            List<FreshFood> test = freshFood.findAll();
+                            for (int i = beginningSize; i < test.size(); i++) {
+                            Label ff = new Label(test.get(i).toString());
+                            expirationList.add(ff, 0, i + beginningSize);
+                        }
+                        }
                     }
 
                     } catch (Exception e) {
                         System.out.println(e.getMessage());
                     }
                 
+                
+                    
+                
             }
         });
         
-        
-        //continue by making a list of what is Expiring today.
-        Label expiringSoon = new Label("Expiring soon: ");
-        grid.add(expiringSoon, 0, 8);
-        GridPane expirationList = new GridPane();
-        grid.add(expirationList, 1, 9);
-        
-        int expiring = 0;
-        List<PreparedFood> expiringPrepared = preparedFood.findAll();
-        List<FreshFood> expiringFresh = freshFood.findAll();
-        
-        for (int i = 0; i < expiringFresh.size(); i++) {
-            Label ff = new Label(expiringFresh.get(i).toString());
-            expirationList.add(ff, 0, i + expiring);
-        }
-        
-        List<Object> kaikki = new ArrayList<>();
-        kaikki.addAll(expiringFresh);
-        kaikki.addAll(expiringPrepared);
-        for (int i = 0; i < kaikki.size(); i++) {
-            Label ff = new Label(kaikki.get(i).toString());
-            expirationList.add(ff, 0, i + expiring);
-        }
-        
-        
-        
-        
-        
+       
 //        Button btn = new Button();
 //        btn.setText("Say 'Hello World'");
 //        btn.setOnAction(new EventHandler<ActionEvent>() {
