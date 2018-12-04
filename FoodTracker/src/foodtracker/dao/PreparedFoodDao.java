@@ -91,9 +91,9 @@ public class PreparedFoodDao implements Dao<PreparedFood, Integer> {
         stmt.setInt(3, food.getQuantity());
         stmt.setString(4, food.getQuantityType());
         //expirationDate
-        stmt.setDate(5, Date.valueOf(LocalDate.now()));
+        stmt.setString(5, converter.dateToString(food.getExpirationDate()));
         //dateAdded
-        stmt.setDate(6, Date.valueOf(LocalDate.now()));
+        stmt.setString(6, converter.dateToString(LocalDate.now()));
         stmt.setBoolean(7, food.isOpened());
         stmt.executeUpdate();
         System.out.println("preparedfooddao addtodatabase metodin loppuosassa käyty");
