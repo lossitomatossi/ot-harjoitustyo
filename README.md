@@ -6,7 +6,7 @@ Eri listoja ovat mm. pian pilaantuvat joka sisältää kaikki tuoreet ruuat sek�
 
 Pilaantuneet ruuat näkyvät omalla listallaan josta ne voi helposti poistaa. Ruokien määriä voi myös muuttaa kulutuksen mukaan.
 
-Ohjelma myös ilmoittaa käyttäjälle jos jossain kentässä on virheellistä tietoa, mutta tämä toiminnallisuus ei vielä toimi.
+Ohjelma myös ilmoittaa käyttäjälle jos jossain kentässä on virheellistä tietoa.
 
 # Dokumentaatio
 
