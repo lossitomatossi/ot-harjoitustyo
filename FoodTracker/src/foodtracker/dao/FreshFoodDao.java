@@ -5,9 +5,13 @@ import foodtracker.database.Database;
 import java.sql.*;
 import java.sql.SQLException;
 import java.sql.Date;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class FreshFoodDao implements Dao<FreshFood, Integer> {
     
@@ -32,14 +36,18 @@ public class FreshFoodDao implements Dao<FreshFood, Integer> {
         String foodType = rs.getString("foodType");
         int quantity = rs.getInt("quantity");
         String quantityType = rs.getString("quantityType");
-        Date dateAdded = rs.getDate("dateAdded");
+        String dateAdded = rs.getString("dateAdded");
         
-        FreshFood ff = new FreshFood(id, name, foodType, quantity, quantityType, dateAdded);
+        FreshFood ff = null;
+        try {
+            ff = new FreshFood(id, name, foodType, quantity, quantityType, stringToDate(dateAdded));
+        } catch (ParseException ex) {
+            Logger.getLogger(FreshFoodDao.class.getName()).log(Level.SEVERE, null, ex);
+        }
         
         rs.close();
         stmt.close();
         connection.close();
-        
         return ff;
         
     }
@@ -57,10 +65,15 @@ public class FreshFoodDao implements Dao<FreshFood, Integer> {
             String foodType = rs.getString("foodType");
             int quantity = rs.getInt("quantity");
             String quantityType = rs.getString("quantityType");
-            Date dateAdded = rs.getDate("dateAdded");
+            String dateAdded = rs.getString("dateAdded");
 
-            FreshFood freshToAdd = new FreshFood(id, name, foodType, quantity, quantityType, dateAdded);
-            freshFoods.add(freshToAdd);
+            FreshFood freshToAdd = null;
+            try {
+                freshToAdd = new FreshFood(id, name, foodType, quantity, quantityType, stringToDate(dateAdded));
+            } catch (ParseException ex) {
+                Logger.getLogger(FreshFoodDao.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            if (freshToAdd != null) {freshFoods.add(freshToAdd); }
         }   
         
         rs.close();
@@ -94,10 +107,15 @@ public class FreshFoodDao implements Dao<FreshFood, Integer> {
         stmt.setString(4, food.getQuantityType());
         //dateAdded
 //        java.sql.Date sqlDate = new jav0a.sql.Date(System.);
-        stmt.setDate(5, Date.valueOf(LocalDate.now()));
+        stmt.setString(5, Date.valueOf(LocalDate.now()).toString());
         stmt.executeUpdate();
         System.out.println("FreshFoods adding works");
         
         conn.close();
+    }
+    
+    private Date stringToDate(String string) throws ParseException {
+        Date date1 = (Date) new SimpleDateFormat("dd/MM/yyyy").parse(string);
+        return date1;
     }
 }
