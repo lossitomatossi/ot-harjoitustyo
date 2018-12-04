@@ -22,6 +22,8 @@ Ohjelma myös ilmoittaa käyttäjälle jos jossain kentässä on virheellistä t
 
 # Releaset
 
+[Viikko5](https://github.com/lossitomatossi/ot-harjoitustyo/releases)
+
 # Komentorivitoiminnot
 
 ## Testaus
