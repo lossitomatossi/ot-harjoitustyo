@@ -6,6 +6,7 @@ import foodtracker.dao.PreparedFoodDao;
 import foodtracker.foodtypes.FreshFood;
 import foodtracker.foodtypes.PreparedFood;
 import foodtracker.database.Database;
+import foodtracker.utilities.AlertMessage;
 import foodtracker.utilities.LocalDateConverter;
 import java.sql.*;
 import java.time.LocalDate;
@@ -29,7 +30,9 @@ import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.event.*;
-import static jdk.nashorn.internal.runtime.Debug.id;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
+import javafx.scene.control.ButtonType;
 
 public class FoodTracker extends Application {
 
@@ -62,6 +65,29 @@ public class FoodTracker extends Application {
         grid.add(quantityLb, 0, 2);
         TextField quantityTf = new TextField();
         grid.add(quantityTf, 1, 2);
+        
+        //limits the textField only to contain Integers
+        /* the one below is for doubles 
+        
+            vendorList_textField_remaining.textProperty().addListener(new ChangeListener<String>() {
+            @Override
+            public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
+                if (!newValue.matches("\\d*(\\.\\d*)?")) {
+                    vendorList_textField_remaining.setText(oldValue);
+                }
+            }
+        });
+
+        
+        */
+        quantityTf.textProperty().addListener(new ChangeListener<String>() {
+            @Override
+            public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
+                if (!newValue.matches("\\d*")) {
+                    quantityTf.setText(newValue.replaceAll("[^\\d]", ""));
+                }
+            }
+        });
         
         
         //Radiobuttons for quantity
@@ -114,7 +140,7 @@ public class FoodTracker extends Application {
         grid.add(expiration, 1, 3);
         
         
-        
+        //toggle group for foodType
         final ToggleGroup foodType = new ToggleGroup();
         RadioButton fresh = new RadioButton("fresh");
         fresh.setUserData("fresh");
@@ -140,8 +166,7 @@ public class FoodTracker extends Application {
                 }
             }
             
-        });       
-                
+        });
                 
         Button btn = new Button();
         btn.setText("Add a food to the database");
@@ -152,7 +177,19 @@ public class FoodTracker extends Application {
             @Override
             public void handle(ActionEvent event) {
 //                System.out.println("nappia painettu");
-            
+            //alert for numberfield being empty
+                if (quantityTf.getText().isEmpty()) {
+                    AlertMessage numberAlert = new AlertMessage("Input error", "Input a number for food quantity", "This field doesn't accept symbols other than numbers");
+                }
+                if (foodNameTf.getText().isEmpty()) {
+                    AlertMessage nameAlert = new AlertMessage("Input error", "Input a name for the food", "The food field seems to be empty");
+                }
+                if (foodNameTf.getText().length() > 50) {
+                    int length = foodNameTf.getText().length();
+                    AlertMessage foodNameTooLong = new AlertMessage("Input error", "The name for the food is too long", "Try to reduce the length of your foodItem to under 50 characters, now it is: " + length + " characters long");
+                }
+                //add an alertmessage to notify the user that they havent selected the foodtype.
+                
                 try {
                     System.out.println("try lauseen sisällä käyty");
                     int amountOfFood = Integer.parseInt(quantityTf.getText());
@@ -171,10 +208,11 @@ public class FoodTracker extends Application {
                         System.out.println("4444444");
                         freshFood.addToDatabase(freshToAdd);
                     }
-                    
-                } catch (Exception e) {
-                    System.out.println(e.getMessage());
-                }
+
+                    } catch (Exception e) {
+                        System.out.println(e.getMessage());
+                    }
+                
             }
         });
         
