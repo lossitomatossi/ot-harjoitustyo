@@ -31,7 +31,10 @@ import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.event.*;
+import javafx.geometry.Pos;
 import javafx.scene.control.ListView;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 
@@ -49,6 +52,10 @@ public class FoodTracker extends Application {
         GridPane grid = new GridPane();
         grid.setHgap(10);
         grid.setVgap(10);
+        VBox menuLeft = new VBox();
+        grid.add(menuLeft, 1, 1);
+        VBox menuRight = new VBox();
+        grid.add(menuRight, 1, 2);
         
         //Top text for the application
         Text sceneTitle = new Text("Welcome to FoodTracker!");
@@ -60,17 +67,19 @@ public class FoodTracker extends Application {
 //        grid.add(numberOfFoods, 1, 0);
         
         //food item data gathering
-        Label foodNameLb = new Label("Food item:");
-        grid.add(foodNameLb, 0, 1);
-        TextField foodNameTf = new TextField();
-        grid.add(foodNameTf, 1, 1);
+        Label lbFoodName = new Label("Food item:");
+        menuLeft.getChildren().add(lbFoodName);
+        grid.add(lbFoodName, 0, 1);
+        TextField tfFoodName = new TextField();
+        menuRight.getChildren().add(tfFoodName);
         
         
         //food quantity data gathering
-        Label quantityLb = new Label("Quantity of food item:");
-        grid.add(quantityLb, 0, 2);
-        TextField quantityTf = new TextField();
-        grid.add(quantityTf, 1, 2);
+        Label lbQuantity = new Label("Quantity of food item:");
+        menuLeft.getChildren().add(lbQuantity);
+        menuLeft.getChildren().add(new Label("Paskaa"));
+        TextField tfQuantity = new TextField();
+        menuRight.getChildren().add(tfQuantity);
         
         //limits the textField only to contain Integers
         /* the one below is for doubles 
@@ -86,11 +95,11 @@ public class FoodTracker extends Application {
 
         
         */
-        quantityTf.textProperty().addListener(new ChangeListener<String>() {
+        tfQuantity.textProperty().addListener(new ChangeListener<String>() {
             @Override
             public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
                 if (!newValue.matches("\\d*")) {
-                    quantityTf.setText(newValue.replaceAll("[^\\d]", ""));
+                    tfQuantity.setText(newValue.replaceAll("[^\\d]", ""));
                 }
             }
         });
@@ -198,23 +207,27 @@ public class FoodTracker extends Application {
 //            Label lb = new Label(all.get(i));
 //            allfoodsgp.add(lb, 0, i + 1);
 //        }
+ 
+        TableView table = new TableView();
+        table.setEditable(true);
         
-        //VBox containing all foods in a list grouped by their foodType
-        VBox vbox = new VBox(8);
-        ListView<String> lvTest = new ListView<String>();
-        lvTest.getItems().addAll(all);
-        vbox.setVgrow(lvTest, Priority.ALWAYS);
-        vbox.getChildren().addAll(new Label("Tracked items: " + allFoods.countAll()), lvTest);
-        grid.add(vbox, 10, 2);
+        final Label label = new Label("Tracked Foods: ");
+        label.setFont(new Font("Arial", 20));
         
-        //VBox with the same information minus duplicates
-        VBox collectionTest = new VBox();
-        ListView<String> sorted = new ListView<String>();
-        sorted.getItems().addAll(allFoods.sortedAll());
-        collectionTest.setVgrow(sorted, Priority.ALWAYS);
-        collectionTest.getChildren().addAll(new Label("Alphabetical order: "), sorted);
-        grid.add(collectionTest, 12, 2);
+        TableColumn columnName = new TableColumn("Food");
+        TableColumn columnFoodType = new TableColumn("Type");
+        TableColumn columnAmount = new TableColumn("Amount");
+        TableColumn columnAmountType = new TableColumn("amountType");
+        TableColumn columnDateAdded = new TableColumn("Added");
+        TableColumn columnExpiration = new TableColumn("Expiration");
+        
+        table.getColumns().addAll(columnName, columnFoodType, columnAmount, columnAmountType,
+                columnDateAdded, columnExpiration);
+//        grid.add(table, 6, 2);
                 
+        
+        
+        
         Button btn = new Button();
         btn.setText("Add a food to the database");
         grid.add(btn, 1, 7);
@@ -225,29 +238,29 @@ public class FoodTracker extends Application {
             public void handle(ActionEvent event) {
 //                System.out.println("nappia painettu");
             //alert for numberfield being empty
-                if (quantityTf.getText().isEmpty()) {
+                if (tfQuantity.getText().isEmpty()) {
                     AlertMessage numberAlert = new AlertMessage("Input error", "Input a number for food quantity", "This field doesn't accept symbols other than numbers");
                 }
-                if (foodNameTf.getText().isEmpty()) {
+                if (tfFoodName.getText().isEmpty()) {
                     AlertMessage nameAlert = new AlertMessage("Input error", "Input a name for the food", "The food field seems to be empty");
                 }
-                if (foodNameTf.getText().length() > 50) {
-                    int length = foodNameTf.getText().length();
+                if (tfFoodName.getText().length() > 50) {
+                    int length = tfFoodName.getText().length();
                     AlertMessage foodNameTooLong = new AlertMessage("Input error", "The name for the food is too long", "Try to reduce the length of your foodItem to under 50 characters, now it is: " + length + " characters long");
                 }
                 //add an alertmessage to notify the user that they havent selected the foodtype.
                 
                 try {
                     System.out.println("try lauseen sisällä käyty");
-                    int amountOfFood = Integer.parseInt(quantityTf.getText());
+                    int amountOfFood = Integer.parseInt(tfQuantity.getText());
                     String quantityType = toggler.getSelectedToggle().getUserData().toString();
                     String foodTypeString = foodType.getSelectedToggle().getUserData().toString();
                     System.out.println(foodTypeString);
                     if (foodTypeString.equals("prepared")) {
-                        PreparedFood preparedToAdd = new PreparedFood(allFoods.findAll().size(), foodNameTf.getText(), foodTypeString, amountOfFood, quantityType, expiration.getValue(), LocalDate.now(), false);
+                        PreparedFood preparedToAdd = new PreparedFood(allFoods.findAll().size(), tfFoodName.getText(), foodTypeString, amountOfFood, quantityType, expiration.getValue(), LocalDate.now(), false);
                         preparedFood.addToDatabase(preparedToAdd);
                     } else if (foodTypeString.equals("fresh")) {
-                        FreshFood freshToAdd = new FreshFood(allFoods.findAll().size(), foodNameTf.getText(), foodTypeString, amountOfFood, quantityType, LocalDate.now());
+                        FreshFood freshToAdd = new FreshFood(allFoods.findAll().size(), tfFoodName.getText(), foodTypeString, amountOfFood, quantityType, LocalDate.now());
                         System.out.println(freshToAdd.toString());
                         freshFood.addToDatabase(freshToAdd);
                         if (expiringFresh.size() < freshFood.findAll().size()) {
@@ -259,7 +272,7 @@ public class FoodTracker extends Application {
                         }
                         }
                     } else {
-                        FoodIngredient ingredientToAdd = new FoodIngredient(19, foodNameTf.getText(), foodTypeString, amountOfFood, quantityType, expiration.getValue(), LocalDate.now());
+                        FoodIngredient ingredientToAdd = new FoodIngredient(19, tfFoodName.getText(), foodTypeString, amountOfFood, quantityType, expiration.getValue(), LocalDate.now());
                         foodIngredient.addToDatabase(ingredientToAdd);
                     }
 
@@ -289,6 +302,10 @@ public class FoodTracker extends Application {
         //for showing the application
         StackPane root = new StackPane();
         root.getChildren().add(grid);
+        root.setAlignment(grid, Pos.TOP_LEFT);
+        root.getChildren().add(table);
+        root.setAlignment(table, Pos.TOP_RIGHT);
+        
         
         Scene scene = new Scene(root, 800, 800);
         
