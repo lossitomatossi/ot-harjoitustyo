@@ -1,5 +1,5 @@
 # Arkkitehtuurikuvaus
-<img src="https://github.com/lossitomatossi/ot-harjoitustyo/blob/master/dokumentaatio/kuvat/arkkitehtuurikuvaus.png" width="800">
+<img src="https://github.com/lossitomatossi/ot-harjoitustyo/blob/master/dokumentaatio/kuvat/arkkitehtuurikuvausuus.png" width="800">
 
 ## Käyttöliittymä
 
