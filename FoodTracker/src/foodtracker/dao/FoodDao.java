@@ -15,7 +15,6 @@ import java.util.Collection;
 import java.util.List;
 import java.util.TreeSet;
 
-
 public class FoodDao {
     
     private Database database;
@@ -23,6 +22,7 @@ public class FoodDao {
     private PreparedFoodDao preparedFoods;
     private Connection conn;
     
+
     public FoodDao(Database database) throws SQLException {
         this.database = database;
         this.converter = new LocalDateConverter();
@@ -64,7 +64,6 @@ public class FoodDao {
         allFoods.addAll(ingredientes);
         return allFoods;
     }
-    
     
     public List<FoodIngredient> findAllIngredients() throws SQLException {
         connectIfNoConnection();
@@ -155,14 +154,13 @@ public class FoodDao {
         return list;
     }
     
-    //removes duplicates
+
     public Collection<String> sortedAll() throws SQLException {
         connectIfNoConnection();
         List<String> all = findAll();
         java.util.Collections.sort(all);
         return all;
     }
-    
     
     public int countAll() throws SQLException {
         connectIfNoConnection();

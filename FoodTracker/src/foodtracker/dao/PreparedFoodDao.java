@@ -9,11 +9,19 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ *
+ * @author terala
+ */
 public class PreparedFoodDao implements Dao<PreparedFood, Integer> {
     
     private Database database;
     private LocalDateConverter converter;
 
+    /**
+     *
+     * @param database
+     */
     public PreparedFoodDao(Database database) {
         this.database = database;
         this.converter = new LocalDateConverter();
@@ -58,6 +66,12 @@ public class PreparedFoodDao implements Dao<PreparedFood, Integer> {
     }
     
     //method for showing prepared foods that are expiring soon
+
+    /**
+     *
+     * @return
+     * @throws SQLException
+     */
     public List<PreparedFood> findAllExpiringSoon() throws SQLException {
         Connection connection = database.getConnection();
         PreparedStatement stmt = connection.prepareStatement("SELECT * FROM FoodItem WHERE foodType = 'prepared'");
@@ -78,6 +92,11 @@ public class PreparedFoodDao implements Dao<PreparedFood, Integer> {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
     
+    /**
+     *
+     * @param food
+     * @throws SQLException
+     */
     public void addToDatabase(PreparedFood food) throws SQLException {
         Connection conn = DriverManager.getConnection("jdbc:sqlite:food.db");
         PreparedStatement stmt = conn.prepareStatement("INSERT INTO FoodItem (name, foodType, quantity, quantityType, expirationDate, dateAdded, opened) VALUES (?, ?, ?, ?, ?, ?, ?)");
@@ -100,6 +119,11 @@ public class PreparedFoodDao implements Dao<PreparedFood, Integer> {
         conn.close();
     }
     
+    /**
+     *
+     * @return
+     * @throws SQLException
+     */
     public List<String> allPreparedInString() throws SQLException {
         List<String> list = new ArrayList<>();
         List<PreparedFood> prepared = findAll();

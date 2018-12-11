@@ -11,6 +11,8 @@ import java.sql.*;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.application.Application;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -187,27 +189,22 @@ public class FoodTracker extends Application {
         
         //continue by making a list of what is Expiring today.
         Label expiringSoon = new Label("Expiring soon: ");
-        grid.add(expiringSoon, 0, 8);
+        grid.add(expiringSoon, 0, 9);
         GridPane expirationList = new GridPane();
-        grid.add(expirationList, 1, 9);
+        grid.add(expirationList, 1, 10);
         
-        int expiring = 0;
         List<PreparedFood> expiringPrepared = preparedFood.findAll();
         List<FreshFood> expiringFresh = allFoods.findAllFresh();
         
         for (int i = 0; i < expiringFresh.size(); i++) {
             Label ff = new Label(expiringFresh.get(i).toString());
-            expirationList.add(ff, 0, i + expiring);
+            expirationList.add(ff, 0, i);
         }
         
-        GridPane allfoodsgp = new GridPane();
-        grid.add(allfoodsgp, 6, 2);
+        
+        
         List<String> all = new ArrayList<>();
         all.addAll(allFoods.findAll());
-//        for (int i = 0; i < all.size(); i++) {
-//            Label lb = new Label(all.get(i));
-//            allfoodsgp.add(lb, 0, i + 1);
-//        }
  
         TableView table = new TableView();
         table.setEditable(true);
@@ -232,7 +229,7 @@ public class FoodTracker extends Application {
         
         Button btn = new Button();
         btn.setText("Add a food to the database");
-        grid.add(btn, 1, 7);
+        grid.add(btn, 1, 6);
         
         btn.setOnAction(new EventHandler<ActionEvent>() {
 //            
@@ -285,6 +282,28 @@ public class FoodTracker extends Application {
                 
                     
                 
+            }
+        });
+        
+        Label labelDelete = new Label("Delete by id: ");
+        TextField textFieldDelete = new TextField();
+        textFieldDelete.setPrefWidth(20);
+        Button delete = new Button();
+        delete.setText("Delete");
+        grid.add(labelDelete, 0, 8);
+        grid.add(textFieldDelete, 1, 8);
+        grid.add(delete, 2, 8);
+        
+        delete.setOnAction(new EventHandler<ActionEvent>() {
+            @Override public void handle(ActionEvent e) {
+                int id = Integer.parseInt(textFieldDelete.getText());
+                try {
+                    if (!(id > allFoods.countAll())) {
+                        allFoods.delete(id);
+                    }
+                } catch (SQLException ex) {
+                    Logger.getLogger(FoodTracker.class.getName()).log(Level.SEVERE, null, ex);
+                }
             }
         });
         
