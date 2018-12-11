@@ -20,6 +20,8 @@ import org.junit.Test;
  */
 public class PreparedFoodTest {
     private PreparedFood pf;
+    private PreparedFood pf2;
+    private PreparedFood pf3;
     private LocalDateConverter converter;
     
     public PreparedFoodTest() {
@@ -35,9 +37,13 @@ public class PreparedFoodTest {
         String quantityType = "pieces";
         LocalDate expirationDate = LocalDate.of(2018, 12, 12);
         LocalDate dateAdded = LocalDate.now();
+        LocalDate expirationSmaller = LocalDate.of(2018, 10, 10);
+        LocalDate expirationBigger = LocalDate.of(2018, 12, 20);
         Boolean opened = false;
         
         pf = new PreparedFood(id, name, foodType, quantity, quantityType, expirationDate, dateAdded, opened);
+        pf2 = new PreparedFood(id, name, foodType, quantity, quantityType, expirationSmaller, dateAdded, opened);
+        pf3 = new PreparedFood(id, name, foodType, quantity, quantityType, expirationBigger, dateAdded, opened);
     }
 
     // TODO add test methods here.
@@ -98,6 +104,21 @@ public class PreparedFoodTest {
         pf.open();
         Assert.assertEquals(true, pf.isOpened());
         
+    }
+    
+    @Test
+    public void testCompare1() {
+        Assert.assertEquals(0, pf.compareTo(pf));
+    }
+    
+    @Test
+    public void testCompare2() {
+        Assert.assertEquals(true, pf.compareTo(pf2) > 0);
+    }
+    
+    @Test
+    public void testCompare3() {
+        Assert.assertEquals(true, pf.compareTo(pf3) < 0);
     }
     
     

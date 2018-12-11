@@ -31,8 +31,8 @@ public class PreparedFood extends Food implements Comparable<PreparedFood> {
         LocalDateConverter converter = new LocalDateConverter();
         return super.getName() + " " + super.getQuantity() + " " + super.getQuantityType() + " " + converter.dateToString(super.getDateAdded()) + " - "  + converter.dateToString(getExpirationDate());
     }
-    
-    public int compareTo0(PreparedFood o) {
+    @Override
+    public int compareTo(PreparedFood o) {
         int cmp = (expirationDate.getYear() - o.getExpirationDate().getYear());
         if (cmp == 0) {
             cmp = (expirationDate.getMonthValue() - o.getExpirationDate().getMonthValue());
@@ -42,11 +42,4 @@ public class PreparedFood extends Food implements Comparable<PreparedFood> {
         }
         return cmp;
     }
-
-    @Override
-    public int compareTo(PreparedFood o) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-    
-    
 }

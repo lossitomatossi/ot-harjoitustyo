@@ -25,7 +25,7 @@ public class FoodIngredientTest {
     
     @Test
     public void toStringWorks() {
-        Assert.assertEquals("Ingredient: pepper 10 gram added: " +  LocalDate.of(420, Month.APRIL, 20), fi.toString());
+        Assert.assertEquals("pepper 10 gram added: " +  LocalDate.of(420, Month.APRIL, 20), fi.toString());
     }
 
     // TODO add test methods here.

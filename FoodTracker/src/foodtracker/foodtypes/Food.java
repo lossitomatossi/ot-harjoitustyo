@@ -10,7 +10,13 @@ public abstract class Food {
     protected int quantity;
     protected String quantityType;
     protected LocalDate dateAdded;
+//    private LocalDate expirationDate;
+//    private Boolean opened;
 
+    
+    //if foodType = fresh, no expiration or opened
+    //if foodType = prepared, expiration and opened
+    //if foodType = ingredient, same as expiration
     public Food(int id, String name, String foodType, int quantity, String quantityType, LocalDate dateAdded) {
         this.id = id;
         this.name = name;

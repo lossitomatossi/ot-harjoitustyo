@@ -1,8 +1,6 @@
 package foodtracker.ui;
 
 import foodtracker.dao.FoodDao;
-import foodtracker.dao.FoodIngredientDao;
-import foodtracker.dao.FreshFoodDao;
 import foodtracker.dao.PreparedFoodDao;
 import foodtracker.foodtypes.FreshFood;
 import foodtracker.foodtypes.PreparedFood;
@@ -32,12 +30,13 @@ import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.event.*;
 import javafx.geometry.Pos;
-import javafx.scene.control.ListView;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
-import javafx.scene.layout.Priority;
-import javafx.scene.layout.VBox;
+import javafx.scene.layout.HBox;
 
+
+
+//HBox ja BorderPane
 public class FoodTracker extends Application {
 
     @Override
@@ -45,8 +44,7 @@ public class FoodTracker extends Application {
         Database database = new Database("jdbc:sqlite:food.db");
         FoodDao allFoods = new FoodDao(database);
         PreparedFoodDao preparedFood = new PreparedFoodDao(database);
-        FreshFoodDao freshFood = new FreshFoodDao(database);
-        FoodIngredientDao foodIngredient = new FoodIngredientDao(database);
+        //FreshFoodDao freshFood = new FreshFoodDao(database);
         LocalDateConverter converter = new LocalDateConverter();
         
         GridPane grid = new GridPane();
@@ -195,7 +193,7 @@ public class FoodTracker extends Application {
         
         int expiring = 0;
         List<PreparedFood> expiringPrepared = preparedFood.findAll();
-        List<FreshFood> expiringFresh = freshFood.findAll();
+        List<FreshFood> expiringFresh = allFoods.findAllFresh();
         
         for (int i = 0; i < expiringFresh.size(); i++) {
             Label ff = new Label(expiringFresh.get(i).toString());
@@ -226,7 +224,8 @@ public class FoodTracker extends Application {
         
         table.getColumns().addAll(columnName, columnFoodType, columnAmount, columnAmountType,
                 columnDateAdded, columnExpiration);
-        grid.add(table, 6, 2);
+        table.setMinSize(400, 400);
+//        grid.add(table, 6, 2);
                 
         
         
@@ -265,18 +264,18 @@ public class FoodTracker extends Application {
                     } else if (foodTypeString.equals("fresh")) {
                         FreshFood freshToAdd = new FreshFood(allFoods.findAll().size(), textFieldFoodName.getText(), foodTypeString, amountOfFood, quantityType, LocalDate.now());
                         System.out.println(freshToAdd.toString());
-                        freshFood.addToDatabase(freshToAdd);
-                        if (expiringFresh.size() < freshFood.findAll().size()) {
-                            int beginningSize = expiringFresh.size();
-                            List<FreshFood> test = freshFood.findAll();
-                            for (int i = beginningSize; i < test.size(); i++) {
-                            Label ff = new Label(test.get(i).toString());
-                            expirationList.add(ff, 0, i + beginningSize);
-                        }
-                        }
+                        allFoods.addFreshToDatabase(freshToAdd);
+//                        if (expiringFresh.size() < allFoods.findAll().size()) {
+//                            int beginningSize = expiringFresh.size();
+//                            List<FreshFood> test = freshFood.findAll();
+//                            for (int i = beginningSize; i < test.size(); i++) {
+//                            Label ff = new Label(test.get(i).toString());
+//                            expirationList.add(ff, 0, i + beginningSize);
+//                        }
+//                        }
                     } else {
                         FoodIngredient ingredientToAdd = new FoodIngredient(19, textFieldFoodName.getText(), foodTypeString, amountOfFood, quantityType, expiration.getValue(), LocalDate.now());
-                        foodIngredient.addToDatabase(ingredientToAdd);
+                        allFoods.addIngredientToDatabase(ingredientToAdd);
                     }
 
                     } catch (Exception e) {
@@ -303,9 +302,14 @@ public class FoodTracker extends Application {
 //            }
 //        });
         //for showing the application
+        
+        HBox hbox = new HBox();
         StackPane root = new StackPane();
-        root.getChildren().add(grid);
-        root.setAlignment(grid, Pos.TOP_LEFT);
+        root.getChildren().add(hbox);
+        
+        hbox.getChildren().add(grid);
+        hbox.getChildren().add(table);
+        
 //        root.getChildren().add(table);
 //        root.setAlignment(table, Pos.TOP_RIGHT);
         
