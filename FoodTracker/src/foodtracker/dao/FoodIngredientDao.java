@@ -51,7 +51,7 @@ public class FoodIngredientDao implements Dao<FoodIngredient, Integer> {
             LocalDate expirationDate = converter.stringToDate(rs.getString("expirationDate"));
             String dateAdded = rs.getString("dateAdded");
             FoodIngredient freshToAdd = new FoodIngredient(rs.getInt("id"), rs.getString("name"), rs.getString("foodType"), rs.getInt("quantity"), rs.getString("quantityType"), converter.stringToDate(dateAdded), expirationDate);
-            System.out.println("Added the following ingredient to the list of ingredients: " + freshToAdd.toString());
+            System.out.println("Found the following ingredient from the database: " + freshToAdd.toString());
             ingredients.add(freshToAdd);
         }
         rs.close();

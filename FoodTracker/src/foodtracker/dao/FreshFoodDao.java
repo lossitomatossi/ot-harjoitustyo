@@ -46,7 +46,7 @@ public class FreshFoodDao implements Dao<FreshFood, Integer> {
         while (rs.next()) {
             String dateAdded = rs.getString("dateAdded");
             FreshFood freshToAdd = new FreshFood(rs.getInt("id"), rs.getString("name"), rs.getString("foodType"), rs.getInt("quantity"), rs.getString("quantityType"), converter.stringToDate(dateAdded));
-            System.out.println("Added the following fresh food to the list of fresh foods:" + freshToAdd.toString());
+            System.out.println("Found the following fresh food from the database: " + freshToAdd.toString());
             freshFoods.add(freshToAdd);
         }
         rs.close();
@@ -82,7 +82,6 @@ public class FreshFoodDao implements Dao<FreshFood, Integer> {
         stmt.setString(4, food.getQuantityType());
         stmt.setString(5, converter.dateToString(food.getDateAdded()));
         stmt.executeUpdate();
-        System.out.println("FreshFoods adding works" + converter.dateToString(food.getDateAdded()));
         
         conn.close();
     }

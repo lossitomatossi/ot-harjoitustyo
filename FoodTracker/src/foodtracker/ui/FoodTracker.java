@@ -52,10 +52,10 @@ public class FoodTracker extends Application {
         GridPane grid = new GridPane();
         grid.setHgap(10);
         grid.setVgap(10);
-        VBox menuLeft = new VBox();
-        grid.add(menuLeft, 1, 1);
-        VBox menuRight = new VBox();
-        grid.add(menuRight, 1, 2);
+//        VBox menuLeft = new VBox();
+//        grid.add(menuLeft, 1, 1);
+//        VBox menuRight = new VBox();
+//        grid.add(menuRight, 2, 1);
         
         //Top text for the application
         Text sceneTitle = new Text("Welcome to FoodTracker!");
@@ -67,19 +67,22 @@ public class FoodTracker extends Application {
 //        grid.add(numberOfFoods, 1, 0);
         
         //food item data gathering
-        Label lbFoodName = new Label("Food item:");
-        menuLeft.getChildren().add(lbFoodName);
-        grid.add(lbFoodName, 0, 1);
-        TextField tfFoodName = new TextField();
-        menuRight.getChildren().add(tfFoodName);
+        Label labelFoodName = new Label("Food item:");
+        grid.add(labelFoodName, 0, 1);
+//        menuLeft.getChildren().add(lbFoodName);
+        TextField textFieldFoodName = new TextField();
+        grid.add(textFieldFoodName, 1, 1);
+//        menuRight.getChildren().add(tfFoodName);
         
         
         //food quantity data gathering
-        Label lbQuantity = new Label("Quantity of food item:");
-        menuLeft.getChildren().add(lbQuantity);
-        menuLeft.getChildren().add(new Label("Paskaa"));
-        TextField tfQuantity = new TextField();
-        menuRight.getChildren().add(tfQuantity);
+        Label labelQuantity = new Label("Quantity of food item:");
+        grid.add(labelQuantity, 0, 2);
+//        menuLeft.getChildren().add(lbQuantity);
+//        menuLeft.getChildren().add(new Label("Paskaa"));
+        TextField textFieldQuantity = new TextField();
+        grid.add(textFieldQuantity, 1, 2);
+//        menuRight.getChildren().add(tfQuantity);
         
         //limits the textField only to contain Integers
         /* the one below is for doubles 
@@ -95,11 +98,11 @@ public class FoodTracker extends Application {
 
         
         */
-        tfQuantity.textProperty().addListener(new ChangeListener<String>() {
+        textFieldQuantity.textProperty().addListener(new ChangeListener<String>() {
             @Override
             public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
                 if (!newValue.matches("\\d*")) {
-                    tfQuantity.setText(newValue.replaceAll("[^\\d]", ""));
+                    textFieldQuantity.setText(newValue.replaceAll("[^\\d]", ""));
                 }
             }
         });
@@ -223,7 +226,7 @@ public class FoodTracker extends Application {
         
         table.getColumns().addAll(columnName, columnFoodType, columnAmount, columnAmountType,
                 columnDateAdded, columnExpiration);
-//        grid.add(table, 6, 2);
+        grid.add(table, 6, 2);
                 
         
         
@@ -238,29 +241,29 @@ public class FoodTracker extends Application {
             public void handle(ActionEvent event) {
 //                System.out.println("nappia painettu");
             //alert for numberfield being empty
-                if (tfQuantity.getText().isEmpty()) {
+                if (textFieldQuantity.getText().isEmpty()) {
                     AlertMessage numberAlert = new AlertMessage("Input error", "Input a number for food quantity", "This field doesn't accept symbols other than numbers");
                 }
-                if (tfFoodName.getText().isEmpty()) {
+                if (textFieldFoodName.getText().isEmpty()) {
                     AlertMessage nameAlert = new AlertMessage("Input error", "Input a name for the food", "The food field seems to be empty");
                 }
-                if (tfFoodName.getText().length() > 50) {
-                    int length = tfFoodName.getText().length();
+                if (textFieldFoodName.getText().length() > 50) {
+                    int length = textFieldFoodName.getText().length();
                     AlertMessage foodNameTooLong = new AlertMessage("Input error", "The name for the food is too long", "Try to reduce the length of your foodItem to under 50 characters, now it is: " + length + " characters long");
                 }
                 //add an alertmessage to notify the user that they havent selected the foodtype.
                 
                 try {
                     System.out.println("try lauseen sisällä käyty");
-                    int amountOfFood = Integer.parseInt(tfQuantity.getText());
+                    int amountOfFood = Integer.parseInt(textFieldQuantity.getText());
                     String quantityType = toggler.getSelectedToggle().getUserData().toString();
                     String foodTypeString = foodType.getSelectedToggle().getUserData().toString();
                     System.out.println(foodTypeString);
                     if (foodTypeString.equals("prepared")) {
-                        PreparedFood preparedToAdd = new PreparedFood(allFoods.findAll().size(), tfFoodName.getText(), foodTypeString, amountOfFood, quantityType, expiration.getValue(), LocalDate.now(), false);
+                        PreparedFood preparedToAdd = new PreparedFood(allFoods.findAll().size(), textFieldFoodName.getText(), foodTypeString, amountOfFood, quantityType, expiration.getValue(), LocalDate.now(), false);
                         preparedFood.addToDatabase(preparedToAdd);
                     } else if (foodTypeString.equals("fresh")) {
-                        FreshFood freshToAdd = new FreshFood(allFoods.findAll().size(), tfFoodName.getText(), foodTypeString, amountOfFood, quantityType, LocalDate.now());
+                        FreshFood freshToAdd = new FreshFood(allFoods.findAll().size(), textFieldFoodName.getText(), foodTypeString, amountOfFood, quantityType, LocalDate.now());
                         System.out.println(freshToAdd.toString());
                         freshFood.addToDatabase(freshToAdd);
                         if (expiringFresh.size() < freshFood.findAll().size()) {
@@ -272,7 +275,7 @@ public class FoodTracker extends Application {
                         }
                         }
                     } else {
-                        FoodIngredient ingredientToAdd = new FoodIngredient(19, tfFoodName.getText(), foodTypeString, amountOfFood, quantityType, expiration.getValue(), LocalDate.now());
+                        FoodIngredient ingredientToAdd = new FoodIngredient(19, textFieldFoodName.getText(), foodTypeString, amountOfFood, quantityType, expiration.getValue(), LocalDate.now());
                         foodIngredient.addToDatabase(ingredientToAdd);
                     }
 
@@ -303,14 +306,15 @@ public class FoodTracker extends Application {
         StackPane root = new StackPane();
         root.getChildren().add(grid);
         root.setAlignment(grid, Pos.TOP_LEFT);
-        root.getChildren().add(table);
-        root.setAlignment(table, Pos.TOP_RIGHT);
+//        root.getChildren().add(table);
+//        root.setAlignment(table, Pos.TOP_RIGHT);
         
         
         Scene scene = new Scene(root, 800, 800);
         
         primaryStage.setTitle("FoodTracker");
         primaryStage.setScene(scene);
+        primaryStage.setMaximized(true);
         primaryStage.show();
     }
 

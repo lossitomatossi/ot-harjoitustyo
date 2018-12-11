@@ -49,7 +49,7 @@ public class PreparedFoodDao implements Dao<PreparedFood, Integer> {
             LocalDate expirationDate = converter.stringToDate(rs.getString("expirationDate"));
             PreparedFood pf = new PreparedFood(rs.getInt("id"), rs.getString("name"), rs.getString("foodType"), rs.getInt("quantity"), rs.getString("quantityType"), expirationDate, dateAdded, rs.getBoolean("opened"));
             preparedFoods.add(pf);
-            System.out.println("Added the following prepared food to the list of fresh foods:" + pf.toString());
+            System.out.println("Found the following prepared food from the database: " + pf.toString());
         }
         rs.close();
         stmt.close();
@@ -96,7 +96,6 @@ public class PreparedFoodDao implements Dao<PreparedFood, Integer> {
         stmt.setString(6, converter.dateToString(LocalDate.now()));
         stmt.setBoolean(7, food.isOpened());
         stmt.executeUpdate();
-        System.out.println("preparedfooddao addtodatabase metodin loppuosassa käyty");
         
         conn.close();
     }
