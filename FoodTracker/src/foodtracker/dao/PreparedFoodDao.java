@@ -100,4 +100,13 @@ public class PreparedFoodDao implements Dao<PreparedFood, Integer> {
         
         conn.close();
     }
+    
+    public List<String> allPreparedInString() throws SQLException {
+        List<String> list = new ArrayList<>();
+        List<PreparedFood> prepared = findAll();
+        for (int i = 0; i < prepared.size(); i++) {
+            list.add(prepared.get(i).toString());
+        }
+        return list;
+    }
 }

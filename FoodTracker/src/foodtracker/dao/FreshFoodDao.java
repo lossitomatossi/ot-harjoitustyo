@@ -5,7 +5,6 @@ import foodtracker.database.Database;
 import foodtracker.utilities.LocalDateConverter;
 import java.sql.*;
 import java.sql.SQLException;
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -86,5 +85,14 @@ public class FreshFoodDao implements Dao<FreshFood, Integer> {
         System.out.println("FreshFoods adding works" + converter.dateToString(food.getDateAdded()));
         
         conn.close();
+    }
+    
+    public List<String> allFreshInString() throws SQLException {
+        List<String> list = new ArrayList<>();
+        List<FreshFood> fresh = findAll();
+        for (int i = 0; i < fresh.size(); i++) {
+            list.add(fresh.get(i).toString());
+        }
+        return list;
     }
 }

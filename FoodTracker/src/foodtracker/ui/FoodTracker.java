@@ -1,11 +1,13 @@
 package foodtracker.ui;
 
 import foodtracker.dao.FoodDao;
+import foodtracker.dao.FoodIngredientDao;
 import foodtracker.dao.FreshFoodDao;
 import foodtracker.dao.PreparedFoodDao;
 import foodtracker.foodtypes.FreshFood;
 import foodtracker.foodtypes.PreparedFood;
 import foodtracker.database.Database;
+import foodtracker.foodtypes.FoodIngredient;
 import foodtracker.utilities.LocalDateConverter;
 import java.sql.*;
 import java.time.LocalDate;
@@ -29,9 +31,9 @@ import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.event.*;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Alert.AlertType;
-import javafx.scene.control.ButtonType;
+import javafx.scene.control.ListView;
+import javafx.scene.layout.Priority;
+import javafx.scene.layout.VBox;
 
 public class FoodTracker extends Application {
 
@@ -41,6 +43,7 @@ public class FoodTracker extends Application {
         FoodDao allFoods = new FoodDao(database);
         PreparedFoodDao preparedFood = new PreparedFoodDao(database);
         FreshFoodDao freshFood = new FreshFoodDao(database);
+        FoodIngredientDao foodIngredient = new FoodIngredientDao(database);
         LocalDateConverter converter = new LocalDateConverter();
         
         GridPane grid = new GridPane();
@@ -51,6 +54,10 @@ public class FoodTracker extends Application {
         Text sceneTitle = new Text("Welcome to FoodTracker!");
         sceneTitle.setFont(Font.font("Tahoma", FontWeight.SEMI_BOLD, 20));
         grid.add(sceneTitle, 0, 0, 2, 1);
+        
+//        Text numberOfFoods = new Text("(currently tracking " + allFoods.countAll() + " foods)");
+//        numberOfFoods.setFont(Font.font("Tahoma", FontWeight.SEMI_BOLD, 10));
+//        grid.add(numberOfFoods, 1, 0);
         
         //food item data gathering
         Label foodNameLb = new Label("Food item:");
@@ -144,6 +151,7 @@ public class FoodTracker extends Application {
         RadioButton fresh = new RadioButton("fresh");
         fresh.setUserData("fresh");
         fresh.setToggleGroup(foodType);
+        fresh.setSelected(true);
         grid.add(fresh, 0, 4);
         RadioButton prepared = new RadioButton("prepared");
         prepared.setUserData("prepared");
@@ -182,13 +190,30 @@ public class FoodTracker extends Application {
             expirationList.add(ff, 0, i + expiring);
         }
         
-//        List<Object> kaikki = new ArrayList<>();
-//        kaikki.addAll(expiringFresh);
-//        kaikki.addAll(expiringPrepared);
-//        for (int i = 0; i < kaikki.size(); i++) {
-//            Label ff = new Label(kaikki.get(i).toString());
-//            expirationList.add(ff, 0, i + expiring);
+        GridPane allfoodsgp = new GridPane();
+        grid.add(allfoodsgp, 6, 2);
+        List<String> all = new ArrayList<>();
+        all.addAll(allFoods.findAll());
+//        for (int i = 0; i < all.size(); i++) {
+//            Label lb = new Label(all.get(i));
+//            allfoodsgp.add(lb, 0, i + 1);
 //        }
+        
+        //VBox containing all foods in a list grouped by their foodType
+        VBox vbox = new VBox(8);
+        ListView<String> lvTest = new ListView<String>();
+        lvTest.getItems().addAll(all);
+        vbox.setVgrow(lvTest, Priority.ALWAYS);
+        vbox.getChildren().addAll(new Label("Tracked items: " + allFoods.countAll()), lvTest);
+        grid.add(vbox, 10, 2);
+        
+        //VBox with the same information minus duplicates
+        VBox collectionTest = new VBox();
+        ListView<String> sorted = new ListView<String>();
+        sorted.getItems().addAll(allFoods.sortedAll());
+        collectionTest.setVgrow(sorted, Priority.ALWAYS);
+        collectionTest.getChildren().addAll(new Label("Alphabetical order: "), sorted);
+        grid.add(collectionTest, 12, 2);
                 
         Button btn = new Button();
         btn.setText("Add a food to the database");
@@ -219,15 +244,11 @@ public class FoodTracker extends Application {
                     String foodTypeString = foodType.getSelectedToggle().getUserData().toString();
                     System.out.println(foodTypeString);
                     if (foodTypeString.equals("prepared")) {
-                        System.out.println("11111");
                         PreparedFood preparedToAdd = new PreparedFood(allFoods.findAll().size(), foodNameTf.getText(), foodTypeString, amountOfFood, quantityType, expiration.getValue(), LocalDate.now(), false);
-                        System.out.println("222222");
                         preparedFood.addToDatabase(preparedToAdd);
                     } else if (foodTypeString.equals("fresh")) {
-                        System.out.println("3333333");
                         FreshFood freshToAdd = new FreshFood(allFoods.findAll().size(), foodNameTf.getText(), foodTypeString, amountOfFood, quantityType, LocalDate.now());
                         System.out.println(freshToAdd.toString());
-                        System.out.println("4444444");
                         freshFood.addToDatabase(freshToAdd);
                         if (expiringFresh.size() < freshFood.findAll().size()) {
                             int beginningSize = expiringFresh.size();
@@ -237,6 +258,9 @@ public class FoodTracker extends Application {
                             expirationList.add(ff, 0, i + beginningSize);
                         }
                         }
+                    } else {
+                        FoodIngredient ingredientToAdd = new FoodIngredient(19, foodNameTf.getText(), foodTypeString, amountOfFood, quantityType, expiration.getValue(), LocalDate.now());
+                        foodIngredient.addToDatabase(ingredientToAdd);
                     }
 
                     } catch (Exception e) {
@@ -248,6 +272,9 @@ public class FoodTracker extends Application {
                 
             }
         });
+        
+        //List of all the foods in string format and in labels
+        
         
        
 //        Button btn = new Button();
@@ -263,7 +290,7 @@ public class FoodTracker extends Application {
         StackPane root = new StackPane();
         root.getChildren().add(grid);
         
-        Scene scene = new Scene(root, 600, 500);
+        Scene scene = new Scene(root, 800, 800);
         
         primaryStage.setTitle("FoodTracker");
         primaryStage.setScene(scene);

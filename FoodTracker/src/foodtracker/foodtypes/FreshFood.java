@@ -2,7 +2,6 @@ package foodtracker.foodtypes;
 
 import foodtracker.utilities.LocalDateConverter;
 import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 
 
 public class FreshFood extends Food {
