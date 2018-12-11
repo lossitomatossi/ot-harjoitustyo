@@ -23,6 +23,7 @@ Ohjelma myös ilmoittaa käyttäjälle jos jossain kentässä on virheellistä t
 # Releaset
 
 [Viikko5](https://github.com/lossitomatossi/ot-harjoitustyo/releases/tag/viikko5)
+
 [Viikko6](https://github.com/lossitomatossi/ot-harjoitustyo/releases/tag/Viikko6)
 
 # Komentorivitoiminnot
