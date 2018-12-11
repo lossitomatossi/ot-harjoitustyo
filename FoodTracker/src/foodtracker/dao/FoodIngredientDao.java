@@ -51,7 +51,7 @@ public class FoodIngredientDao implements Dao<FoodIngredient, Integer> {
             LocalDate expirationDate = converter.stringToDate(rs.getString("expirationDate"));
             String dateAdded = rs.getString("dateAdded");
             FoodIngredient freshToAdd = new FoodIngredient(rs.getInt("id"), rs.getString("name"), rs.getString("foodType"), rs.getInt("quantity"), rs.getString("quantityType"), converter.stringToDate(dateAdded), expirationDate);
-            System.out.println("Added the following fresh food to the list of fresh foods:" + freshToAdd.toString());
+            System.out.println("Added the following ingredient to the list of ingredients: " + freshToAdd.toString());
             ingredients.add(freshToAdd);
         }
         rs.close();
@@ -83,9 +83,9 @@ public class FoodIngredientDao implements Dao<FoodIngredient, Integer> {
         stmt.setInt(3, ingredient.getQuantity());
         stmt.setString(4, ingredient.getQuantityType());
         stmt.setString(5, converter.dateToString(ingredient.getDateAdded()));
-        stmt.setString(6, converter.dateToString(ingredient.getDateAdded()));
+        stmt.setString(6, converter.dateToString(ingredient.getExpirationDate()));
         stmt.executeUpdate();
-        System.out.println("FreshFoods adding works" + converter.dateToString(ingredient.getDateAdded()));
+        System.out.println("Ingredient adding works" + converter.dateToString(ingredient.getDateAdded()));
         
         conn.close();
     }

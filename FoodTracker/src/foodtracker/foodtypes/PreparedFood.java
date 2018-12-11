@@ -5,7 +5,7 @@ import foodtracker.utilities.LocalDateConverter;
 import java.time.LocalDate;
 
 
-public class PreparedFood extends Food {
+public class PreparedFood extends Food implements Comparable<PreparedFood> {
     private LocalDate expirationDate;
     private boolean opened;
 
@@ -30,6 +30,22 @@ public class PreparedFood extends Food {
     public String toString() {
         LocalDateConverter converter = new LocalDateConverter();
         return super.getName() + " " + super.getQuantity() + " " + super.getQuantityType() + " " + converter.dateToString(super.getDateAdded()) + " - "  + converter.dateToString(getExpirationDate());
+    }
+    
+    public int compareTo0(PreparedFood o) {
+        int cmp = (expirationDate.getYear() - o.getExpirationDate().getYear());
+        if (cmp == 0) {
+            cmp = (expirationDate.getMonthValue() - o.getExpirationDate().getMonthValue());
+            if (cmp == 0) {
+                cmp = (expirationDate.getDayOfMonth() - o.getExpirationDate().getDayOfMonth());
+            }
+        }
+        return cmp;
+    }
+
+    @Override
+    public int compareTo(PreparedFood o) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
     
     
