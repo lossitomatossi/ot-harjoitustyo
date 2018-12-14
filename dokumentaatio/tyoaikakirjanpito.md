@@ -8,6 +8,7 @@
 | 23.11 | 2   | jdbc fixejä ja tietokantaan lisäyksen toteutus |
 | 27.11 | 6.5 | jbdc fixejä lisää, jacoco, checkstyle, testit, lisää luokkia, arkkitehtuurikuvaus karkeasti |
 | 3.12  | .5  | muutin tietokannan date osat varchar tyyppisiksi |
-| 4.12  | 9.5   | korjasin tietokantaan yhteydenoton, checkstyle korjauksia, lisää testejä, lisää luokkia, alertit kertomaan käyttäjälle jos tietokenttiä on tyhjänä, sekvenssikaavio freshfood lisäämiselle |
-| 11.12 | 9  | poistin turhia Dao luokkia, javadoc aloitettu, aloitin listView tekemisen, lisää testejä, muokkasin testien tietokannan kuormittavuutta jne |
-| yht   | 35  | projekti ok vaiheessa |
+| 4.12  | 9.5 | korjasin tietokantaan yhteydenoton, checkstyle korjauksia, lisää testejä, lisää luokkia, alertit kertomaan käyttäjälle jos tietokenttiä on tyhjänä, sekvenssikaavio freshfood lisäämiselle |
+| 11.12 | 9   | poistin turhia Dao luokkia, javadoc aloitettu, aloitin listView tekemisen, lisää testejä, muokkasin testien tietokannan kuormittavuutta jne |
+| 13.12 | 1   | dao luokkien poisto jatkui, lisää testejä
+| yht   | 36  | projekti ok vaiheessa |
