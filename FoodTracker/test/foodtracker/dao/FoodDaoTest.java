@@ -6,6 +6,7 @@ import foodtracker.foodtypes.FreshFood;
 import foodtracker.utilities.LocalDateConverter;
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -131,20 +132,22 @@ public class FoodDaoTest {
         allFoods.connectIfNoConnection();
         Assert.assertEquals(false, conn.isClosed());
     }
-//    @Test
-//    public void addFreshToDatabaseTest() throws SQLException {
-//        FreshFood sitruuna = new FreshFood(99999, "sitruuna", "fresh", 69, "pieces", LocalDate.now());
-//        allFoods.addFreshToDatabase(sitruuna);
-//        FreshFood haettuSitruuna = allFoods.findOneFresh(99999);
-//        Assert.assertEquals(sitruuna.toString(), haettuSitruuna.toString());
-//    }
-//    
-//    @Test
-//    public void addFreshToDatabaseTest2() throws SQLException {
-//        FreshFood sitruuna = new FreshFood(999, "sitruuna", "fresh", 69, "pieces", LocalDate.now());
-//        allFoods.addFreshToDatabase(sitruuna);
-//        FreshFood haettuSitruuna = allFoods.findOneFresh(99999);
-//        Assert.assertEquals("fresh", haettuSitruuna.getFoodType());
-//    }
+    @Test
+    public void addFreshToDatabaseTest() throws SQLException {
+        FreshFood sitruuna = new FreshFood(99999, "sitruuna", "fresh", 69, "pieces", LocalDate.now());
+        allFoods.addFreshWithId(sitruuna, 99999);
+        FreshFood haettuSitruuna = allFoods.findOneFresh(99999);
+        allFoods.delete(99999);
+        Assert.assertEquals(sitruuna.toString(), haettuSitruuna.toString());
+    }
+    
+    @Test
+    public void addFreshToDatabaseTest2() throws SQLException {
+        FreshFood sitruuna = new FreshFood(99999, "sitruuna", "fresh", 69, "pieces", LocalDate.now());
+        allFoods.addFreshWithId(sitruuna, 99999);
+        FreshFood haettuSitruuna = allFoods.findOneFresh(99999);
+        allFoods.delete(99999);
+        Assert.assertEquals("fresh", haettuSitruuna.getFoodType());
+    }
 
 }

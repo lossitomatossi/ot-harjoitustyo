@@ -12,6 +12,9 @@ public class PreparedFood extends Food implements Comparable<PreparedFood> {
     public PreparedFood(int id, String name, String foodType, int quantity, String quantityType, LocalDate expirationDate, LocalDate dateAdded, boolean opened) {
         super(id, name, foodType, quantity, quantityType, dateAdded);
         this.expirationDate = expirationDate;
+        if (foodType.equals("ingredient")) {
+            this.opened = false;
+        }
         this.opened = opened;
     }
     public LocalDate getExpirationDate() {

@@ -1,7 +1,6 @@
 package foodtracker.ui;
 
 import foodtracker.dao.FoodDao;
-import foodtracker.dao.PreparedFoodDao;
 import foodtracker.foodtypes.FreshFood;
 import foodtracker.foodtypes.PreparedFood;
 import foodtracker.database.Database;
@@ -45,7 +44,6 @@ public class FoodTracker extends Application {
     public void start(Stage primaryStage) throws ClassNotFoundException, SQLException {
         Database database = new Database("jdbc:sqlite:food.db");
         FoodDao allFoods = new FoodDao(database);
-        PreparedFoodDao preparedFood = new PreparedFoodDao(database);
         //FreshFoodDao freshFood = new FreshFoodDao(database);
         LocalDateConverter converter = new LocalDateConverter();
         
@@ -193,7 +191,7 @@ public class FoodTracker extends Application {
         GridPane expirationList = new GridPane();
         grid.add(expirationList, 1, 10);
         
-        List<PreparedFood> expiringPrepared = preparedFood.findAll();
+        List<PreparedFood> expiringPrepared = allFoods.findAllExpiringSoon();
         List<FreshFood> expiringFresh = allFoods.findAllFresh();
         
         for (int i = 0; i < expiringFresh.size(); i++) {
@@ -223,6 +221,7 @@ public class FoodTracker extends Application {
                 columnDateAdded, columnExpiration);
         table.setMinSize(400, 400);
 //        grid.add(table, 6, 2);
+
                 
         
         
@@ -257,7 +256,7 @@ public class FoodTracker extends Application {
                     System.out.println(foodTypeString);
                     if (foodTypeString.equals("prepared")) {
                         PreparedFood preparedToAdd = new PreparedFood(allFoods.findAll().size(), textFieldFoodName.getText(), foodTypeString, amountOfFood, quantityType, expiration.getValue(), LocalDate.now(), false);
-                        preparedFood.addToDatabase(preparedToAdd);
+                        allFoods.addPreparedToDatabase(preparedToAdd);
                     } else if (foodTypeString.equals("fresh")) {
                         FreshFood freshToAdd = new FreshFood(allFoods.findAll().size(), textFieldFoodName.getText(), foodTypeString, amountOfFood, quantityType, LocalDate.now());
                         System.out.println(freshToAdd.toString());
@@ -347,6 +346,4 @@ public class FoodTracker extends Application {
     public static void main(String[] args) {
         launch(args);
     }
-    
-    
 }
