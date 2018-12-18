@@ -5,6 +5,7 @@ import foodtracker.foodtypes.FreshFood;
 import foodtracker.foodtypes.PreparedFood;
 import foodtracker.database.Database;
 import foodtracker.foodtypes.FoodIngredient;
+import foodtracker.foodtypes.TableFood;
 import foodtracker.utilities.LocalDateConverter;
 import java.sql.*;
 import java.time.LocalDate;
@@ -30,7 +31,6 @@ import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.event.*;
-import javafx.geometry.Pos;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.layout.HBox;
@@ -204,23 +204,30 @@ public class FoodTracker extends Application {
         List<String> all = new ArrayList<>();
         all.addAll(allFoods.findAll());
  
-        TableView table = new TableView();
+        TableView<TableFood> table = new TableView();
         table.setEditable(true);
         
         final Label label = new Label("Tracked Foods: ");
         label.setFont(new Font("Arial", 20));
         
-        TableColumn columnName = new TableColumn("Food");
-        TableColumn columnFoodType = new TableColumn("Type");
-        TableColumn columnAmount = new TableColumn("Amount");
-        TableColumn columnAmountType = new TableColumn("amountType");
-        TableColumn columnDateAdded = new TableColumn("Added");
-        TableColumn columnExpiration = new TableColumn("Expiration");
-        
-        table.getColumns().addAll(columnName, columnFoodType, columnAmount, columnAmountType,
-                columnDateAdded, columnExpiration);
-        table.setMinSize(400, 400);
-//        grid.add(table, 6, 2);
+//        TableColumn columnName = new TableColumn("Food");
+//        columnName.setCellValueFactory(
+//            new PropertyValueFactory<TableFood, String>("firstName"));
+//        TableColumn columnFoodType = new TableColumn("Type");
+//        TableColumn columnAmount = new TableColumn("Amount");
+//        TableColumn columnAmountType = new TableColumn("amountType");
+//        TableColumn columnDateAdded = new TableColumn("Added");
+//        TableColumn columnExpiration = new TableColumn("Expiration");
+//        
+//        table.getColumns().addAll(columnName, columnFoodType, columnAmount, columnAmountType,
+//                columnDateAdded, columnExpiration);
+//        table.setMinSize(400, 400);
+////        grid.add(table, 6, 2);
+//        List<PreparedFood> tableTest = allFoods.findAllPrepared();
+//        
+//        table.getItems().add(new TableFood(tableTest.get(0).getName(), tableTest.get(0).getFoodType(), 
+//                tableTest.get(0).getQuantity(), tableTest.get(0).getQuantityType(), 
+//                tableTest.get(0).getDateAdded(), tableTest.get(0).getExpirationDate()));
 
                 
         
