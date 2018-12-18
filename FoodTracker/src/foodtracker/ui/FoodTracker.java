@@ -5,10 +5,10 @@ import foodtracker.foodtypes.FreshFood;
 import foodtracker.foodtypes.PreparedFood;
 import foodtracker.database.Database;
 import foodtracker.foodtypes.FoodIngredient;
-import foodtracker.foodtypes.TableFood;
 import foodtracker.utilities.LocalDateConverter;
 import java.sql.*;
 import java.time.LocalDate;
+import java.time.Month;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
@@ -16,6 +16,8 @@ import java.util.logging.Logger;
 import javafx.application.Application;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.DatePicker;
@@ -33,12 +35,19 @@ import javafx.stage.Stage;
 import javafx.event.*;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.HBox;
 
 
 
 //HBox ja BorderPane
 public class FoodTracker extends Application {
+    private TableView<TableFood> table = new TableView<TableFood>();
+    private final ObservableList<TableFood> data =
+            FXCollections.observableArrayList(
+            new TableFood(1, "testinimi", "testityyppi", 13, "pcs", LocalDate.of(2018, Month.DECEMBER, 31), LocalDate.now()),
+            new TableFood(2, "testi2", "tyyppi2", 11, "pcs", LocalDate.now(), LocalDate.now())
+            );
 
     @Override
     public void start(Stage primaryStage) throws ClassNotFoundException, SQLException {
@@ -205,29 +214,50 @@ public class FoodTracker extends Application {
         all.addAll(allFoods.findAll());
  
         TableView<TableFood> table = new TableView();
-        table.setEditable(true);
+        table.setEditable(false);
         
         final Label label = new Label("Tracked Foods: ");
         label.setFont(new Font("Arial", 20));
         
-//        TableColumn columnName = new TableColumn("Food");
-//        columnName.setCellValueFactory(
-//            new PropertyValueFactory<TableFood, String>("firstName"));
-//        TableColumn columnFoodType = new TableColumn("Type");
-//        TableColumn columnAmount = new TableColumn("Amount");
-//        TableColumn columnAmountType = new TableColumn("amountType");
-//        TableColumn columnDateAdded = new TableColumn("Added");
-//        TableColumn columnExpiration = new TableColumn("Expiration");
+        TableColumn columnId = new TableColumn("Id");
+        columnId.setCellValueFactory(
+            new PropertyValueFactory<TableFood, String>("id"));
+        
+        TableColumn columnName = new TableColumn("Food");
+        columnName.setCellValueFactory(
+            new PropertyValueFactory<TableFood, String>("foodName"));
+        
+        TableColumn columnFoodType = new TableColumn("Type");
+        columnFoodType.setCellValueFactory(
+            new PropertyValueFactory<TableFood, String>("foodType"));
+        
+        TableColumn columnAmount = new TableColumn("Amount");
+        columnAmount.setCellValueFactory(
+            new PropertyValueFactory<TableFood, String>("quantity"));
+        
+        TableColumn columnAmountType = new TableColumn("amountType");
+        columnAmountType.setCellValueFactory(
+            new PropertyValueFactory<TableFood, String>("quantityType"));
+        
+        TableColumn columnDateAdded = new TableColumn("Added");
+        columnDateAdded.setCellValueFactory(
+            new PropertyValueFactory<TableFood, String>("added"));
+        
+        TableColumn columnExpiration = new TableColumn("Expiration");
+        columnExpiration.setCellValueFactory(
+            new PropertyValueFactory<TableFood, String>("expiration"));
+        
+        //funktio create columns
+        
+        table.setItems(data);
+        
+        table.getColumns().addAll(columnName, columnFoodType, columnAmount, columnAmountType,
+                columnDateAdded, columnExpiration);
+        table.setMinSize(400, 400);
+//        grid.add(table, 6, 2);
+//        List<TableFood> tableAll = allFoods.preparedToTable();
 //        
-//        table.getColumns().addAll(columnName, columnFoodType, columnAmount, columnAmountType,
-//                columnDateAdded, columnExpiration);
-//        table.setMinSize(400, 400);
-////        grid.add(table, 6, 2);
-//        List<PreparedFood> tableTest = allFoods.findAllPrepared();
-//        
-//        table.getItems().add(new TableFood(tableTest.get(0).getName(), tableTest.get(0).getFoodType(), 
-//                tableTest.get(0).getQuantity(), tableTest.get(0).getQuantityType(), 
-//                tableTest.get(0).getDateAdded(), tableTest.get(0).getExpirationDate()));
+//        table.getItems().addAll(tableAll);
 
                 
         

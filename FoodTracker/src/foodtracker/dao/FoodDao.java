@@ -4,6 +4,7 @@ import foodtracker.database.Database;
 import foodtracker.foodtypes.FoodIngredient;
 import foodtracker.foodtypes.FreshFood;
 import foodtracker.foodtypes.PreparedFood;
+import foodtracker.ui.TableFood;
 import foodtracker.utilities.LocalDateConverter;
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -280,5 +281,15 @@ public class FoodDao {
         List<PreparedFood> expiringPreparedFoods = new ArrayList<>();
         
         return expiringPreparedFoods;
+    }
+    
+    public List<TableFood> preparedToTable() throws SQLException {
+        List<TableFood> changedList = new ArrayList<>();
+        List<PreparedFood> list = findAllPrepared();
+        for (int i = 0; i < list.size(); i++) {
+            TableFood table = new TableFood(list.get(i).getId(), list.get(i).getName(), list.get(i).getFoodType(),list.get(i).getQuantity(), list.get(i).getQuantityType(), list.get(i).getDateAdded(), list.get(i).getExpirationDate());
+            changedList.add(table);
+        }
+        return  changedList;
     }
 }
