@@ -4,7 +4,7 @@ import foodtracker.database.Database;
 import foodtracker.foodtypes.FoodIngredient;
 import foodtracker.foodtypes.FreshFood;
 import foodtracker.foodtypes.PreparedFood;
-import foodtracker.ui.TableFood;
+import foodtracker.utilities.TableFood;
 import foodtracker.utilities.LocalDateConverter;
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -291,5 +291,33 @@ public class FoodDao {
             changedList.add(table);
         }
         return  changedList;
+    }
+    
+    public List<TableFood> freshToTable() throws SQLException {
+        List<TableFood> changedList = new ArrayList();
+        List<FreshFood> list = findAllFresh();
+        for (int i = 0; i < list.size(); i++) {
+            TableFood table = new TableFood(list.get(i).getId(), list.get(i).getName(), list.get(i).getFoodType(),list.get(i).getQuantity(), list.get(i).getQuantityType(), list.get(i).getDateAdded(), LocalDate.now());
+            changedList.add(table);
+        }
+        return  changedList;
+    }
+    
+    public List<TableFood> ingredientToTable() throws SQLException {
+        List<TableFood> changedList = new ArrayList();
+        List<FoodIngredient> list = findAllIngredients();
+        for (int i = 0; i < list.size(); i++) {
+            TableFood table = new TableFood(list.get(i).getId(), list.get(i).getName(), list.get(i).getFoodType(),list.get(i).getQuantity(), list.get(i).getQuantityType(), list.get(i).getDateAdded(), LocalDate.now());
+            changedList.add(table);
+        }
+        return  changedList;
+    }
+    
+    public List<TableFood> tableFiller() throws SQLException {
+        List<TableFood> list = new ArrayList();
+        list.addAll(ingredientToTable());
+        list.addAll(freshToTable());
+        list.addAll(preparedToTable());
+        return list;
     }
 }

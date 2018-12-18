@@ -1,5 +1,6 @@
 package foodtracker.ui;
 
+import foodtracker.utilities.TableFood;
 import foodtracker.dao.FoodDao;
 import foodtracker.foodtypes.FreshFood;
 import foodtracker.foodtypes.PreparedFood;
@@ -44,10 +45,7 @@ import javafx.scene.layout.HBox;
 public class FoodTracker extends Application {
     private TableView<TableFood> table = new TableView<TableFood>();
     private final ObservableList<TableFood> data =
-            FXCollections.observableArrayList(
-            new TableFood(1, "testinimi", "testityyppi", 13, "pcs", LocalDate.of(2018, Month.DECEMBER, 31), LocalDate.now()),
-            new TableFood(2, "testi2", "tyyppi2", 11, "pcs", LocalDate.now(), LocalDate.now())
-            );
+            FXCollections.observableArrayList();
 
     @Override
     public void start(Stage primaryStage) throws ClassNotFoundException, SQLException {
@@ -148,11 +146,7 @@ public class FoodTracker extends Application {
             }
             
         });
-        
-        //use toggler.getSelectedToggle().getUserData() to find out which button
-        //is used so you can get good sql queries in place!
-        
-        
+
         
         //Ability to pick expiration date in a calendar format
         Label expirationLb = new Label("Expiration date: ");
@@ -241,23 +235,21 @@ public class FoodTracker extends Application {
         
         TableColumn columnDateAdded = new TableColumn("Added");
         columnDateAdded.setCellValueFactory(
-            new PropertyValueFactory<TableFood, String>("added"));
+            new PropertyValueFactory<TableFood, String>("dateAdded"));
         
         TableColumn columnExpiration = new TableColumn("Expiration");
         columnExpiration.setCellValueFactory(
-            new PropertyValueFactory<TableFood, String>("expiration"));
+            new PropertyValueFactory<TableFood, String>("expirationDate"));
         
         //funktio create columns
         
         table.setItems(data);
         
-        table.getColumns().addAll(columnName, columnFoodType, columnAmount, columnAmountType,
+        
+        table.getColumns().addAll(columnId, columnName, columnFoodType, columnAmount, columnAmountType,
                 columnDateAdded, columnExpiration);
-        table.setMinSize(400, 400);
-//        grid.add(table, 6, 2);
-//        List<TableFood> tableAll = allFoods.preparedToTable();
-//        
-//        table.getItems().addAll(tableAll);
+        table.setMinSize(800, 100);
+        data.addAll(allFoods.tableFiller());
 
                 
         

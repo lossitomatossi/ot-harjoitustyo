@@ -1,4 +1,4 @@
-package foodtracker.ui;
+package foodtracker.utilities;
 
 import java.time.LocalDate;
 import javafx.beans.property.SimpleStringProperty;
@@ -9,19 +9,23 @@ public class TableFood {
     private final SimpleStringProperty foodType;
     private final SimpleStringProperty quantity;
     private final SimpleStringProperty quantityType;
-    private final LocalDate dateAdded;
-    private final LocalDate expirationDate;
+    private final SimpleStringProperty dateAdded;
+    private final SimpleStringProperty expirationDate;
+    private LocalDateConverter converter;
 
     public TableFood(int id, String foodName, String foodType, int quantity, String quantityType, LocalDate dateAdded, LocalDate expirationDate) {
-        String idString = Integer.toString(id);
-        String qString = Integer.toString(quantity);
-        this.id = new SimpleStringProperty(idString);
+        this.id = new SimpleStringProperty(Integer.toString(id));
         this.foodName = new SimpleStringProperty(foodName);
         this.foodType = new SimpleStringProperty(foodType);
-        this.quantity = new SimpleStringProperty(qString);
+        this.quantity = new SimpleStringProperty(Integer.toString(quantity));
         this.quantityType = new SimpleStringProperty(quantityType);
-        this.dateAdded = dateAdded;
-        this.expirationDate = expirationDate;
+        this.converter = new LocalDateConverter();
+        this.dateAdded = new SimpleStringProperty(converter.dateToString(dateAdded));
+        if (foodType.equals("fresh")) {
+            this.expirationDate = new SimpleStringProperty("");
+        } else {
+            this.expirationDate = new SimpleStringProperty(converter.dateToString(expirationDate));
+        }
         System.out.println("133313313313133");
     }
 
@@ -45,11 +49,11 @@ public class TableFood {
         return quantityType.get();
     }
 
-    public LocalDate getDateAdded() {
-        return dateAdded;
+    public String getDateAdded() {
+        return dateAdded.get();
     }
 
-    public LocalDate getExpirationDate() {
-        return expirationDate;
+    public String getExpirationDate() {
+        return expirationDate.get();
     }
 }
