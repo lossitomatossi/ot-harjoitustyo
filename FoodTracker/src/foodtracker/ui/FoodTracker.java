@@ -188,21 +188,13 @@ public class FoodTracker extends Application {
             
         });
         
+        Button buttonEditView = new Button();
+        buttonEditView.setText("Edit the database");
+        
+        
         //continue by making a list of what is Expiring today.
         Label expiringSoon = new Label("Expiring soon: ");
         grid.add(expiringSoon, 0, 9);
-        GridPane expirationList = new GridPane();
-        grid.add(expirationList, 1, 10);
-        
-        List<PreparedFood> expiringPrepared = allFoods.findAllExpiringSoon();
-        List<FreshFood> expiringFresh = allFoods.findAllFresh();
-        
-        for (int i = 0; i < expiringFresh.size(); i++) {
-            Label ff = new Label(expiringFresh.get(i).toString());
-            expirationList.add(ff, 0, i);
-        }
-        
-        
         
         List<String> all = new ArrayList<>();
         all.addAll(allFoods.findAll());
@@ -290,14 +282,6 @@ public class FoodTracker extends Application {
                         FreshFood freshToAdd = new FreshFood(allFoods.findAll().size(), textFieldFoodName.getText(), foodTypeString, amountOfFood, quantityType, LocalDate.now());
                         System.out.println(freshToAdd.toString());
                         allFoods.addFreshToDatabase(freshToAdd);
-//                        if (expiringFresh.size() < allFoods.findAll().size()) {
-//                            int beginningSize = expiringFresh.size();
-//                            List<FreshFood> test = freshFood.findAll();
-//                            for (int i = beginningSize; i < test.size(); i++) {
-//                            Label ff = new Label(test.get(i).toString());
-//                            expirationList.add(ff, 0, i + beginningSize);
-//                        }
-//                        }
                     } else {
                         FoodIngredient ingredientToAdd = new FoodIngredient(19, textFieldFoodName.getText(), foodTypeString, amountOfFood, quantityType, expiration.getValue(), LocalDate.now());
                         allFoods.addIngredientToDatabase(ingredientToAdd);
@@ -306,10 +290,6 @@ public class FoodTracker extends Application {
                     } catch (Exception e) {
                         System.out.println(e.getMessage());
                     }
-                
-                
-                    
-                
             }
         });
         
@@ -334,21 +314,6 @@ public class FoodTracker extends Application {
                 }
             }
         });
-        
-        //List of all the foods in string format and in labels
-        
-        
-       
-//        Button btn = new Button();
-//        btn.setText("Say 'Hello World'");
-//        btn.setOnAction(new EventHandler<ActionEvent>() {
-//            
-//            @Override
-//            public void handle(ActionEvent event) {
-//                System.out.println("Hello World!");
-//            }
-//        });
-        //for showing the application
         
         HBox hbox = new HBox();
         StackPane root = new StackPane();
