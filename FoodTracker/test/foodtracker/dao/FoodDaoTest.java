@@ -29,7 +29,7 @@ public class FoodDaoTest {
     
     @Before
     public void setUp() throws ClassNotFoundException, SQLException {
-        this.database = new Database("jdbc:sqlite:food.db");
+        this.database = new Database("jdbc:sqlite:test.db");
         this.conn = database.getConnection();
         this.allFoods = new FoodDao(database);
         this.omena = allFoods.findOneFresh(1);
