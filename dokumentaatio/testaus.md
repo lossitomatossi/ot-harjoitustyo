@@ -14,6 +14,5 @@ Testaamatta jäänyt lukuisia tilanteita.
 # Sovellukseen jääneet laatuongelmat:
 
 - Dao luokkien testaus ei vielä täysin valmis
-- Pian pilaantuvien lista ei päivitä viimeisimmässä versiossa
-- Kaikki ruuat saa listalle kerralla mutta listaus ei näy tableview:issä vielä 11.12.2018
+- Pian pilaantuvien lista ei näkyvissä 18.12.2018
 - Arkkitehtuurikuvaus ei ole ajantasalla 4.12.2018 jälkeen
