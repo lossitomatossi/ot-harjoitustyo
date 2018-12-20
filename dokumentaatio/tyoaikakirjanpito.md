@@ -13,4 +13,5 @@
 | 13.12 | 1   | dao luokkien poisto jatkui, lisää testejä |
 | 17.12 | .5  | tableview:iin tutustumista |
 | 18.12 | 2.5 | tableview toimii, lisää testejä, foodTable luokka, aloitettiin muokkausnäkymän teko |
-| yht   | 39  | projekti ok vaiheessa |
+| 20.12 | 2.5 | muokkausnäkymä melkeen toiminnallinen, lisättiin miscUtilities luokka ja siihen testit + javadoc |
+| yht   | 41.5| projekti ok vaiheessa |
