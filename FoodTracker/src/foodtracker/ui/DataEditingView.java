@@ -4,6 +4,7 @@ import foodtracker.dao.FoodDao;
 import foodtracker.database.Database;
 import foodtracker.utilities.TableFood;
 import foodtracker.utilities.LocalDateConverter;
+import foodtracker.utilities.MiscUtilities;
 
 import java.sql.SQLException;
 import java.time.LocalDate;
@@ -38,6 +39,7 @@ public class DataEditingView extends Application {
     private final ObservableList<TableFood> data =
             FXCollections.observableArrayList();
     final HBox hb = new HBox();
+    private MiscUtilities misc = new MiscUtilities();
 
     @Override
     public void start(Stage stage) throws ClassNotFoundException, SQLException {
@@ -116,23 +118,17 @@ public class DataEditingView extends Application {
         addButton.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent e) {
-                String type = "";
-                if (addType.getText().startsWith("p")) {
-                    type = "pieces";
-                } else if (addType.getText().startsWith("g")){
-                    type = "grams";
-                } else if (addType.getText().startsWith("l")) {
-                    type = "liters";
-                } else {
-                    type = "unknown";
-                }
+                
+                String foodType = misc.whichType(addType.getText());
+                String amountType = misc.whichQuantityType(addAmountType.getText());
+                
                 String date = converter.dateToString(addDate.getValue());
                 TableFood newest = new TableFood(
                         0,
                         addFood.getText(),
-                        type,
+                        foodType,
                         Integer.parseInt(addAmount.getText()),
-                        addAmountType.getText(),
+                        amountType,
                         LocalDate.now(),
                         addDate.getValue());
                 data.add(newest);
@@ -151,6 +147,7 @@ public class DataEditingView extends Application {
             @Override
             public void handle(ActionEvent event) {
                 List<TableFood> comparison = new ArrayList();
+                TableFood selected = table.getSelectionModel().getSelectedItem();
                 
                 try {
                     comparison = allFoods.tableFiller();
@@ -174,6 +171,7 @@ public class DataEditingView extends Application {
         
         Button cancel = new Button();
         cancel.setText("Cancel");
+        cancel.setStyle("-fx-background-color: #ffa500; ");
         
         
         
