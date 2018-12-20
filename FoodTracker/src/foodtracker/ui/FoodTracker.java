@@ -1,5 +1,6 @@
 package foodtracker.ui;
 
+import foodtracker.utilities.AlertMessage;
 import foodtracker.utilities.TableFood;
 import foodtracker.dao.FoodDao;
 import foodtracker.foodtypes.FreshFood;
