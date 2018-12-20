@@ -320,4 +320,13 @@ public class FoodDao {
         list.addAll(preparedToTable());
         return list;
     }
+    
+    public boolean deleteWithIdName(int id, String name) throws SQLException {
+        Connection connection = database.getConnection();
+        PreparedStatement stmt = connection.prepareStatement("SELECT * FROM FoodItem WHERE id = ? and name = ?");
+        stmt.setInt(1, id);
+        stmt.setString(2, name);
+        stmt.executeUpdate();
+        return false;
+    }
 }

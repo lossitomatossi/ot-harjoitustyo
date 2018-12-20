@@ -7,6 +7,10 @@ import foodtracker.utilities.LocalDateConverter;
 
 import java.sql.SQLException;
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.application.Application;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -44,6 +48,7 @@ public class DataEditingView extends Application {
         Database database = new Database("jdbc:sqlite:food.db");
         FoodDao allFoods = new FoodDao(database);
         LocalDateConverter converter = new LocalDateConverter();
+        List<TableFood> foodsNew = new ArrayList();
         
         table = new TableView();
         table.setEditable(true);
@@ -122,15 +127,16 @@ public class DataEditingView extends Application {
                     type = "unknown";
                 }
                 String date = converter.dateToString(addDate.getValue());
-                data.add(new TableFood(
+                TableFood newest = new TableFood(
                         0,
                         addFood.getText(),
                         type,
                         Integer.parseInt(addAmount.getText()),
                         addAmountType.getText(),
                         LocalDate.now(),
-                        addDate.getValue()));
-                        
+                        addDate.getValue());
+                data.add(newest);
+                foodsNew.add(newest);
                 addFood.clear();
                 addType.clear();
                 addAmount.clear();
@@ -139,13 +145,48 @@ public class DataEditingView extends Application {
             }
         });
         
-        hb.getChildren().addAll(addFood, addType, addAmount, addAmountType, addButton);
+        Button delete = new Button();
+        delete.setText("Delete");
+        delete.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                List<TableFood> comparison = new ArrayList();
+                
+                try {
+                    comparison = allFoods.tableFiller();
+                } catch (SQLException ex) {
+                    Logger.getLogger(DataEditingView.class.getName()).log(Level.SEVERE, null, ex);
+                }
+                if (comparison.contains(data.get(0))) {
+                    //tähän näin sen sarakkeen arvo mitä ollaa poistamassa niinku javadocsin toi 
+                    //informaatio sanoo.
+                    
+                }
+                
+            }
+        
+        });
+        
+        Button commitChanges = new Button();
+        commitChanges.setText("Commit changes");
+//        if (comparison.contains(data.get(i))) {
+//                        //lisää data.get(i) tietokantaan.
+        
+        Button cancel = new Button();
+        cancel.setText("Cancel");
+        
+        
+        
+        hb.getChildren().addAll(addFood, addType, addAmount, addAmountType, addDate, addButton, delete);
         hb.setSpacing(3);
+        HBox commitButtons = new HBox();
+        commitButtons.getChildren().addAll(commitChanges, cancel);
+        
         
         final VBox vbox = new VBox();
         vbox.setSpacing(5);
         vbox.setPadding(new Insets(10, 0, 0, 10));
-        vbox.getChildren().addAll(table, hb);
+        vbox.getChildren().addAll(table, hb, commitButtons);
         
         ((Group) scene.getRoot()).getChildren().addAll(vbox);
         stage.setScene(scene);
