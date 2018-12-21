@@ -21,7 +21,7 @@ public class MiscUtilities {
     public String whichQuantityType(String string) {
         if (string.startsWith("p")) {
             return "pieces";
-        } else if (string.startsWith("g")){
+        } else if (string.startsWith("g")) {
             return "grams";
         } else if (string.startsWith("l")) {
             return "liters";
@@ -39,7 +39,7 @@ public class MiscUtilities {
     public String whichType(String string) {
         if (string.startsWith("f")) {
             return "fresh";
-        } else if (string.startsWith("p")){
+        } else if (string.startsWith("p")) {
             return "prepared";
         } else if (string.startsWith("i")) {
             return "ingredient";

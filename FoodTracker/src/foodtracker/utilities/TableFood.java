@@ -4,6 +4,7 @@ import java.time.LocalDate;
 import javafx.beans.property.SimpleStringProperty;
 
 public class TableFood {
+
     private final SimpleStringProperty id;
     private final SimpleStringProperty foodName;
     private final SimpleStringProperty foodType;
@@ -55,5 +56,11 @@ public class TableFood {
 
     public String getExpirationDate() {
         return expirationDate.get();
+    }
+
+//    @Override
+    public int compareTo(TableFood tf) {
+        int idInt = Integer.parseInt(getId());
+        return idInt - Integer.parseInt(tf.getId());
     }
 }

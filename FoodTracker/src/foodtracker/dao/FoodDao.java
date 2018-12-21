@@ -19,25 +19,23 @@ import java.util.List;
 import java.util.TreeSet;
 
 public class FoodDao {
-    
+
     private Database database;
     private LocalDateConverter converter;
     private Connection conn;
-    
 
     public FoodDao(Database database) throws SQLException {
         this.database = database;
         this.converter = new LocalDateConverter();
         this.conn = database.getConnection();
     }
-    
+
 //    public Food findOne(Integer key) throws SQLException {
 //        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
 //    }
-    
     public FreshFood findOneFresh(Integer key) throws SQLException {
         connectIfNoConnection();
-        
+
         PreparedStatement stmt = conn.prepareStatement("SELECT * FROM FoodItem WHERE id = ? AND foodType = 'fresh'");
         stmt.setObject(1, key);
         ResultSet rs = stmt.executeQuery();
@@ -46,13 +44,13 @@ public class FoodDao {
         }
         String dateAdded = rs.getString("dateAdded");
         FreshFood ff = new FreshFood(rs.getInt("id"), rs.getString("name"), "fresh", rs.getInt("quantity"), rs.getString("quantityType"), converter.stringToDate(dateAdded));
-        
+
         rs.close();
         stmt.close();
         conn.close();
         return ff;
     }
-    
+
     public PreparedFood findOnePrepared(Integer key) throws SQLException {
         connectIfNoConnection();
         PreparedStatement stmt = conn.prepareStatement("SELECT * FROM FoodItem WHERE id = ? AND foodType = 'prepared'");
@@ -69,8 +67,7 @@ public class FoodDao {
         conn.close();
         return pf;
     }
-    
-    
+
     //Combines all toStrings of foodtypes to list
     public List<String> findAll() throws SQLException {
         List<String> allFoods = new ArrayList<>();
@@ -83,11 +80,11 @@ public class FoodDao {
         allFoods.addAll(ingredientes);
         return allFoods;
     }
-    
+
     public List<FoodIngredient> findAllIngredients() throws SQLException {
         connectIfNoConnection();
         PreparedStatement stmt = conn.prepareStatement("SELECT * FROM FoodItem WHERE foodType = 'ingredient'");
-        
+
         ResultSet rs = stmt.executeQuery();
         List<FoodIngredient> ingredients = new ArrayList<>();
         while (rs.next()) {
@@ -102,11 +99,11 @@ public class FoodDao {
         conn.close();
         return ingredients;
     }
-    
+
     public List<FreshFood> findAllFresh() throws SQLException {
         connectIfNoConnection();
         PreparedStatement stmt = conn.prepareStatement("SELECT * FROM FoodItem WHERE foodType = 'fresh'");
-        
+
         ResultSet rs = stmt.executeQuery();
         List<FreshFood> freshFoods = new ArrayList<>();
         while (rs.next()) {
@@ -120,11 +117,11 @@ public class FoodDao {
         conn.close();
         return freshFoods;
     }
-    
+
     public List<PreparedFood> findAllPrepared() throws SQLException {
         connectIfNoConnection();
         PreparedStatement stmt = conn.prepareStatement("SELECT * FROM FoodItem WHERE foodType = 'prepared'");
-        
+
         ResultSet rs = stmt.executeQuery();
         List<PreparedFood> preparedFoods = new ArrayList<>();
         while (rs.next()) {
@@ -139,7 +136,7 @@ public class FoodDao {
         conn.close();
         return preparedFoods;
     }
-    
+
     public void addIngredientToDatabase(FoodIngredient ingredient) throws SQLException {
         connectIfNoConnection();
         PreparedStatement stmt = conn.prepareStatement("INSERT INTO FoodItem (name, foodType, quantity, quantityType, dateAdded, expirationDate) VALUES (?, ?, ?, ?, ?, ?)");
@@ -155,10 +152,10 @@ public class FoodDao {
         stmt.setString(6, converter.dateToString(ingredient.getExpirationDate()));
         stmt.executeUpdate();
         System.out.println("Ingredient adding works" + converter.dateToString(ingredient.getDateAdded()));
-        
+
         conn.close();
     }
-    
+
     public void addPreparedToDatabase(PreparedFood food) throws SQLException {
         connectIfNoConnection();
         PreparedStatement stmt = conn.prepareStatement("INSERT INTO FoodItem (name, foodType, quantity, quantityType, expirationDate, dateAdded, opened) VALUES (?, ?, ?, ?, ?, ?, ?)");
@@ -177,10 +174,10 @@ public class FoodDao {
         stmt.setString(6, converter.dateToString(LocalDate.now()));
         stmt.setBoolean(7, food.isOpened());
         stmt.executeUpdate();
-        
+
         conn.close();
     }
-    
+
     public void addFreshWithId(FreshFood food, int id) throws SQLException {
         connectIfNoConnection();
         PreparedStatement stmt = conn.prepareStatement("INSERT INTO FoodItem (id, name, foodType, quantity, quantityType, dateAdded) VALUES (?, ?, ?, ?, ?, ?)");
@@ -195,10 +192,10 @@ public class FoodDao {
         stmt.setString(5, food.getQuantityType());
         stmt.setString(6, converter.dateToString(food.getDateAdded()));
         stmt.executeUpdate();
-        
+
         conn.close();
     }
-    
+
     public void addFreshToDatabase(FreshFood food) throws SQLException {
         connectIfNoConnection();
         PreparedStatement stmt = conn.prepareStatement("INSERT INTO FoodItem (name, foodType, quantity, quantityType, dateAdded) VALUES (?, ?, ?, ?, ?)");
@@ -212,10 +209,10 @@ public class FoodDao {
         stmt.setString(4, food.getQuantityType());
         stmt.setString(5, converter.dateToString(food.getDateAdded()));
         stmt.executeUpdate();
-        
+
         conn.close();
     }
-    
+
     public List<String> allIngredientsInString(List<FoodIngredient> given) throws SQLException {
         List<String> list = new ArrayList<>();
         for (int i = 0; i < given.size(); i++) {
@@ -223,7 +220,7 @@ public class FoodDao {
         }
         return list;
     }
-    
+
     public List<String> allFreshInString(List<FreshFood> given) throws SQLException {
         List<String> list = new ArrayList<>();
         for (int i = 0; i < given.size(); i++) {
@@ -231,7 +228,7 @@ public class FoodDao {
         }
         return list;
     }
-    
+
     public List<String> allPreparedInString() throws SQLException {
         List<String> list = new ArrayList<>();
         List<PreparedFood> prepared = findAllPrepared();
@@ -240,7 +237,6 @@ public class FoodDao {
         }
         return list;
     }
-    
 
     public Collection<String> sortedAll() throws SQLException {
         connectIfNoConnection();
@@ -248,7 +244,7 @@ public class FoodDao {
         java.util.Collections.sort(all);
         return all;
     }
-    
+
     public int countAll() throws SQLException {
         connectIfNoConnection();
         PreparedStatement stmt = conn.prepareStatement("SELECT COUNT(*) FROM FoodItem");
@@ -256,7 +252,7 @@ public class FoodDao {
         int num = rs.getInt(1);
         conn.close();
         return num;
-        
+
     }
 
     public void delete(Integer key) throws SQLException {
@@ -266,53 +262,53 @@ public class FoodDao {
         stmt.executeUpdate();
         conn.close();
     }
-    
+
     public void connectIfNoConnection() throws SQLException {
         if (conn.isClosed()) {
             this.conn = database.getConnection();
         }
     }
-    
+
     public List<PreparedFood> findAllExpiringSoon() throws SQLException {
         Connection connection = database.getConnection();
         PreparedStatement stmt = connection.prepareStatement("SELECT * FROM FoodItem WHERE foodType = 'prepared'");
-        
+
         ResultSet rs = stmt.executeQuery();
         List<PreparedFood> expiringPreparedFoods = new ArrayList<>();
-        
+
         return expiringPreparedFoods;
     }
-    
+
     public List<TableFood> preparedToTable() throws SQLException {
         List<TableFood> changedList = new ArrayList<>();
         List<PreparedFood> list = findAllPrepared();
         for (int i = 0; i < list.size(); i++) {
-            TableFood table = new TableFood(list.get(i).getId(), list.get(i).getName(), list.get(i).getFoodType(),list.get(i).getQuantity(), list.get(i).getQuantityType(), list.get(i).getDateAdded(), list.get(i).getExpirationDate());
+            TableFood table = new TableFood(list.get(i).getId(), list.get(i).getName(), list.get(i).getFoodType(), list.get(i).getQuantity(), list.get(i).getQuantityType(), list.get(i).getDateAdded(), list.get(i).getExpirationDate());
             changedList.add(table);
         }
-        return  changedList;
+        return changedList;
     }
-    
+
     public List<TableFood> freshToTable() throws SQLException {
         List<TableFood> changedList = new ArrayList();
         List<FreshFood> list = findAllFresh();
         for (int i = 0; i < list.size(); i++) {
-            TableFood table = new TableFood(list.get(i).getId(), list.get(i).getName(), list.get(i).getFoodType(),list.get(i).getQuantity(), list.get(i).getQuantityType(), list.get(i).getDateAdded(), LocalDate.now());
+            TableFood table = new TableFood(list.get(i).getId(), list.get(i).getName(), list.get(i).getFoodType(), list.get(i).getQuantity(), list.get(i).getQuantityType(), list.get(i).getDateAdded(), LocalDate.now());
             changedList.add(table);
         }
-        return  changedList;
+        return changedList;
     }
-    
+
     public List<TableFood> ingredientToTable() throws SQLException {
         List<TableFood> changedList = new ArrayList();
         List<FoodIngredient> list = findAllIngredients();
         for (int i = 0; i < list.size(); i++) {
-            TableFood table = new TableFood(list.get(i).getId(), list.get(i).getName(), list.get(i).getFoodType(),list.get(i).getQuantity(), list.get(i).getQuantityType(), list.get(i).getDateAdded(), LocalDate.now());
+            TableFood table = new TableFood(list.get(i).getId(), list.get(i).getName(), list.get(i).getFoodType(), list.get(i).getQuantity(), list.get(i).getQuantityType(), list.get(i).getDateAdded(), LocalDate.now());
             changedList.add(table);
         }
-        return  changedList;
+        return changedList;
     }
-    
+
     public List<TableFood> tableFiller() throws SQLException {
         List<TableFood> list = new ArrayList();
         list.addAll(ingredientToTable());
@@ -320,7 +316,7 @@ public class FoodDao {
         list.addAll(preparedToTable());
         return list;
     }
-    
+
     public boolean deleteWithIdName(int id, String name) throws SQLException {
         Connection connection = database.getConnection();
         PreparedStatement stmt = connection.prepareStatement("SELECT * FROM FoodItem WHERE id = ? and name = ?");

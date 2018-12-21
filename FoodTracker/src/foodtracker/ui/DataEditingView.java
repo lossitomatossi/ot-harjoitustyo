@@ -171,7 +171,7 @@ public class DataEditingView extends Application {
         
         Button cancel = new Button();
         cancel.setText("Cancel");
-        cancel.setStyle("-fx-background-color: #ffa500; ");
+        cancel.setStyle("-fx-background-color: #ff471a; ");
         
         
         
