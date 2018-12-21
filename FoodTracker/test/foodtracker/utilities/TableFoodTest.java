@@ -16,47 +16,49 @@ import static org.junit.Assert.*;
  * @author terala
  */
 public class TableFoodTest {
+
     private TableFood tf;
+    private TableFood test;
     private LocalDateConverter converter;
-    
+
     @Before
     public void setUp() {
         this.tf = new TableFood(13, "name", "type", 69, "qType", LocalDate.now(), LocalDate.of(2020, Month.APRIL, 20));
+        test = new TableFood(13, "name", "type", 22, "q", LocalDate.now(), LocalDate.of(2020, Month.APRIL, 20));
     }
-    
+
     @Test
     public void getIdTest() {
         assertEquals("13", tf.getId());
     }
-    
+
     @Test
     public void getFoodNameTest() {
         assertEquals("name", tf.getFoodName());
     }
-    
+
     @Test
     public void getFoodTypeTest() {
         assertEquals("type", tf.getFoodType());
     }
-    
+
     @Test
     public void getQuantityTest() {
         assertEquals("69", tf.getQuantity());
     }
-    
+
     @Test
     public void getQuantityTypeTest() {
         assertEquals("qType", tf.getQuantityType());
     }
-    
-//    @Test
-//    public void getDateAdded() {
-//        assertEquals(converter.dateToString(LocalDate.now()), tf.getDateAdded());
-//    }
-//    
-//    @Test
-//    public void getExpiration() {
-//        LocalDate date = LocalDate.of(2020, Month.APRIL, 20);
-//        assertEquals(converter.dateToString(date), tf.getExpirationDate());
-//    }
+
+    @Test
+    public void getDateAdded() {
+        assertEquals(test.getDateAdded(), tf.getDateAdded());
+    }
+
+    @Test
+    public void getExpiration() {
+        assertEquals(test.getExpirationDate(), tf.getExpirationDate());
+    }
 }
