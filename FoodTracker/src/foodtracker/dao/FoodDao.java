@@ -67,6 +67,10 @@ public class FoodDao {
         conn.close();
         return pf;
     }
+    
+    FreshFood findOneIngredient(int i) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
 
     //Combines all toStrings of foodtypes to list
     public List<String> findAll() throws SQLException {
@@ -136,6 +140,23 @@ public class FoodDao {
         conn.close();
         return preparedFoods;
     }
+    
+    public void addFreshToDatabase(FreshFood food) throws SQLException {
+        connectIfNoConnection();
+        PreparedStatement stmt = conn.prepareStatement("INSERT INTO FoodItem (name, foodType, quantity, quantityType, dateAdded) VALUES (?, ?, ?, ?, ?)");
+        stmt.setString(1, food.getName());
+        if (food.getFoodType() == null) {
+            stmt.setString(2, "unknown");
+        } else {
+            stmt.setString(2, food.getFoodType());
+        }
+        stmt.setInt(3, food.getQuantity());
+        stmt.setString(4, food.getQuantityType());
+        stmt.setString(5, converter.dateToString(food.getDateAdded()));
+        stmt.executeUpdate();
+
+        conn.close();
+    }
 
     public void addIngredientToDatabase(FoodIngredient ingredient) throws SQLException {
         connectIfNoConnection();
@@ -195,21 +216,41 @@ public class FoodDao {
 
         conn.close();
     }
-
-    public void addFreshToDatabase(FreshFood food) throws SQLException {
+    
+    void addIngredientWithId(FoodIngredient fi, int id) throws SQLException {
         connectIfNoConnection();
-        PreparedStatement stmt = conn.prepareStatement("INSERT INTO FoodItem (name, foodType, quantity, quantityType, dateAdded) VALUES (?, ?, ?, ?, ?)");
-        stmt.setString(1, food.getName());
-        if (food.getFoodType() == null) {
-            stmt.setString(2, "unknown");
+        PreparedStatement stmt = conn.prepareStatement("INSERT INTO FoodItem (id, name, foodType, quantity, quantityType, dateAdded, expirationDate) VALUES (?, ?, ?, ?, ?, ?, ?)");
+        stmt.setInt(1, id);
+        stmt.setString(2, fi.getName());
+        if (fi.getFoodType() == null) {
+            stmt.setString(3, "unknown");
         } else {
-            stmt.setString(2, food.getFoodType());
+            stmt.setString(3, fi.getFoodType());
         }
-        stmt.setInt(3, food.getQuantity());
-        stmt.setString(4, food.getQuantityType());
-        stmt.setString(5, converter.dateToString(food.getDateAdded()));
+        stmt.setInt(4, fi.getQuantity());
+        stmt.setString(5, fi.getQuantityType());
+        stmt.setString(6, converter.dateToString(fi.getDateAdded()));
+        stmt.setString(7, converter.dateToString(fi.getExpirationDate()));
         stmt.executeUpdate();
-
+        conn.close();
+    }
+    
+    void addPreparedWithId(PreparedFood pf, int id) throws SQLException {
+        connectIfNoConnection();
+        PreparedStatement stmt = conn.prepareStatement("INSERT INTO FoodItem (id, name, foodType, quantity, quantityType, dateAdded, expirationDate, opened) VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
+        stmt.setInt(1, id);
+        stmt.setString(2, pf.getName());
+        if (pf.getFoodType() == null) {
+            stmt.setString(3, "unknown");
+        } else {
+            stmt.setString(3, pf.getFoodType());
+        }
+        stmt.setInt(4, pf.getQuantity());
+        stmt.setString(5, pf.getQuantityType());
+        stmt.setString(6, converter.dateToString(pf.getDateAdded()));
+        stmt.setString(7, converter.dateToString(pf.getExpirationDate()));
+        stmt.setBoolean(8, pf.isOpened());
+        stmt.executeUpdate();
         conn.close();
     }
 
