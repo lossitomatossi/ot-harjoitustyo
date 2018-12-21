@@ -54,4 +54,16 @@ public class MiscUtilitiesTest {
         String s = "peocws";
         assertEquals("pieces", misc.whichQuantityType(s));
     }
+    
+    @Test
+    public void testWhichQuantityType4() {
+        String s = "containers";
+        assertEquals("containers", misc.whichQuantityType(s));
+    }
+    
+    @Test
+    public void testWhichFoodType4() {
+        String s = "xyra";
+        assertEquals("unknown", misc.whichType(s));
+    }
 }
