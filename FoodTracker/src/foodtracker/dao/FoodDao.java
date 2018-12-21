@@ -68,8 +68,21 @@ public class FoodDao {
         return pf;
     }
     
-    FreshFood findOneIngredient(int i) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public FoodIngredient findOneIngredient(int id) throws SQLException {
+        connectIfNoConnection();
+        PreparedStatement stmt = conn.prepareStatement("SELECT * FROM FoodItem WHERE id = ? AND foodType = 'ingredient'");
+        stmt.setObject(1, id);
+        ResultSet rs = stmt.executeQuery();
+        if (!rs.next()) {
+            return null;
+        }
+        LocalDate dateAdded = converter.stringToDate(rs.getString("dateAdded"));
+        LocalDate expirationDate = converter.stringToDate(rs.getString("expirationDate"));
+        FoodIngredient pf = new FoodIngredient(rs.getInt("id"), rs.getString("name"), rs.getString("foodType"), rs.getInt("quantity"), rs.getString("quantityType"), expirationDate, dateAdded);
+        rs.close();
+        stmt.close();
+        conn.close();
+        return pf;
     }
 
     //Combines all toStrings of foodtypes to list

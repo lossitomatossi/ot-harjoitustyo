@@ -55,7 +55,6 @@ public class FoodDaoTest {
     public void testCountAll() throws SQLException {
         int x = allFoods.countAll();
         Assert.assertEquals(true, !(x < 0));
-        
     }
     
     @Test
@@ -159,40 +158,43 @@ public class FoodDaoTest {
     }
     
     @Test
-    public void addIngredientTest1() throws SQLException {
-        FoodIngredient cumin = new FoodIngredient(77777, "cumin", "ingredient", 69, "pieces", LocalDate.now(), LocalDate.of(22, Month.MARCH, 1987));
-        allFoods.addIngredientWithId(cumin, 77777);
-        FreshFood foundCumin = allFoods.findOneIngredient(77777);
-        allFoods.delete(77777);
+    public void addIngredientTest() throws SQLException {
+        FoodIngredient cumin = new FoodIngredient(777, "cumin", "ingredient", 69, "pieces", LocalDate.now(), LocalDate.now());
+        System.out.println("222222");
+        allFoods.addIngredientWithId(cumin, 777);
+        System.out.println("33333");
+        FoodIngredient foundCumin = allFoods.findOneIngredient(777);
+        System.out.println("44444");
+        allFoods.delete(777);
         Assert.assertEquals(cumin.toString(), foundCumin.toString());
     }
     
     @Test
     public void addIngredientTest2() throws SQLException {
-        FoodIngredient cumin = new FoodIngredient(77777, "cumin", "ingredient", 69, "pieces", LocalDate.now(), LocalDate.of(22, Month.MARCH, 1987));
+        FoodIngredient cumin = new FoodIngredient(77777, "cumin", "ingredient", 69, "pieces", LocalDate.now(), LocalDate.now());
         allFoods.addIngredientWithId(cumin, 77777);
-        FreshFood foundCumin = allFoods.findOneIngredient(77777);
+        FoodIngredient foundCumin = allFoods.findOneIngredient(77777);
         allFoods.delete(77777);
         Assert.assertEquals("ingredient", foundCumin.getFoodType());
     }
     
     @Test
-    public void addPreparedTest1() throws SQLException {
-        PreparedFood meatloaf = new PreparedFood(88888, "cumin", "ingredient", 69, "pieces", LocalDate.now(), LocalDate.of(22, Month.MARCH, 1987), false);
-        allFoods.addPreparedWithId(meatloaf, 88888);
-        FreshFood foundCumin = allFoods.findOneIngredient(88888);
-        allFoods.delete(77777);
-        Assert.assertEquals(meatloaf.toString(), foundCumin.toString());
+    public void addPreparedTest() throws SQLException {
+        PreparedFood meatloaf = new PreparedFood(888, "meatloaf", "prepared", 500, "grams", LocalDate.now(), LocalDate.now(), false);
+        allFoods.addPreparedWithId(meatloaf, 888);
+        PreparedFood foundMeatloaf = allFoods.findOnePrepared(888);
+        allFoods.delete(888);
+        Assert.assertEquals(meatloaf.toString(), foundMeatloaf.toString());
     }
     
-    @Test
-    public void addPreparedTest2() throws SQLException {
-        FoodIngredient cumin = new FoodIngredient(77777, "cumin", "ingredient", 69, "pieces", LocalDate.now(), LocalDate.of(22, Month.MARCH, 1987));
-        allFoods.addIngredientWithId(cumin, 77777);
-        FreshFood foundCumin = allFoods.findOneIngredient(77777);
-        allFoods.delete(77777);
-        Assert.assertEquals("ingredient", foundCumin.getFoodType());
-    }
+//    @Test
+//    public void addPreparedTest2() throws SQLException {
+//        PreparedFood meatloaf = new PreparedFood(888, "meatloaf", "prepared", 500, "grams", LocalDate.now(), LocalDate.now(), false);
+//        allFoods.addPreparedWithId(meatloaf, 888);
+//        PreparedFood foundMeatloaf = allFoods.findOnePrepared(888);
+//        allFoods.delete(888);
+//        Assert.assertEquals("prepared", foundMeatloaf.getFoodType());
+//    }
     
     @Test
     public void freshNotFoundTest() throws SQLException {
