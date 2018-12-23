@@ -4,7 +4,7 @@ Ohjelmaa on testattu JUnitilla sekä manuaalisesti
 
 ## Testauskattavuus
 
-Käyttöliittymäkerrosta lukuunottamatta sovelluksen testauksen rivikattavuus on 69% ja haarautumakattavuus on 60%.
+Käyttöliittymäkerrosta lukuunottamatta sovelluksen testauksen rivikattavuus on 78% ja haarautumakattavuus on 65%.
 
 <img src="https://github.com/lossitomatossi/ot-harjoitustyo/blob/master/dokumentaatio/kuvat/jacoco.png" width="800">
 
