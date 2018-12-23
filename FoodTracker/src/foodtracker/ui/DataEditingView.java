@@ -40,6 +40,11 @@ public class DataEditingView extends Application {
             FXCollections.observableArrayList();
     final HBox hb = new HBox();
     private MiscUtilities misc = new MiscUtilities();
+    private List<TableFood> commitsToAdd;
+    private List<TableFood> commitsToDelete;
+    private final ObservableList<TableFood> originalData =
+            FXCollections.observableArrayList();
+    
 
     @Override
     public void start(Stage stage) throws ClassNotFoundException, SQLException {
@@ -50,7 +55,9 @@ public class DataEditingView extends Application {
         Database database = new Database("jdbc:sqlite:food.db");
         FoodDao allFoods = new FoodDao(database);
         LocalDateConverter converter = new LocalDateConverter();
-        List<TableFood> foodsNew = new ArrayList();
+        commitsToAdd = new ArrayList();
+        commitsToDelete = new ArrayList();
+        originalData.addAll(allFoods.tableFiller());
         
         table = new TableView();
         table.setEditable(true);
@@ -132,7 +139,7 @@ public class DataEditingView extends Application {
                         LocalDate.now(),
                         addDate.getValue());
                 data.add(newest);
-                foodsNew.add(newest);
+                commitsToAdd.add(newest);
                 addFood.clear();
                 addType.clear();
                 addAmount.clear();
@@ -146,32 +153,45 @@ public class DataEditingView extends Application {
         delete.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-                List<TableFood> comparison = new ArrayList();
                 TableFood selected = table.getSelectionModel().getSelectedItem();
                 
-                try {
-                    comparison = allFoods.tableFiller();
-                } catch (SQLException ex) {
-                    Logger.getLogger(DataEditingView.class.getName()).log(Level.SEVERE, null, ex);
+                if (originalData.contains(selected)) {
+                    commitsToDelete.add(selected);                    
                 }
-                if (comparison.contains(data.get(0))) {
-                    //tähän näin sen sarakkeen arvo mitä ollaa poistamassa niinku javadocsin toi 
-                    //informaatio sanoo.
-                    
-                }
-                
+                data.remove(selected);                
             }
-        
         });
         
         Button commitChanges = new Button();
         commitChanges.setText("Commit changes");
-//        if (comparison.contains(data.get(i))) {
-//                        //lisää data.get(i) tietokantaan.
+        
+        commitChanges.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                for (int i = 0; i < commitsToAdd.size(); i++) {
+                    try {
+                        allFoods.addTableFood(commitsToAdd.get(i));
+                    } catch (SQLException ex) {
+                        Logger.getLogger(DataEditingView.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                }
+                for (int i = 0; i < commitsToDelete.size(); i++) {
+                    try {
+                        allFoods.delete(Integer.parseInt(commitsToDelete.get(i).getId()));
+                    } catch (SQLException ex) {
+                        Logger.getLogger(DataEditingView.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                }
+            }
+        });
+        
         
         Button cancel = new Button();
         cancel.setText("Cancel");
         cancel.setStyle("-fx-background-color: #ff471a; ");
+        cancel.setOnAction(e -> {
+           stage.close();
+        });
         
         
         

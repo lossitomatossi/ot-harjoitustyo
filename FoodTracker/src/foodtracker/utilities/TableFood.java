@@ -1,5 +1,8 @@
 package foodtracker.utilities;
 
+import foodtracker.foodtypes.FoodIngredient;
+import foodtracker.foodtypes.FreshFood;
+import foodtracker.foodtypes.PreparedFood;
 import java.time.LocalDate;
 import javafx.beans.property.SimpleStringProperty;
 
@@ -62,5 +65,20 @@ public class TableFood {
     public int compareTo(TableFood tf) {
         int idInt = Integer.parseInt(getId());
         return idInt - Integer.parseInt(tf.getId());
+    }
+    
+    public FreshFood tableFoodToFresh() {
+        FreshFood ff = new FreshFood(Integer.parseInt(getId()), getFoodName(), getFoodType(), Integer.parseInt(getQuantity()), getQuantityType(), converter.stringToDate(getDateAdded()));
+        return ff;
+    }
+    
+    public PreparedFood tableFoodToPrepared() {
+        PreparedFood pp = new PreparedFood(Integer.parseInt(getId()), getFoodName(), getFoodType(), Integer.parseInt(getQuantity()), getQuantityType(), converter.stringToDate(getDateAdded()), converter.stringToDate(getExpirationDate()), false);
+        return pp;
+    }
+    
+    public FoodIngredient tableFoodToIngredient() {
+        FoodIngredient fi = new FoodIngredient(Integer.parseInt(getId()), getFoodName(), getFoodType(), Integer.parseInt(getQuantity()), getQuantityType(), converter.stringToDate(getDateAdded()), converter.stringToDate(getExpirationDate()));
+        return fi;
     }
 }

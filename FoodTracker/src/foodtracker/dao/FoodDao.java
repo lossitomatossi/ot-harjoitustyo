@@ -211,6 +211,20 @@ public class FoodDao {
 
         conn.close();
     }
+    
+    public void addTableFood(TableFood tf) throws SQLException {
+        if (tf.getFoodType().equals("fresh")) {
+            addFreshToDatabase(tf.tableFoodToFresh());
+        }
+        
+        if (tf.getFoodType().equals("prepared")) {
+            addPreparedToDatabase(tf.tableFoodToPrepared());
+        }
+        
+        if (tf.getFoodType().equals("ingredient")) {
+            addIngredientToDatabase(tf.tableFoodToIngredient());
+        }
+    }
 
     public void addFreshWithId(FreshFood food, int id) throws SQLException {
         connectIfNoConnection();
