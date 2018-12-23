@@ -253,6 +253,5 @@ public class FoodDaoTest {
         }
         allFoods.delete(59);
         Assert.assertEquals(true, found);
-        
     }
 }
