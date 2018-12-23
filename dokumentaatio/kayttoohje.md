@@ -15,6 +15,8 @@ Kun käynnistät sovelluksen, vasemmassa laidassa on lomakkeet yksittäisten ruo
 
 Taulukoissa olevien asioiden järjestystä pystyy muuttamaan taulukon yläosassa olevien "nappien" avulla. Kussakin napissa lukee mitä informaatiota sillä järjestysnumerolla olevassa solussa on.
 
+Oikean toiminnan mahdollistamiseksi ohjelma olettaa että tietokannat sijaitsevat samassa kansiossa kuin ohjelma.
+
 FoodTracker kertoo tietoja syötettäessä jos ruuan nimi on liian pitkä tai puuttuu, ruuan määrään ei voi syöttää muita merkkejä kuin numeroita ja tämäkin kenttä kertoo jos on tyhjä. Ruuan määrän määrittävä toggleGroup valitsee automaattisesti arvon grammoiksi, mutta ruuan tyyppi pitää valita manuualisesti.
 
 Tietokannassa päivämäärät ovat kirjainyhdistelminä muodossa dd.MM.yyyy (esim 04.12.2018), pituus on 11 merkkiä jotta tietokanta on validi vuoden 9999 jälkeen, vaikkei ohjelma todennäköisesti sinne asti selviä.
