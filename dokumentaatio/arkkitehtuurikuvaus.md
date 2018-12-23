@@ -1,12 +1,11 @@
 # Arkkitehtuurikuvaus
-<img src="https://github.com/lossitomatossi/ot-harjoitustyo/blob/master/dokumentaatio/kuvat/arkkitehtuurikuvausuus.png" width="800">
+<img src="https://github.com/lossitomatossi/ot-harjoitustyo/blob/master/dokumentaatio/kuvat/arkkitehtuurikuvaus2.png" width="800">
 
 ## Käyttöliittymä
 
-Käyttöliittymä sisältää kolme erillistä näkymää
-- ruokien lisääminen ja pian pilantuuvien listaus
-- kaikkien ruokien listaus päivämäärän mukaan
-- kaikkien ruokien listaus aakkosjärjestyksen mukaan
+Käyttöliittymä sisältää kaksi erillistä näkymää
+- näkymä jossa näkyy vain tietokannassa olevat ruuat ja jossa voi lisätä yksittäisiä ruokia.
+- näkymä jossa voi tehdä useita muutoksia kerrallaan, ja jotka tehdään tietokantaan vasta kun käyttäjä hyväksyy muutokset.
 
 # Sekvenssikaaviot
 
