@@ -197,7 +197,7 @@ public class DataEditingView extends Application {
             } catch (SQLException ex) {
                 Logger.getLogger(DataEditingView.class.getName()).log(Level.SEVERE, null, ex);
             }
-            
+
             stage.close();
         });
 

@@ -5,6 +5,7 @@ import foodtracker.foodtypes.FoodIngredient;
 import foodtracker.foodtypes.FreshFood;
 import foodtracker.foodtypes.PreparedFood;
 import foodtracker.utilities.LocalDateConverter;
+import foodtracker.utilities.TableFood;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.SQLRecoverableException;
@@ -187,6 +188,33 @@ public class FoodDaoTest {
         Assert.assertEquals(meatloaf.toString(), foundMeatloaf.toString());
     }
     
+    @Test
+    public void addIngredientTest3() throws SQLException {
+        LocalDate now = LocalDate.now();
+        String date = converter.dateToString(now);
+        FoodIngredient cumin = new FoodIngredient(888, "cumin", "prepared", 500, "grams", LocalDate.now(), LocalDate.now());
+        allFoods.addIngredientToDatabase(cumin);
+        int id = allFoods.findIdForNameAmount("cumin", 500);
+        PreparedFood foundMeatloaf = allFoods.findOnePrepared(id);
+        allFoods.delete(id);
+        Assert.assertEquals(cumin.getName(), foundMeatloaf.getName());
+    }
+    
+    @Test
+    public void addIngredientTest4() throws SQLException {
+        LocalDate now = LocalDate.now();
+        String date = converter.dateToString(now);
+        FoodIngredient cumin = new FoodIngredient(888, "cumin", "prepared", 500, "grams", LocalDate.now(), LocalDate.now());
+        allFoods.addIngredientToDatabase(cumin);
+        int id = allFoods.findIdForNameAmount("cumin", 500);
+        PreparedFood foundMeatloaf = allFoods.findOnePrepared(id);
+        allFoods.delete(id);
+        Assert.assertEquals(cumin.getQuantity(), foundMeatloaf.getQuantity());
+    }
+    
+    
+    
+    
 //    @Test
 //    public void addPreparedTest2() throws SQLException {
 //        PreparedFood meatloaf = new PreparedFood(888, "meatloaf", "prepared", 500, "grams", LocalDate.now(), LocalDate.now(), false);
@@ -209,5 +237,22 @@ public class FoodDaoTest {
     @Test
     public void ingredientNotFound() throws SQLException {
         Assert.assertEquals(null, allFoods.findOnePrepared(88888888));
+    }
+    
+    @Test
+    public void preparedToTable() throws SQLException {
+        PreparedFood fi = new PreparedFood(59, "name", "prepared", 22, "pieces", LocalDate.now(), LocalDate.of(2018, Month.MARCH, 12), false);
+        TableFood testing = new TableFood(59, "name", "prepared", 22, "pieces", LocalDate.now(), LocalDate.of(2018, Month.MARCH, 12));
+        allFoods.addPreparedWithId(fi, 59);
+        List<TableFood> list = allFoods.preparedToTable();
+        boolean found = false;
+        for (int i = 0; i < list.size(); i++) {
+            if (list.get(i).getFoodName().equals("name")) {
+                found = true;
+            }
+        }
+        allFoods.delete(59);
+        Assert.assertEquals(true, found);
+        
     }
 }

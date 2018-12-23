@@ -7,16 +7,13 @@ import foodtracker.foodtypes.PreparedFood;
 import foodtracker.utilities.TableFood;
 import foodtracker.utilities.LocalDateConverter;
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.text.Collator;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
-import java.util.TreeSet;
 
 public class FoodDao {
 
@@ -391,6 +388,19 @@ public class FoodDao {
         stmt.setInt(1, id);
         stmt.setString(2, name);
         stmt.executeUpdate();
+        conn.close();
         return false;
     }
+    
+    public int findIdForNameAmount(String name, int amount) throws SQLException {
+        Connection conn = database.getConnection();
+        PreparedStatement stmt = conn.prepareStatement("SELECT id FROM FoodItem WHERE name = ? and quantity = ?");
+        stmt.setString(1, name);
+        stmt.setInt(2, amount);
+        ResultSet rs = stmt.executeQuery();
+        int id = rs.getInt(1);
+        conn.close();
+        return id;
+        
+    }   
 }
