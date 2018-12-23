@@ -35,16 +35,16 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 
 public class DataEditingView extends Application {
+
     private TableView<TableFood> table = new TableView<TableFood>();
-    private final ObservableList<TableFood> data =
-            FXCollections.observableArrayList();
+    private final ObservableList<TableFood> data
+            = FXCollections.observableArrayList();
     final HBox hb = new HBox();
     private MiscUtilities misc = new MiscUtilities();
     private List<TableFood> commitsToAdd;
     private List<TableFood> commitsToDelete;
-    private final ObservableList<TableFood> originalData =
-            FXCollections.observableArrayList();
-    
+    private final ObservableList<TableFood> originalData
+            = FXCollections.observableArrayList();
 
     @Override
     public void start(Stage stage) throws ClassNotFoundException, SQLException {
@@ -58,48 +58,46 @@ public class DataEditingView extends Application {
         commitsToAdd = new ArrayList();
         commitsToDelete = new ArrayList();
         originalData.addAll(allFoods.tableFiller());
-        
+
         table = new TableView();
         table.setEditable(true);
-        
+
         final Label label = new Label("Tracked Foods: ");
         label.setFont(new Font("Arial", 20));
-        
+
         TableColumn columnName = new TableColumn("Food");
         columnName.setCellValueFactory(
-            new PropertyValueFactory<TableFood, String>("foodName"));
-        
+                new PropertyValueFactory<TableFood, String>("foodName"));
+
         TableColumn columnFoodType = new TableColumn("Type");
         columnFoodType.setCellValueFactory(
-            new PropertyValueFactory<TableFood, String>("foodType"));
-        
+                new PropertyValueFactory<TableFood, String>("foodType"));
+
         TableColumn columnAmount = new TableColumn("Amount");
         columnAmount.setCellValueFactory(
-            new PropertyValueFactory<TableFood, String>("quantity"));
-        
+                new PropertyValueFactory<TableFood, String>("quantity"));
+
         TableColumn columnAmountType = new TableColumn("amountType");
         columnAmountType.setCellValueFactory(
-            new PropertyValueFactory<TableFood, String>("quantityType"));
-        
+                new PropertyValueFactory<TableFood, String>("quantityType"));
+
         TableColumn columnDateAdded = new TableColumn("Added");
         columnDateAdded.setCellValueFactory(
-            new PropertyValueFactory<TableFood, String>("dateAdded"));
-        
+                new PropertyValueFactory<TableFood, String>("dateAdded"));
+
         TableColumn columnExpiration = new TableColumn("Expiration");
         columnExpiration.setCellValueFactory(
-            new PropertyValueFactory<TableFood, String>("expirationDate")
+                new PropertyValueFactory<TableFood, String>("expirationDate")
         );
-        
+
         //funktio create columns
-        
         table.setItems(data);
-        
-        
+
         table.getColumns().addAll(columnName, columnFoodType, columnAmount, columnAmountType,
                 columnDateAdded, columnExpiration);
         table.setMinSize(800, 100);
         data.addAll(allFoods.tableFiller());
-        
+
         final TextField addFood = new TextField();
         addFood.setPromptText("Name of food");
         addFood.setMaxWidth(columnName.getPrefWidth());
@@ -120,15 +118,15 @@ public class DataEditingView extends Application {
         addAmountType.setPromptText("Unit of amount");
         final DatePicker addDate = new DatePicker();
         addDate.setMaxWidth(columnExpiration.getPrefWidth());
-        
+
         final Button addButton = new Button("Add");
         addButton.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent e) {
-                
+
                 String foodType = misc.whichType(addType.getText());
                 String amountType = misc.whichQuantityType(addAmountType.getText());
-                
+
                 String date = converter.dateToString(addDate.getValue());
                 TableFood newest = new TableFood(
                         0,
@@ -147,24 +145,24 @@ public class DataEditingView extends Application {
                 addDate.setValue(null);
             }
         });
-        
+
         Button delete = new Button();
         delete.setText("Delete");
         delete.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
                 TableFood selected = table.getSelectionModel().getSelectedItem();
-                
+
                 if (originalData.contains(selected)) {
-                    commitsToDelete.add(selected);                    
+                    commitsToDelete.add(selected);
                 }
-                data.remove(selected);                
+                data.remove(selected);
             }
         });
-        
+
         Button commitChanges = new Button();
         commitChanges.setText("Commit changes");
-        
+
         commitChanges.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
@@ -184,28 +182,35 @@ public class DataEditingView extends Application {
                 }
             }
         });
-        
-        
+
         Button cancel = new Button();
         cancel.setText("Cancel");
         cancel.setStyle("-fx-background-color: #ff471a; ");
         cancel.setOnAction(e -> {
-           stage.close();
+            FoodTracker maini = new FoodTracker();
+            Stage backToNormal = new Stage();
+
+            try {
+                maini.start(backToNormal);
+            } catch (ClassNotFoundException ex) {
+                Logger.getLogger(DataEditingView.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (SQLException ex) {
+                Logger.getLogger(DataEditingView.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            
+            stage.close();
         });
-        
-        
-        
+
         hb.getChildren().addAll(addFood, addType, addAmount, addAmountType, addDate, addButton, delete);
         hb.setSpacing(3);
         HBox commitButtons = new HBox();
         commitButtons.getChildren().addAll(commitChanges, cancel);
-        
-        
+
         final VBox vbox = new VBox();
         vbox.setSpacing(5);
         vbox.setPadding(new Insets(10, 0, 0, 10));
         vbox.getChildren().addAll(table, hb, commitButtons);
-        
+
         ((Group) scene.getRoot()).getChildren().addAll(vbox);
         stage.setScene(scene);
         stage.show();

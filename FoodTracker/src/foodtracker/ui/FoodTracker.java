@@ -47,7 +47,7 @@ public class FoodTracker extends Application {
             = FXCollections.observableArrayList();
 
     @Override
-    public void start(Stage primaryStage) throws ClassNotFoundException, SQLException {
+    public void start(Stage stage) throws ClassNotFoundException, SQLException {
         Database database = new Database("jdbc:sqlite:food.db");
         FoodDao allFoods = new FoodDao(database);
         //FreshFoodDao freshFood = new FreshFoodDao(database);
@@ -182,11 +182,23 @@ public class FoodTracker extends Application {
 
         Button buttonEditView = new Button();
         buttonEditView.setText("Edit the database");
+        buttonEditView.setOnAction(e -> {
+            Stage edit = new Stage();
+            DataEditingView editView = new DataEditingView();
+            try {
+                editView.start(edit);
+            } catch (ClassNotFoundException ex) {
+                Logger.getLogger(FoodTracker.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (SQLException ex) {
+                Logger.getLogger(FoodTracker.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            stage.close();
+        });
+        grid.add(buttonEditView, 0, 9);
 
         //continue by making a list of what is Expiring today.
-        Label expiringSoon = new Label("Expiring soon: ");
-        grid.add(expiringSoon, 0, 9);
-
+//        Label expiringSoon = new Label("Expiring soon: ");
+//        grid.add(expiringSoon, 0, 9);
         List<String> all = new ArrayList<>();
         all.addAll(allFoods.findAll());
 
@@ -314,10 +326,10 @@ public class FoodTracker extends Application {
 //        root.setAlignment(table, Pos.TOP_RIGHT);
         Scene scene = new Scene(root, 800, 800);
 
-        primaryStage.setTitle("FoodTracker");
-        primaryStage.setScene(scene);
-        primaryStage.setMaximized(true);
-        primaryStage.show();
+        stage.setTitle("FoodTracker");
+        stage.setScene(scene);
+        stage.setMaximized(true);
+        stage.show();
     }
 
     /**
