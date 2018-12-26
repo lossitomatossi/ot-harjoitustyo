@@ -126,10 +126,16 @@ public class DataEditingView extends Application {
 
                 String foodType = misc.whichType(addType.getText());
                 String amountType = misc.whichQuantityType(addAmountType.getText());
+                int foodsInDatabase = 0;
+                try {
+                    foodsInDatabase = allFoods.countAll() + 1;
+                } catch (SQLException ex) {
+                    Logger.getLogger(DataEditingView.class.getName()).log(Level.SEVERE, null, ex);
+                }
 
                 String date = converter.dateToString(addDate.getValue());
                 TableFood newest = new TableFood(
-                        0,
+                        foodsInDatabase,
                         addFood.getText(),
                         foodType,
                         Integer.parseInt(addAmount.getText()),
@@ -152,7 +158,6 @@ public class DataEditingView extends Application {
             @Override
             public void handle(ActionEvent event) {
                 TableFood selected = table.getSelectionModel().getSelectedItem();
-
                 if (originalData.contains(selected)) {
                     commitsToDelete.add(selected);
                 }
@@ -176,10 +181,13 @@ public class DataEditingView extends Application {
                 for (int i = 0; i < commitsToDelete.size(); i++) {
                     try {
                         allFoods.delete(Integer.parseInt(commitsToDelete.get(i).getId()));
+                        System.out.println("koitettiin poistaa");
                     } catch (SQLException ex) {
                         Logger.getLogger(DataEditingView.class.getName()).log(Level.SEVERE, null, ex);
                     }
                 }
+                commitsToAdd.clear();
+                commitsToDelete.clear();
             }
         });
 
