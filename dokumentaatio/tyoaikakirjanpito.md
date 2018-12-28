@@ -14,4 +14,6 @@
 | 17.12 | .5  | tableview:iin tutustumista |
 | 18.12 | 2.5 | tableview toimii, lisää testejä, foodTable luokka, aloitettiin muokkausnäkymän teko |
 | 20.12 | 2.5 | muokkausnäkymä melkeen toiminnallinen, lisättiin miscUtilities luokka ja siihen testit + javadoc |
-| yht   | 41.5| projekti ok vaiheessa |
+| 23.12 | 3   | testikattavuus, muokattu vaatimusmäärittely, testejä ja final release joka ei kuitenkaa viel toimiva |
+| 26.12 | 1   | testien kirjoitusta ja manuaalisia testejä |
+| yht   | 45.5| pitää korjata editview commitit poistamisen suhteen |
